@@ -1,5 +1,6 @@
 package se.uit.chichssssteam.quanlicuocdidong;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -7,7 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity
@@ -18,11 +18,15 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
+    private String mangDiDong;
+    private String goiCuoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
 
@@ -31,14 +35,19 @@ public class MainActivity extends ActionBarActivity
 
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
+
+        // Get infomation from ChonGoiCuocActivitity
+        getMobileNetwork();
         // populate the navigation drawer
-        mNavigationDrawerFragment.setUserData("John Doe", "johndoe@doe.com", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+        setMobileNetworkUserData();
+
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -78,6 +87,42 @@ public class MainActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+    private void getMobileNetwork()
+    {
+        Intent callerIntent = getIntent();
+        Bundle packegeFromCaller = callerIntent.getBundleExtra("Mang");
+        mangDiDong = packegeFromCaller.getString("Mang Di Dong");
+        goiCuoc = packegeFromCaller.getString("Goi Cuoc");
+    }
+    private void setMobileNetworkUserData()
+    {
+        int idAvatar;
+        switch(mangDiDong)
+        {
+            case "Mobifone": {
+                idAvatar = R.drawable.mobifone;
+                break;
+            }
+            case "VinaPhone": {
+                idAvatar = R.drawable.vinaphonne;
+                break;
+            }
+            case "Viettel": {
+                idAvatar = R.drawable.vietel;
+                break;
+            }
+            case "GMobile": {
+                idAvatar = R.drawable.gmobile;
+                break;
+            }
+            case "VietNamMobile": {
+                idAvatar = R.drawable.vietnamobile;
+                break;
+            }
+            default:
+                idAvatar=R.drawable.notfound;
+        }
+        mNavigationDrawerFragment.setUserData("Nhà mạng: " + mangDiDong, "Gói cước: " + goiCuoc, BitmapFactory.decodeResource(getResources(), idAvatar));
+    }
 
 }

@@ -118,9 +118,12 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
-        items.add(new NavigationItem("item 1", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("item 2", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("item 3", getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("Thống kê", getResources().getDrawable(R.drawable.ic_action_action_trending_up)));
+        items.add(new NavigationItem("Tra theo tháng", getResources().getDrawable(R.drawable.ic_action_action_search)));
+        items.add(new NavigationItem("Tra theo ngày", getResources().getDrawable(R.drawable.ic_action_action_search)));
+        items.add(new NavigationItem("Cài đặt",getResources().getDrawable(R.drawable.ic_action_action_settings)));
+        items.add(new NavigationItem("Giới thiệu",getResources().getDrawable(R.drawable.ic_action_action_info_outline)));
+        items.add(new NavigationItem("Thoát",getResources().getDrawable(R.drawable.ic_action_content_clear)));
         return items;
     }
 
@@ -229,7 +232,9 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         ImageView avatarContainer = (ImageView) mFragmentContainerView.findViewById(R.id.imgAvatar);
         ((TextView) mFragmentContainerView.findViewById(R.id.txtUserEmail)).setText(email);
         ((TextView) mFragmentContainerView.findViewById(R.id.txtUsername)).setText(user);
-        avatarContainer.setImageDrawable(new RoundImage(avatar));
+
+        //not use avatar image
+        //avatarContainer.setImageDrawable(new RoundImage(avatar));
     }
 
     public View getGoogleDrawer() {
