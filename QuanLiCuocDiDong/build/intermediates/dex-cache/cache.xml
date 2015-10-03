@@ -2,11 +2,39 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\QNghi\AndroidStudioProjects\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.1\jars\classes.jar"
+        jar="E:\Project\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="E:\Project\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\classes-b234d0841fe967e32e24c86b27e962cc73956593.jar" />
+    </item>
+    <item
+        jar="E:\Project\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
-        <dex dex="C:\Users\QNghi\AndroidStudioProjects\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\classes-e8037a27842dfa63dde89dd7c6e6e0581c4a8f72.jar" />
+        <dex dex="E:\Project\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\classes-0d44e24158e8788aa23b320c682a8033fbcff5db.jar" />
+    </item>
+    <item
+        jar="E:\Project\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="E:\Project\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-a36ecfa0037bc72e38ce77f5c68f3cd4939cd1fa.jar" />
+    </item>
+    <item
+        jar="E:\Project\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="E:\Project\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\classes-2630c7dee84dc6807bd8523c0a728a4e9c00fd3e.jar" />
+    </item>
+    <item
+        jar="C:\Users\QNghi\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="E:\Project\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-6e48466229d8769d2c439726c9ecddff2a405832.jar" />
     </item>
 
 </items>
