@@ -17,6 +17,15 @@ public class MessageLog
         _recieverNumber = "";
         _messageFee = 0;
     }
+
+    public MessageLog(String date, String number, int fee)
+    {
+        _messageId = -1;
+        _messageDate = date;
+        _recieverNumber = number;
+        _messageFee = fee;
+    }
+
     public int get_messageId()
     {
         return _messageId;

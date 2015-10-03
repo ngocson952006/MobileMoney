@@ -1,6 +1,7 @@
 package se.uit.chichssssteam.quanlicuocdidong;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +28,13 @@ public class NumberHeaderManager
     private List<String> _emergencyNumber;
     public NumberHeaderManager()
     {
+        this._mobifone = new ArrayList<String>();
+        this._vinaphone = new ArrayList<String>();
+        this._Gmobile = new ArrayList<String>();
+        this._viettel = new ArrayList<String>();
+        this._vietnamobile = new ArrayList<String>();
+        this._emergencyNumber = new ArrayList<String>();
+
         this._mobifone = Arrays.asList("090","093","0120","0121","0122","0126","0128");
         this._vinaphone = Arrays.asList("091","094","0123","0124","0125","0127","0129");
         this._viettel = Arrays.asList("096","097","098","0163","0164","0165","0166","0167","0168","0169");

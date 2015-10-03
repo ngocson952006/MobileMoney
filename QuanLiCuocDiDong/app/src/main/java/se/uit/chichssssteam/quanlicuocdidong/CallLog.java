@@ -19,6 +19,14 @@ public class CallLog
         _callFee = 0;
 
     }
+    public CallLog(int id, String date, String number, int duration, int fee)
+    {
+        _callId = id;
+        _callDate = date;
+        _callNumber = number;
+        _callDuration = duration;
+        _callFee = fee;
+    }
     public int get_callId()
     {
         return _callId;
