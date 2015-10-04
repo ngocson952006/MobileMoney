@@ -35,17 +35,17 @@ public class NumberHeaderManager
         this._emergencyNumber = Arrays.asList("113","114","115", "119");
     }
 
-    public Boolean isEmergencyCall(String phoneNumber)
+    public boolean isEmergencyCall(String phoneNumber)
     {
         for(Iterator<String> i = this._emergencyNumber.iterator(); i.hasNext();)
         {
-            if(phoneNumber == i.toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
     }
 
-    public Boolean isOldNumber(String phoneNumber)
+    public boolean isOldNumber(String phoneNumber)
     {
         if(phoneNumber.length() == 10)
             return true;
@@ -55,53 +55,53 @@ public class NumberHeaderManager
     {
 
         if(this.isOldNumber(phoneNumber))
-            return phoneNumber.substring(0,2);
-        else
             return phoneNumber.substring(0,3);
+        else
+            return phoneNumber.substring(0,4);
 
     }
-    public Boolean isMobifone(String phoneNumber)
+    public boolean isMobifone(String phoneNumber)
     {
         for(Iterator<String> i = this._mobifone.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
     }
-    public Boolean isVinaphone(String phoneNumber)
+    public boolean isVinaphone(String phoneNumber)
     {
         for(Iterator<String> i = this._vinaphone.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
 
     }
-    public Boolean isViettel(String phoneNumber)
+    public boolean isViettel(String phoneNumber)
     {
         for(Iterator<String> i = this._viettel.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
     }
-    public Boolean isVietnamobile(String phoneNumber)
+    public boolean isVietnamobile(String phoneNumber)
     {
         for(Iterator<String> i = this._vietnamobile.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
     }
-    public Boolean isGmobile(String phoneNumber)
+    public boolean isGmobile(String phoneNumber)
     {
         for(Iterator<String> i = this._Gmobile.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
@@ -125,7 +125,7 @@ public class NumberHeaderManager
     }
     public boolean isInternalNetwork(String ownerNumber, String callNumber)
     {
-        if(this.VerifyNetwork(ownerNumber) == this.VerifyNetwork(callNumber))
+        if(this.VerifyNetwork(ownerNumber).equals(this.VerifyNetwork(callNumber)))
             return true;
         return false;
 
