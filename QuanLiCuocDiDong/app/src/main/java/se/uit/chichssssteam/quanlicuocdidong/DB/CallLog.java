@@ -1,4 +1,5 @@
-package se.uit.chichssssteam.quanlicuocdidong;
+package se.uit.chichssssteam.quanlicuocdidong.DB;
+
 
 /**
  * Created by justinvan on 03-Oct-15.

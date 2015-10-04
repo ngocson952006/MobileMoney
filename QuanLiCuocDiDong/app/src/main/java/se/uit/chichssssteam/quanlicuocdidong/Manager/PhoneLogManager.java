@@ -1,33 +1,31 @@
-package se.uit.chichssssteam.quanlicuocdidong;
+package se.uit.chichssssteam.quanlicuocdidong.Manager;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Message;
-import android.provider.ContactsContract;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import android.provider.CallLog;
-import android.provider.Telephony;
-import android.telecom.Call;
-import android.telephony.SmsManager;
+
+import se.uit.chichssssteam.quanlicuocdidong.DB.*;
+
+import se.uit.chichssssteam.quanlicuocdidong.NetworkPackage.PackageFee;
 
 /**
  * Created by justinvan on 03-Oct-15.
  */
 public class PhoneLogManager {
-    List<se.uit.chichssssteam.quanlicuocdidong.CallLog> _listCall;
+    List<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog> _listCall;
     List<MessageLog> _listMessage;
 
     public PhoneLogManager() {
-        _listCall = new ArrayList<se.uit.chichssssteam.quanlicuocdidong.CallLog>();
+        _listCall = new ArrayList<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog>();
         _listMessage = new ArrayList<MessageLog>();
     }
     public String ConvertToTimeSpan(String date)
@@ -42,9 +40,9 @@ public class PhoneLogManager {
         }
         return "";
     }
-    public List<se.uit.chichssssteam.quanlicuocdidong.CallLog> LoadCallLog(Context context, PackageFee p) {
+    public List<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog> LoadCallLog(Context context, PackageFee p) {
 
-        List<se.uit.chichssssteam.quanlicuocdidong.CallLog> _logList = new ArrayList<se.uit.chichssssteam.quanlicuocdidong.CallLog>();
+        List<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog> _logList = new ArrayList<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog>();
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI
                 , null, null, null, CallLog.Calls.DATE + " DESC");
         int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
@@ -62,8 +60,8 @@ public class PhoneLogManager {
                 if (dircode == CallLog.Calls.OUTGOING_TYPE) {
                     p.set_callTime(ConvertToTimeSpan(_callDate));
                     int _fee = p.CalculateCallFee();
-                    se.uit.chichssssteam.quanlicuocdidong.CallLog newElement = new
-                            se.uit.chichssssteam.quanlicuocdidong.CallLog(-1, _callDate, _number, _callDuration, _fee);
+                    se.uit.chichssssteam.quanlicuocdidong.DB.CallLog newElement = new
+                            se.uit.chichssssteam.quanlicuocdidong.DB.CallLog(-1, _callDate, _number, _callDuration, _fee);
                     _logList.add(newElement);
                 }
             }
@@ -96,7 +94,7 @@ public class PhoneLogManager {
 
     public int CalculateTotalCallFee() {
         int totalFee = 0;
-        for (Iterator<se.uit.chichssssteam.quanlicuocdidong.CallLog> i = _listCall.iterator(); i.hasNext(); ) {
+        for (Iterator<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog> i = _listCall.iterator(); i.hasNext(); ) {
             totalFee += i.next().get_callFee();
         }
         return totalFee;
@@ -130,8 +128,8 @@ public class PhoneLogManager {
             if (dircode == CallLog.Calls.OUTGOING_TYPE)
             {
                 int _fee = p.CalculateCallFee();
-                se.uit.chichssssteam.quanlicuocdidong.CallLog newElement = new
-                        se.uit.chichssssteam.quanlicuocdidong.CallLog(-1, _callDate, _number, _callDuration, _fee);
+                se.uit.chichssssteam.quanlicuocdidong.DB.CallLog newElement = new
+                        se.uit.chichssssteam.quanlicuocdidong.DB.CallLog(-1, _callDate, _number, _callDuration, _fee);
                 this._listCall.add(0,newElement);
             }
         }

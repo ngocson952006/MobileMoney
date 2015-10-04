@@ -1,6 +1,5 @@
 package se.uit.chichssssteam.quanlicuocdidong.NetworkPackage;
 
-import se.uit.chichssssteam.quanlicuocdidong.Manager.PackageFee;
 
 /**
  * Created by justinvan on 03-Oct-15.

@@ -1,4 +1,4 @@
-package se.uit.chichssssteam.quanlicuocdidong;
+package se.uit.chichssssteam.quanlicuocdidong.NetworkPackage;
 
 
 import java.util.ArrayList;
