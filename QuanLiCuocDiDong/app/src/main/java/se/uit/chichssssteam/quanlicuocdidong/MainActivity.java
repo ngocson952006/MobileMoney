@@ -2,7 +2,10 @@ package se.uit.chichssssteam.quanlicuocdidong;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +14,7 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerCallbacks {
+        implements NavigationDrawerCallbacks,ThongKeFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -47,7 +50,27 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
+        Fragment fragment = null;
 
+        Class fragmentClass;
+        switch(position) {
+            case 1:
+                fragmentClass = ThongKeFragment.class;
+                break;
+            default:
+                fragmentClass = ThongKeFragment.class;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        //setTitle("Hello");
     }
 
 
@@ -86,6 +109,11 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        // Do different stuff
     }
     private void getMobileNetwork()
     {
