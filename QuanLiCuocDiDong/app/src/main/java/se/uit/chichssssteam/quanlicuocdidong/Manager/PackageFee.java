@@ -1,11 +1,11 @@
-package se.uit.chichssssteam.quanlicuocdidong.Manager;
+package se.uit.chichssssteam.quanlicuocdidong;
 
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.Scanner;
 /**
  * Created by justinvan on 03-Oct-15.
  */
@@ -20,6 +20,7 @@ public abstract class PackageFee
     protected NumberHeaderManager _numberHeader;
     //
     protected String _callTime;
+    protected String _sendMessageTime;
     protected int _callBlock;
     protected int _internalCallFee;
     protected int _outerCallFee;
@@ -28,6 +29,7 @@ public abstract class PackageFee
     //
 
     //get methods
+    public String get_sendMessageTime(){return this._sendMessageTime;}
     public String get_callTime()
     {
         return this._callTime;
@@ -54,6 +56,7 @@ public abstract class PackageFee
     }
 
     //set methods
+    public void set_sendMessageTime(String messageTime){this._sendMessageTime = messageTime;}
     public void set_callTime(String time)
     {
         this._callTime = time;
@@ -82,6 +85,8 @@ public abstract class PackageFee
     //Methods
     public PackageFee()
     {
+        _callTime = "";
+        _sendMessageTime = "";
         _numberHeader = new NumberHeaderManager();
         _ownNumber="";
         _outGoingPhoneNumber ="";
@@ -93,6 +98,9 @@ public abstract class PackageFee
     }
     public PackageFee(String ownNumber, String outGoingPhoneNumber, int callDuration, int callFee, int messageFee)
     {
+
+        _callTime = "";
+        _sendMessageTime = "";
         _numberHeader = new NumberHeaderManager();
         _ownNumber = ownNumber;
         _outGoingPhoneNumber = outGoingPhoneNumber;

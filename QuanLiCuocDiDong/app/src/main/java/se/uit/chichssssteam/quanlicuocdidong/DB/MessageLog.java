@@ -1,4 +1,4 @@
-package se.uit.chichssssteam.quanlicuocdidong.DB;
+package se.uit.chichssssteam.quanlicuocdidong;
 
 /**
  * Created by justinvan on 03-Oct-15.
@@ -17,6 +17,15 @@ public class MessageLog
         _recieverNumber = "";
         _messageFee = 0;
     }
+
+    public MessageLog(String date, String number, int fee)
+    {
+        _messageId = -1;
+        _messageDate = date;
+        _recieverNumber = number;
+        _messageFee = fee;
+    }
+
     public int get_messageId()
     {
         return _messageId;

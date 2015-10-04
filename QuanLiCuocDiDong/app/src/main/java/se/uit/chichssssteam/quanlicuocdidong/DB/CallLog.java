@@ -1,4 +1,4 @@
-package se.uit.chichssssteam.quanlicuocdidong.DB;
+package se.uit.chichssssteam.quanlicuocdidong;
 
 /**
  * Created by justinvan on 03-Oct-15.
@@ -18,6 +18,14 @@ public class CallLog
         _callDuration = 0;
         _callFee = 0;
 
+    }
+    public CallLog(int id, String date, String number, int duration, int fee)
+    {
+        _callId = id;
+        _callDate = date;
+        _callNumber = number;
+        _callDuration = duration;
+        _callFee = fee;
     }
     public int get_callId()
     {
