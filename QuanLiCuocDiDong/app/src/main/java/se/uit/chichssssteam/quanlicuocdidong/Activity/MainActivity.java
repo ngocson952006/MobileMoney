@@ -1,19 +1,22 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import se.uit.chichssssteam.quanlicuocdidong.Manager.NavigationDrawerCallbacks;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.OnFragmentInteractionListener;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.PackageNetwork;
 import se.uit.chichssssteam.quanlicuocdidong.R;
 
 
@@ -23,10 +26,13 @@ public class MainActivity extends ActionBarActivity
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
+    public static final String PREFS_NAME = "MySetting";
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
     private String mangDiDong;
     private String goiCuoc;
+    private int idImage;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,37 +53,56 @@ public class MainActivity extends ActionBarActivity
         getMobileNetwork();
         setMobileNetworkUserData();
 
+
+    }
+    @Override
+    protected void onStop(){
+        // We need an Editor object to make preference changes.
+        // All objects are from android.context.Context
+        saveSharedPreferences();
+        super.onStop();
+
+    }
+
+    public void saveSharedPreferences()
+    {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("GoiCuoc", goiCuoc);
+        editor.putString("NhaMang", mangDiDong);
+        editor.putInt("idImage",idImage);
+        // Commit the edits!
+        editor.commit();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
-        String titleBar = "Null";
         Class fragmentClass = null;
+
         switch(position) {
             case 0:
                 fragmentClass = ThongKeFragment.class;
-                titleBar = "Thống kê";
+                setTitle(ThongKeFragment.getNameFragment());
                 break;
             case 1:
                 fragmentClass = ThangFragment.class;
-                titleBar = "Tra theo tháng";
+                setTitle(ThangFragment.getNameFragment());
                 break;
             case 2:
                 fragmentClass = NgayFragment.class;
-                titleBar = "Tra theo ngày";
+                setTitle(NgayFragment.getNameFragment());
                 break;
             case 3:
                 fragmentClass = CaiDatFragment.class;
-                titleBar = "Cài đặt";
+                setTitle(CaiDatFragment.getNameFragment());
                 break;
             case 4:
                 fragmentClass = GioiThieuFragment.class;
-                titleBar = "Giới thiệu";
+                setTitle(GioiThieuFragment.getNameFragment());
                 break;
         }
-
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -87,7 +112,7 @@ public class MainActivity extends ActionBarActivity
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-        setTitle(titleBar);
+
     }
 
 
@@ -97,19 +122,23 @@ public class MainActivity extends ActionBarActivity
             mNavigationDrawerFragment.closeDrawer();
         else
         {
-            //super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
 
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Chạm lần nữa để thoát", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
         }
 
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(true);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -154,8 +183,14 @@ public class MainActivity extends ActionBarActivity
         // Do different stuff
     }
     @Override
-    public void onCaiDatFragmentInteraction(Uri uri){
-
+    public void onCaiDatFragmentInteraction(){
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        editor.commit();
+        Intent myIntent = new Intent(MainActivity.this,ChonMangDiDongActivity.class);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(myIntent);
     }
     @Override
     public void onGioiThieuFragmentInteraction(Uri uri){
@@ -165,12 +200,27 @@ public class MainActivity extends ActionBarActivity
     {
         Intent callerIntent = getIntent();
         Bundle packegeFromCaller = callerIntent.getBundleExtra("Mang");
-        mangDiDong = packegeFromCaller.getString("Mang Di Dong");
-        goiCuoc = packegeFromCaller.getString("Goi Cuoc");
+        if (packegeFromCaller != null) {
+            mangDiDong = ((PackageNetwork)packegeFromCaller.getSerializable("PackageNetworkItem")).getNameNetwork();
+            goiCuoc = ((PackageNetwork)packegeFromCaller.getSerializable("PackageNetworkItem")).getPackageName();
+            idImage = ((PackageNetwork)packegeFromCaller.getSerializable("PackageNetworkItem")).getIdResourceImage();
+        }
+        else {
+            // Restore preferences
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            goiCuoc = settings.getString("GoiCuoc", "Not found");
+            mangDiDong = settings.getString("NhaMang","Not found");
+            idImage = settings.getInt("idImage",0);
+        }
+        saveSharedPreferences();
     }
     private void setMobileNetworkUserData()
     {
         mNavigationDrawerFragment.setUserData("Nhà mạng: " + mangDiDong, "Gói cước: " + goiCuoc);
+    }
+    public String getGoiCuoc()
+    {
+        return goiCuoc;
     }
 
 }
