@@ -10,7 +10,6 @@ import java.util.List;
 
 public class NumberHeaderManager
 {
-
     public enum networkName
     {
         unknown,
@@ -20,6 +19,7 @@ public class NumberHeaderManager
         vietnamobile,
         Gmobile,
     }
+
     private List<String> _mobifone;
     private List<String> _vinaphone;
     private List<String> _viettel;
@@ -28,13 +28,6 @@ public class NumberHeaderManager
     private List<String> _emergencyNumber;
     public NumberHeaderManager()
     {
-        this._mobifone = new ArrayList<String>();
-        this._vinaphone = new ArrayList<String>();
-        this._Gmobile = new ArrayList<String>();
-        this._viettel = new ArrayList<String>();
-        this._vietnamobile = new ArrayList<String>();
-        this._emergencyNumber = new ArrayList<String>();
-
         this._mobifone = Arrays.asList("090","093","0120","0121","0122","0126","0128");
         this._vinaphone = Arrays.asList("091","094","0123","0124","0125","0127","0129");
         this._viettel = Arrays.asList("096","097","098","0163","0164","0165","0166","0167","0168","0169");
@@ -43,17 +36,17 @@ public class NumberHeaderManager
         this._emergencyNumber = Arrays.asList("113","114","115", "119");
     }
 
-    public Boolean isEmergencyCall(String phoneNumber)
+    public boolean isEmergencyCall(String phoneNumber)
     {
         for(Iterator<String> i = this._emergencyNumber.iterator(); i.hasNext();)
         {
-            if(phoneNumber == i.toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
     }
 
-    public Boolean isOldNumber(String phoneNumber)
+    public boolean isOldNumber(String phoneNumber)
     {
         if(phoneNumber.length() == 10)
             return true;
@@ -63,53 +56,53 @@ public class NumberHeaderManager
     {
 
         if(this.isOldNumber(phoneNumber))
-            return phoneNumber.substring(0,2);
-        else
             return phoneNumber.substring(0,3);
+        else
+            return phoneNumber.substring(0,4);
 
     }
-    public Boolean isMobifone(String phoneNumber)
+    public boolean isMobifone(String phoneNumber)
     {
         for(Iterator<String> i = this._mobifone.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
     }
-    public Boolean isVinaphone(String phoneNumber)
+    public boolean isVinaphone(String phoneNumber)
     {
         for(Iterator<String> i = this._vinaphone.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
 
     }
-    public Boolean isViettel(String phoneNumber)
+    public boolean isViettel(String phoneNumber)
     {
         for(Iterator<String> i = this._viettel.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
     }
-    public Boolean isVietnamobile(String phoneNumber)
+    public boolean isVietnamobile(String phoneNumber)
     {
         for(Iterator<String> i = this._vietnamobile.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
     }
-    public Boolean isGmobile(String phoneNumber)
+    public boolean isGmobile(String phoneNumber)
     {
         for(Iterator<String> i = this._Gmobile.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber) == i.next().toString())
+            if(getHeadNumber(phoneNumber).equals(i.next()))
                 return true;
         }
         return false;
@@ -131,9 +124,9 @@ public class NumberHeaderManager
             return networkName.unknown;
 
     }
-    public boolean isInternalNetwork(networkName network, String callNumber)
+    public boolean isInternalNetwork(String ownerNumber, String callNumber)
     {
-        if(network == this.VerifyNetwork(callNumber))
+        if(this.VerifyNetwork(ownerNumber).equals(this.VerifyNetwork(callNumber)))
             return true;
         return false;
 
