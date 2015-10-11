@@ -1,15 +1,23 @@
 package se.uit.chichssssteam.quanlicuocdidong.Manager;
 
+import java.io.Serializable;
+
 /**
  * Created by QNghi on 28/9/2015.
  */
-public class PackageNetwork {
+public class PackageNetwork implements Serializable {
     private String namePackage;
     private int idResourceImage;
-    public PackageNetwork(String _namePackage, int _idImage)
+    private String nameNetwork;
+    private String urlPromotion;
+    public PackageNetwork(String _nameNetwork, String _namePackage, int _idImage)
     {
+        nameNetwork = _nameNetwork;
         namePackage = _namePackage;
         idResourceImage = _idImage;
+    }
+    public String getNameNetwork(){
+        return nameNetwork;
     }
     public String getPackageName()
     {
@@ -18,5 +26,9 @@ public class PackageNetwork {
     public int getIdResourceImage()
     {
         return idResourceImage;
+    }
+    public void setUrlPromotion(String _url)
+    {
+        urlPromotion = _url;
     }
 }

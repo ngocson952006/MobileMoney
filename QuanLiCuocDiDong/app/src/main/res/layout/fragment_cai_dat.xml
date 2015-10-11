@@ -1,21 +1,84 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="se.uit.chichssssteam.quanlicuocdidong.Activity.CaiDatFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:background="#ff2c323f" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:clickable="true"
+        android:background="@android:color/background_light">
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+            android:background="#e0e0e0">
+            <TextView android:textStyle="bold" android:textColor="#626359" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:text="1. Thông tin gói cước:" android:layout_weight="1.0"
+                android:id="@+id/textv111" />
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="2.0">
+                    <TextView android:textStyle="bold" android:textColor="#626359" android:paddingLeft="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Cước phí"
+                        android:id="@+id/textView001" />
+                    <TextView android:textColor="#626359" android:id="@+id/textViewCuocphi" android:paddingLeft="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Sim" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="3.0">
+                    <ImageView android:id="@+id/imageViewLogoGoiCuoc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/vinaphonne"
+                        android:layout_marginRight="5dp" />
+                    <TextView android:textStyle="bold" android:textColor="#626359" android:id="@+id/textViewTenGoiCuoc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TOMATO" />
+                </LinearLayout>
+            </LinearLayout>
+            <Button android:textColor="@color/primary_text_default_material_dark" android:id="@+id/buttonClear" android:background="@color/button_material_dark" android:layout_width="163dp" android:layout_height="40.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="5.0dip" android:text="Thay đổi nhà mạng"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+            android:background="#e0e0e0">
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="2.0">
+                <TextView android:textStyle="bold" android:textColor="#626359" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:text="2. Chế độ Pop - up:" />
+                <TextView android:textColor="#626359" android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="5.0dip" android:layout_marginBottom="5.0dip" android:text="Thông báo giá cước sau mỗi cuộc gọi đi" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="75dp" android:layout_height="fill_parent">
 
-    <!-- TODO: Update blank fragment layout -->
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBoxPopUp"
+                    android:checked="false" />
+            </LinearLayout>
+        </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|top">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CaiDat"
-            android:id="@+id/textView9"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
-</FrameLayout>
+
+        <LinearLayout android:gravity="center" android:orientation="vertical"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip" android:layout_marginBottom="7.0dip"
+            android:background="#e0e0e0">
+            <TextView android:textStyle="bold" android:textColor="#626359" android:gravity="center_vertical" android:id="@+id/text6" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip" android:text="3. Hỗ trợ tra cứu tài khoản:" />
+            <LinearLayout android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kiểm tra số dư tài khoản"
+                    android:textColor="#626359"
+                    android:layout_marginLeft="20dp" />
+                <Button android:textColor="@color/primary_text_default_material_dark" android:id="@+id/button1" android:background="@color/button_material_dark" android:layout_width="60dp" android:layout_height="40.0dip"
+                    android:layout_marginRight="10dp" android:text="*101#"
+                    android:layout_marginLeft="20dp" />
+                <Button android:textColor="@color/primary_text_default_material_dark" android:id="@+id/button2" android:background="@color/button_material_dark" android:layout_width="60dp" android:layout_height="40.0dip"
+                    android:text="*102#"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:weightSum="1">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kiểm tra thông tin thuê bao" android:textColor="#626359"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp" />
+                <Button android:textColor="@color/primary_text_default_material_dark" android:id="@+id/buttonTTTB" android:background="@color/button_material_dark" android:layout_width="60dp" android:layout_height="40.0dip"
+                    android:text="TTTB"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+        android:background="#e0e0e0"
+        android:baselineAligned="true">
+        <TextView android:textStyle="bold" android:textColor="#626359" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:text="4. Chế độ Widget:" android:layout_weight="1.0"
+            android:id="@+id/textView22" />
+        <TextView android:textColor="#626359" android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="5.0dip" android:layout_marginBottom="5.0dip" android:text="Hiển thị trực quan cước phí theo ngày. Bạn vào phần widget kéo ra màn hình để sử dụng nhé!" />
+        <ImageView android:layout_width="fill_parent" android:layout_height="100.0dip" android:layout_marginBottom="5.0dip" android:src="@drawable/vinaphonne" android:layout_weight="2.0" />
+    </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

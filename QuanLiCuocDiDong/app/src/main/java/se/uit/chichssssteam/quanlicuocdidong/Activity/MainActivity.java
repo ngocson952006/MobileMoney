@@ -27,6 +27,11 @@ public class MainActivity extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     public static final String PREFS_NAME = "MySetting";
+    public static final String KEY_GOICUOC ="GoiCuoc";
+    public static final String KEY_NHAMANG = "NhaMang";
+    public static final String KEY_IDIMAGE = "idImage";
+    public static final String KEY_ALLOWPOPUP = "AllowPopup";
+    public static final String VALUE_DEFAULT = "Not found";
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
     private String mangDiDong;
@@ -39,16 +44,7 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-        setSupportActionBar(mToolbar);
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
-
+        initNavigationDrawer();
         // Get infomation from ChonGoiCuocActivitity
         getMobileNetwork();
         setMobileNetworkUserData();
@@ -64,13 +60,23 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    public void initNavigationDrawer()
+    {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(mToolbar);
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
+    }
     public void saveSharedPreferences()
     {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("GoiCuoc", goiCuoc);
-        editor.putString("NhaMang", mangDiDong);
-        editor.putInt("idImage",idImage);
+        editor.putString(KEY_GOICUOC, goiCuoc);
+        editor.putString(KEY_NHAMANG, mangDiDong);
+        editor.putInt(KEY_IDIMAGE, idImage);
         // Commit the edits!
         editor.commit();
     }
@@ -99,6 +105,10 @@ public class MainActivity extends ActionBarActivity
                 setTitle(CaiDatFragment.getNameFragment());
                 break;
             case 4:
+                fragmentClass = TienIchFragment.class;
+                setTitle(TienIchFragment.getNameFragment());
+                break;
+            case 5:
                 fragmentClass = GioiThieuFragment.class;
                 setTitle(GioiThieuFragment.getNameFragment());
                 break;
@@ -134,7 +144,7 @@ public class MainActivity extends ActionBarActivity
 
                 @Override
                 public void run() {
-                    doubleBackToExitPressedOnce=false;
+                    doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
         }
@@ -196,6 +206,10 @@ public class MainActivity extends ActionBarActivity
     public void onGioiThieuFragmentInteraction(Uri uri){
 
     }
+    @Override
+    public void onTienIchFragmentInteraction(Uri uri){
+
+    }
     private void getMobileNetwork()
     {
         Intent callerIntent = getIntent();
@@ -208,9 +222,9 @@ public class MainActivity extends ActionBarActivity
         else {
             // Restore preferences
             SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-            goiCuoc = settings.getString("GoiCuoc", "Not found");
-            mangDiDong = settings.getString("NhaMang","Not found");
-            idImage = settings.getInt("idImage",0);
+            goiCuoc = settings.getString(KEY_GOICUOC, VALUE_DEFAULT);
+            mangDiDong = settings.getString(KEY_NHAMANG,VALUE_DEFAULT);
+            idImage = settings.getInt(KEY_IDIMAGE,0);
         }
         saveSharedPreferences();
     }

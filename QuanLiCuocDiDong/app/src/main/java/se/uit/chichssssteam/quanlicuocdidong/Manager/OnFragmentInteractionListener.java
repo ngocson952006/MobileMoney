@@ -10,6 +10,7 @@ public interface OnFragmentInteractionListener {
     public void onThongKeFragmentInteraction(Uri uri);
     public void onThangFragmentInteraction(Uri uri);
     public void onNgayFragmentInteraction(Uri uri);
-    public void onCaiDatFragmentInteraction(Uri uri);
+    public void onCaiDatFragmentInteraction();
     public void onGioiThieuFragmentInteraction(Uri uri);
+    public void onTienIchFragmentInteraction(Uri uri);
 }

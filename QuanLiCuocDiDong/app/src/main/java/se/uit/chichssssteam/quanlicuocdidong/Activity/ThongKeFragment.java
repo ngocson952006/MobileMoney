@@ -84,5 +84,8 @@ public class ThongKeFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
+    public static String getNameFragment()
+    {
+        return "Thống kê";
+    }
 }

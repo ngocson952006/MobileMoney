@@ -127,6 +127,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         items.add(new NavigationItem("Tra theo tháng", getResources().getDrawable(R.drawable.ic_action_action_search)));
         items.add(new NavigationItem("Tra theo ngày", getResources().getDrawable(R.drawable.ic_action_action_search)));
         items.add(new NavigationItem("Cài đặt",getResources().getDrawable(R.drawable.ic_action_action_settings)));
+        items.add(new NavigationItem("Tiện ích",getResources().getDrawable(R.drawable.ic_action_action_extension)));
         items.add(new NavigationItem("Giới thiệu",getResources().getDrawable(R.drawable.ic_action_action_info_outline)));
         return items;
     }

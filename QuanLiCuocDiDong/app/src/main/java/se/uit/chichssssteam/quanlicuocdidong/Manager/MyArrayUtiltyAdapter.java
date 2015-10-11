@@ -12,36 +12,40 @@ import java.util.ArrayList;
 
 import se.uit.chichssssteam.quanlicuocdidong.R;
 
-public class MyArrayAdapter extends
-        ArrayAdapter<PackageNetwork>
+/**
+ * Created by QNghi on 11/10/2015.
+ */
+public class MyArrayUtiltyAdapter extends ArrayAdapter<UtiltyItem>
 {
     Activity context=null;
-    ArrayList<PackageNetwork>myArrayPackageNetwork=null;
+    ArrayList<UtiltyItem>myUtiltyArray=null;
     int layoutId;
 
-    public MyArrayAdapter(Activity context,
+    public MyArrayUtiltyAdapter(Activity context,
                           int layoutId,
-                          ArrayList<PackageNetwork>arr){
+                          ArrayList<UtiltyItem>arr){
         super(context, layoutId, arr);
         this.context=context;
         this.layoutId=layoutId;
-        this.myArrayPackageNetwork=arr;
+        this.myUtiltyArray=arr;
     }
-
     public View getView(int position, View convertView,
                         ViewGroup parent) {
         LayoutInflater inflater=
                 context.getLayoutInflater();
         convertView=inflater.inflate(layoutId, null);
-        if(myArrayPackageNetwork.size()>0 && position>=0)
+        if(myUtiltyArray.size()>0 && position>=0)
         {
-            final TextView txtdisplay=(TextView)
-                    convertView.findViewById(R.id.txtitem);
-            final PackageNetwork namePackage=myArrayPackageNetwork.get(position);
-            txtdisplay.setText(namePackage.getPackageName());
+            final UtiltyItem namePackage=myUtiltyArray.get(position);
+            final TextView txtdisplayTitle=(TextView)
+                    convertView.findViewById(R.id.txtitemTitle);
+            txtdisplayTitle.setText(namePackage.getTitle());
+            final TextView txtdisplayDes=(TextView)
+                    convertView.findViewById(R.id.txtitemDes);
+            txtdisplayDes.setText(namePackage.getDes());
             final ImageView imgitem=(ImageView)
                     convertView.findViewById(R.id.imgitem);
-            imgitem.setImageResource(namePackage.getIdResourceImage());
+            imgitem.setImageResource(namePackage.getIdImage());
         }
         return convertView;
     }

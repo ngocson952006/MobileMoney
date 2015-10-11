@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Chọn nhà mạng"
-        android:id="@+id/textView"
+        android:id="@+id/textViewCuocphi"
         android:layout_marginTop="25dp"
         android:gravity="center"
         android:textSize="35dp"
@@ -29,7 +29,7 @@
         android:layout_height="fill_parent"
         android:id="@+id/scrollView"
         android:fillViewport="false"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textViewCuocphi"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp">

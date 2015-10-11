@@ -2,6 +2,7 @@ package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -11,22 +12,32 @@ import se.uit.chichssssteam.quanlicuocdidong.R;
 
 public class SplashActivity extends Activity {
 
+    String goiCuoc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        new CountDownTimer(2000, 1000) {
+        SharedPreferences settings = getSharedPreferences("MySetting", MODE_PRIVATE);
+        goiCuoc = settings.getString("GoiCuoc", "Not found");
+        new CountDownTimer(3000, 3000) {
 
             public void onTick(long millisUntilFinished) {
-                //Do nothing
+                ///
             }
-
             public void onFinish() {
-                Intent myIntent = new Intent(SplashActivity.this,ChonMangDiDongActivity.class);
-                startActivity(myIntent);
-            }
+                if (goiCuoc == "Not found") {
+                    Intent myIntent = new Intent(SplashActivity.this, ChonMangDiDongActivity.class);
+                    startActivity(myIntent);
+                }
+                else {
+                    Intent myIntent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(myIntent);
+                }
+                }
+
         }.start();
-        }
+
+    }
 
         @Override
     public boolean onCreateOptionsMenu(Menu menu) {

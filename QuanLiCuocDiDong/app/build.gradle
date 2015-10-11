@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '23.0.1'
+    useLibrary  'org.apache.http.legacy'
     defaultConfig {
         applicationId "se.uit.chichssssteam.quanlicuocdidong"
         minSdkVersion 15
@@ -17,6 +18,11 @@ android {
         }
     }
     productFlavors {
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
     }
 }
 

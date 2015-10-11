@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,10 @@ public class ChonGoiCuocActivity extends Activity {
     String mangDiDong;
     ImageView imgViewMangDiDong;
     ListView lstViewGoiCuoc;
+    TextView textViewTut;
     ArrayList<PackageNetwork> arrayListPackageNw = new ArrayList<PackageNetwork>();
     MyArrayAdapter adapter = null;
+    String stringTut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class ChonGoiCuocActivity extends Activity {
     {
         imgViewMangDiDong = (ImageView) findViewById(R.id.imageViewMangDiDong);
         lstViewGoiCuoc = (ListView) findViewById(R.id.listViewGoiCuoc);
+        textViewTut = (TextView) findViewById(R.id.textViewTut);
     }
     private void addEvents()
     {
@@ -67,12 +71,12 @@ public class ChonGoiCuocActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                String goiCuoc = ((PackageNetwork)parent.getItemAtPosition(position)).getPackageName();
+
                 Bundle myBundle = new Bundle();
-                myBundle.putString("Mang Di Dong",mangDiDong);
-                myBundle.putString("Goi Cuoc",goiCuoc);
-                Intent myIntent = new Intent(ChonGoiCuocActivity.this,MainActivity.class);
-                myIntent.putExtra("Mang",myBundle);
+                PackageNetwork myPN = (PackageNetwork) parent.getItemAtPosition(position);
+                myBundle.putSerializable("PackageNetworkItem", myPN);
+                Intent myIntent = new Intent(ChonGoiCuocActivity.this, MainActivity.class);
+                myIntent.putExtra("Mang", myBundle);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(myIntent);
             }
@@ -99,50 +103,56 @@ public class ChonGoiCuocActivity extends Activity {
         switch(mangDiDong)
         {
             case "Mobifone": {
+                stringTut = "Nhấn *101#";
                 imgViewMangDiDong.setImageResource(R.drawable.mobifone);
-                arrayListPackageNw.add(new PackageNetwork("Mobicard", R.drawable.mobicard));
-                arrayListPackageNw.add(new PackageNetwork("MobiGold",R.drawable.mobigold));
-                arrayListPackageNw.add(new PackageNetwork("MobiQ",R.drawable.mobiq));
-                arrayListPackageNw.add(new PackageNetwork("Q-Student",R.drawable.qstudent));
-                arrayListPackageNw.add(new PackageNetwork("Q-Teen",R.drawable.qteen));
-                arrayListPackageNw.add(new PackageNetwork("Q-Kids",R.drawable.qkids));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Mobicard", R.drawable.mobicard));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"MobiGold",R.drawable.mobigold));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"MobiQ",R.drawable.mobiq));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Q-Student",R.drawable.qstudent));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Q-Teen",R.drawable.qteen));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Q-Kids",R.drawable.qkids));
                 break;
             }
             case "VinaPhone": {
+                stringTut = "Nhấn *110#";
                 imgViewMangDiDong.setImageResource(R.drawable.vinaphonne);
-                arrayListPackageNw.add(new PackageNetwork("VinaCard", R.drawable.vinacard));
-                arrayListPackageNw.add(new PackageNetwork("VinaXtra", R.drawable.vinaxtra));
-                arrayListPackageNw.add(new PackageNetwork("TalkEZ", R.drawable.talkez));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VinaCard", R.drawable.vinacard));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VinaXtra", R.drawable.vinaxtra));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"TalkEZ", R.drawable.talkez));
                 break;
             }
             case "Viettel": {
+                stringTut = "Gửi sms GC tới 195";
                 imgViewMangDiDong.setImageResource(R.drawable.vietel);
-                arrayListPackageNw.add(new PackageNetwork("Economy", R.drawable.vietel));
-                arrayListPackageNw.add(new PackageNetwork("Tomato", R.drawable.vietel));
-                arrayListPackageNw.add(new PackageNetwork("Student", R.drawable.vietel));
-                arrayListPackageNw.add(new PackageNetwork("Sea+", R.drawable.vietel));
-                arrayListPackageNw.add(new PackageNetwork("Hi School", R.drawable.vietel));
-                arrayListPackageNw.add(new PackageNetwork("7Colors", R.drawable.vietel));
-                arrayListPackageNw.add(new PackageNetwork("Buôn làng", R.drawable.vietel));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Economy", R.drawable.vietel));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Tomato", R.drawable.vietel));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Student", R.drawable.vietel));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Sea+", R.drawable.vietel));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Hi School", R.drawable.vietel));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"7Colors", R.drawable.vietel));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Buôn làng", R.drawable.vietel));
                 break;
             }
             case "GMobile": {
+                stringTut = "Nhấn *110#";
                 imgViewMangDiDong.setImageResource(R.drawable.gmobile);
-                arrayListPackageNw.add(new PackageNetwork("Big Save", R.drawable.gmobile));
-                arrayListPackageNw.add(new PackageNetwork("Big & Kool", R.drawable.gmobile));
-                arrayListPackageNw.add(new PackageNetwork("Tỉ phú 2", R.drawable.gmobile));
-                arrayListPackageNw.add(new PackageNetwork("Tỉ phú 3", R.drawable.tiphu3));
-                arrayListPackageNw.add(new PackageNetwork("Tỉ phú 5", R.drawable.tiphu5));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Big Save", R.drawable.gmobile));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Big & Kool", R.drawable.gmobile));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Tỉ phú 2", R.drawable.gmobile));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Tỉ phú 3", R.drawable.tiphu3));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Tỉ phú 5", R.drawable.tiphu5));
                 break;
             }
             case "VietNamMobile": {
+                stringTut = "Nhấn *101#";
                 imgViewMangDiDong.setImageResource(R.drawable.vietnamobile);
-                arrayListPackageNw.add(new PackageNetwork("VM One", R.drawable.vietnamobile));
-                arrayListPackageNw.add(new PackageNetwork("VMax", R.drawable.vietnamobile));
-                arrayListPackageNw.add(new PackageNetwork("SV 2014", R.drawable.vietnamobile));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VM One", R.drawable.vietnamobile));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VMax", R.drawable.vietnamobile));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"SV 2014", R.drawable.vietnamobile));
                 break;
             }
         }
+        textViewTut.setText("*" + stringTut + " để kiểm tra gói cước đang sử dụng");
     }
     private void addItemToListView()
     {

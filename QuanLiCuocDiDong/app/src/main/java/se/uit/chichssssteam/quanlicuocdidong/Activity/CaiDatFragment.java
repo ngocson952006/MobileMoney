@@ -1,12 +1,18 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import se.uit.chichssssteam.quanlicuocdidong.Manager.OnFragmentInteractionListener;
 import se.uit.chichssssteam.quanlicuocdidong.R;
@@ -21,8 +27,13 @@ public class CaiDatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private int idImage;
 
     private OnFragmentInteractionListener mListener;
+
+    private Button buttonClear;
+    CheckBox checkBoxPopup;
+    SharedPreferences settings;
 
     /**
      * Use this factory method to create a new instance of
@@ -49,23 +60,74 @@ public class CaiDatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
+        settings = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        mParam1 = settings.getString(MainActivity.KEY_GOICUOC, MainActivity.VALUE_DEFAULT);
+        mParam2 = settings.getString(MainActivity.KEY_NHAMANG, MainActivity.VALUE_DEFAULT);
+        idImage = settings.getInt(MainActivity.KEY_IDIMAGE, 0);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_cai_dat, container, false);
+
+        checkBoxPopup = (CheckBox) view.findViewById(R.id.checkBoxPopUp);
+        checkBoxPopup.setChecked(settings.getBoolean(MainActivity.KEY_ALLOWPOPUP,false));
+
+        Button buttonChangeMobileNW = (Button) view.findViewById(R.id.buttonClear);
+        buttonChangeMobileNW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed();
+            }
+        });
+
+        TextView textViewGoiCuoc = (TextView) view.findViewById(R.id.textViewTenGoiCuoc);
+        textViewGoiCuoc.setText(mParam1);
+
+        ImageView imageViewLogo = (ImageView) view.findViewById(R.id.imageViewLogoGoiCuoc);
+        imageViewLogo.setImageResource(idImage);
+
+        Button button1 = (Button) view.findViewById(R.id.button1);
+        Button button2 = (Button) view.findViewById(R.id.button2);
+        Button buttonTTTB = (Button) view.findViewById(R.id.buttonTTTB);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*101#"));
+                startActivity(callIntent);
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*102#"));
+                startActivity(callIntent);
+            }
+        });
+        buttonTTTB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                smsIntent.setType("vnd.android-dir/mms-sms");
+                smsIntent.putExtra("address", "1414");
+                smsIntent.putExtra("sms_body","TTTB");
+                startActivity(smsIntent);
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cai_dat, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed() {
         if (mListener != null) {
-            mListener.onCaiDatFragmentInteraction(uri);
+            mListener.onCaiDatFragmentInteraction();
         }
     }
 
@@ -85,6 +147,42 @@ public class CaiDatFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+    @Override
+    public void onStop()
+    {
+        settings = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        boolean AllowPopup;
+        if (checkBoxPopup.isChecked())
+            AllowPopup = true;
+        else
+            AllowPopup = false;
+        editor.putBoolean(MainActivity.KEY_ALLOWPOPUP,AllowPopup);
+        // Commit the edits!
+        editor.commit();
+        super.onStop();
+    }
 
+    private Uri ussdToCallableUri(String ussd) {
+
+        String uriString = "";
+
+        if(!ussd.startsWith("tel:"))
+            uriString += "tel:";
+
+        for(char c : ussd.toCharArray()) {
+
+            if(c == '#')
+                uriString += Uri.encode("#");
+            else
+                uriString += c;
+        }
+
+        return Uri.parse(uriString);
+    }
+    public static String getNameFragment()
+    {
+        return "Cài đặt";
+    }
 
 }
