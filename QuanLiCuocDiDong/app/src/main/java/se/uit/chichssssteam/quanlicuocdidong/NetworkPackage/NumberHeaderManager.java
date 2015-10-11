@@ -1,6 +1,5 @@
 package se.uit.chichssssteam.quanlicuocdidong.NetworkPackage;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -8,8 +7,10 @@ import java.util.List;
 /**
  * Created by justinvan on 03-Oct-15.
  */
+
 public class NumberHeaderManager
 {
+
     public enum networkName
     {
         unknown,
@@ -19,7 +20,6 @@ public class NumberHeaderManager
         vietnamobile,
         Gmobile,
     }
-
     private List<String> _mobifone;
     private List<String> _vinaphone;
     private List<String> _viettel;
@@ -131,9 +131,9 @@ public class NumberHeaderManager
             return networkName.unknown;
 
     }
-    public boolean isInternalNetwork(String ownerNumber, String callNumber)
+    public boolean isInternalNetwork(networkName network, String callNumber)
     {
-        if(this.VerifyNetwork(ownerNumber) == this.VerifyNetwork(callNumber))
+        if(network == this.VerifyNetwork(callNumber))
             return true;
         return false;
 

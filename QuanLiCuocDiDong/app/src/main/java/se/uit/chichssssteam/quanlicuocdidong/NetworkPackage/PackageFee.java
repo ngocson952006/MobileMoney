@@ -1,5 +1,6 @@
 package se.uit.chichssssteam.quanlicuocdidong.NetworkPackage;
-
+import android.content.Context;
+import android.telephony.TelephonyManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 public abstract class PackageFee
 {
     //Attributes
-    protected String _ownNumber;
+    protected NumberHeaderManager.networkName _myNetwork;
     protected String _outGoingPhoneNumber;
     protected int _callDuration;
     protected int _callFee;
@@ -28,16 +29,14 @@ public abstract class PackageFee
     protected int _outerMessageFee;
     //
 
+    protected  int _type;
     //get methods
     public String get_sendMessageTime(){return this._sendMessageTime;}
     public String get_callTime()
     {
         return this._callTime;
     }
-    public String get_ownNumber()
-    {
-        return this._ownNumber;
-    }
+
     public String get_outGoingPhoneNumber()
     {
         return this._outGoingPhoneNumber;
@@ -54,6 +53,22 @@ public abstract class PackageFee
     {
         return this._messageFee;
     }
+    public int get_type()
+    {
+        if(this._type == -1) {
+            if (this._numberHeader.isEmergencyCall(this._outGoingPhoneNumber))
+                this._type = 2;
+            if (this._numberHeader.isInternalNetwork(this._myNetwork, this._outGoingPhoneNumber))
+                this._type = 0;
+            else
+                this._type = 1;
+        }
+        return this._type;
+    }
+     public NumberHeaderManager.networkName get_myNetwork()
+     {
+         return this._myNetwork;
+     }
 
     //set methods
     public void set_sendMessageTime(String messageTime){this._sendMessageTime = messageTime;}
@@ -61,10 +76,7 @@ public abstract class PackageFee
     {
         this._callTime = time;
     }
-    public void set_ownNumber(String number)
-    {
-        this._ownNumber = number;
-    }
+
     public void set_outGoingPhoneNumber(String number)
     {
         this._outGoingPhoneNumber = number;
@@ -81,44 +93,47 @@ public abstract class PackageFee
     {
         this._messageFee = messageFee;
     }
-
+    public void set_type(int type){this._type = type;}
+    public void set_myNetwork(NumberHeaderManager.networkName network){this._myNetwork = network;}
     //Methods
     public PackageFee()
     {
         _callTime = "";
         _sendMessageTime = "";
         _numberHeader = new NumberHeaderManager();
-        _ownNumber="";
+
         _outGoingPhoneNumber ="";
         _callDuration = 0;
         _callFee = 0;
         _messageFee = 0;
         _callBlock = 6;
+        _type = -1;
 
     }
-    public PackageFee(String ownNumber, String outGoingPhoneNumber, int callDuration, int callFee, int messageFee)
+    public PackageFee(String outGoingPhoneNumber, int callDuration, int callFee, int messageFee)
     {
 
         _callTime = "";
         _sendMessageTime = "";
         _numberHeader = new NumberHeaderManager();
-        _ownNumber = ownNumber;
         _outGoingPhoneNumber = outGoingPhoneNumber;
         _callDuration = callDuration;
         _callFee = callFee;
         _messageFee = messageFee;
         _callBlock = 6;
+        _type = -1;
 
     }
 
     public int CalculateCallFee()
     {
+        this.get_type();
         if(this._numberHeader.isEmergencyCall(this._outGoingPhoneNumber))
         {
             this._callFee = 0;
             return this._internalCallFee;
         }
-        if(this._numberHeader.isInternalNetwork(this._ownNumber, this._outGoingPhoneNumber))
+        if(this._numberHeader.isInternalNetwork(this._myNetwork, this._outGoingPhoneNumber))
         {
             if(this._callDuration <= this._callBlock)
                 this._callFee = this._internalCallFee/10;
@@ -198,8 +213,8 @@ public abstract class PackageFee
     }
     public int CalculateMessageFee()
     {
-
-        if(this._numberHeader.isInternalNetwork(this._ownNumber, this._outGoingPhoneNumber))
+        this.set_type(this.get_type());
+        if(this._numberHeader.isInternalNetwork(this._myNetwork, this._outGoingPhoneNumber))
         {
             return this._internalMessageFee;
         }
