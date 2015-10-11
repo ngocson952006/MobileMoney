@@ -1,7 +1,11 @@
 package se.uit.chichssssteam.quanlicuocdidong.DB;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,10 +24,10 @@ public class DAO_MessageLog
 
     private SQLiteDatabase _database;
     private DbHelper _dbHelper;
-    private String[] _listColumn = {_dbHelper.MESS_ID, _dbHelper.MESSAGE_DATE, _dbHelper.RECIEVER, _dbHelper.MESSAGE_FEE};
+    private String[] _listColumn = {_dbHelper.MESS_ID, _dbHelper.MESSAGE_DATE, _dbHelper.RECEIVER, _dbHelper.MESSAGE_FEE};
 
-    public DAO_MessageLog(Context c) {
-        _dbHelper = new DbHelper(c);
+    public DAO_MessageLog(Context context) {
+        _dbHelper = _dbHelper.getInstance(context);
     }
 
     public void Open() throws SQLException
@@ -42,18 +46,20 @@ public class DAO_MessageLog
     {
         MessageLog row = new MessageLog();
         row.set_messageId(c.getInt(0));
-        row.set_messageDate(c.getString(1));
+        Date temp = new Date(c.getLong(1));
+        row.set_messageDate(temp.toString());
         row.set_recieverNumber(c.getString(2));
         row.set_messageFee(c.getInt(3));
         return row;
     }
 
-    public MessageLog CreateMessageLogRow(String messageDate, String reciever, int messageFee)
+
+    public MessageLog CreateMessageLogRow(String messageDate, String receiver, int messageFee)
     {
         MessageLog msgLog  = new MessageLog();
         ContentValues values = new ContentValues();
-        values.put(_dbHelper.MESSAGE_DATE, messageDate);
-        values.put(_dbHelper.RECIEVER , reciever);
+        values.put(_dbHelper.MESSAGE_DATE, _dbHelper.convertToMilisec(messageDate));
+        values.put(_dbHelper.RECEIVER , receiver);
         values.put(_dbHelper.MESSAGE_FEE, messageFee);
         long insertId = _database.insert(_dbHelper.MESSAGE_TABLE,null,values);
         Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn, _dbHelper.MESS_ID + " = " + insertId, null,null,null,null);

@@ -10,8 +10,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import se.uit.chichssssteam.quanlicuocdidong.Manager.Statistic;
-
 /**
  * Created by justinvan on 03-Oct-15.
  */
@@ -22,9 +20,9 @@ public class DAO_Statistic
     private String[] _listColumn = {_dbHelper.MONTH, _dbHelper.YEAR, _dbHelper.INNER_CALL_FEE, _dbHelper.OUTER_CALL_FEE,
             _dbHelper.INNER_MESSAGE_FEE, _dbHelper.OUTER_MESSAGE_FEE};
 
-    public DAO_Statistic(Context c)
+    public DAO_Statistic(Context context)
     {
-        _dbHelper = new DbHelper(c);
+        _dbHelper = _dbHelper.getInstance(context);
     }
     public void Open() throws SQLException
     {
@@ -98,4 +96,13 @@ public class DAO_Statistic
         cursor.close();
         return result;
     }
+    public void UpdateStatisticRow(int month, int year, int value, String columnName)
+    {
+        ContentValues newValue = new ContentValues();
+        newValue.put(columnName,value);
+        String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
+        int _rowAffect;
+        _rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,newValue,whereClause, null);
+    }
+
 }

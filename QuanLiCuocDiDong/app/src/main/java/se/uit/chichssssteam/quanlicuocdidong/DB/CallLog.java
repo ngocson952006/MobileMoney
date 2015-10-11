@@ -11,6 +11,7 @@ public class CallLog
     private String _callNumber;
     private int _callDuration;
     private int _callFee;
+    private int _callType;
     public CallLog()
     {
         _callId = -1;
@@ -18,15 +19,16 @@ public class CallLog
         _callNumber = "";
         _callDuration = 0;
         _callFee = 0;
-
+        _callType = -1;
     }
-    public CallLog(int id, String date, String number, int duration, int fee)
+    public CallLog(int id, String date, String number, int duration, int fee, int callType)
     {
         _callId = id;
         _callDate = date;
         _callNumber = number;
         _callDuration = duration;
         _callFee = fee;
+        _callType = callType;
     }
     public int get_callId()
     {
@@ -48,6 +50,7 @@ public class CallLog
     {
         return _callFee;
     }
+    public int get_callType(){ return _callType;}
 
     public void set_callId(int callId)
     {
@@ -69,4 +72,5 @@ public class CallLog
     {
         _callFee = callFee;
     }
+    public void set_callType(int callType) {_callType = callType;}
 }

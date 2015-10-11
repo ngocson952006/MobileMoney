@@ -5,11 +5,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by justinvan on 03-Oct-15.
  */
 public class DbHelper extends SQLiteOpenHelper
 {
+    private static DbHelper _singleton;
     //CALL LOG TABLE
     public static final String CALL_TABLE  = "CALLLOG";
     public static final String CALL_ID = "CallId";
@@ -17,14 +23,15 @@ public class DbHelper extends SQLiteOpenHelper
     public static final String CALL_NUMBER = "CallNumber";
     public static final String DURATION = "Duration";
     public static final String CALL_FEE = "CallFee";
-
+    public static final String CALL_TYPE = "CallType";
     //MESSAGE LOG TABLE
 
     public static final String MESSAGE_TABLE = "MESSAGELOG";
     public static final String MESS_ID = "MessageId";
     public static final String MESSAGE_DATE = "MessageDate";
-    public static final String RECIEVER = "RecieverNumber";
+    public static final String RECEIVER = "ReceiverNumber";
     public static final String MESSAGE_FEE = "MessageFee";
+    public static final String MESSAGE_TYPE = "MessageType";
 
     //STATISTIC TABLE
     public static final String STATISTIC_TABLE = "STATISTIC";
@@ -43,16 +50,18 @@ public class DbHelper extends SQLiteOpenHelper
     //CREATE CALL LOG TABLE
     private static final String CREATE_CALL_LOG_TABLE = "create table "+ CALL_TABLE + "("
             + CALL_ID + " integer primary key autoincrement,"
-            + CALL_DATE + " smalldatetime not null,"
+            + CALL_DATE + " bigint not null,"
             + CALL_NUMBER + " varchar(11) not null,"
             + DURATION + " integer not null,"
-            + CALL_FEE + " integer" +");";
+            + CALL_FEE + " integer,"
+            + CALL_TYPE + " integer" +");";
     //CREATE MESSAGE LOG TABLE
     private static final String CREATE_MESSAGE_LOG_TABLE ="create table " + MESSAGE_TABLE + "("
             + MESS_ID + " integer primary key autoincrement,"
-            + MESSAGE_DATE + " smalldatetime not null,"
-            + RECIEVER + " varchar(11) not null,"
-            + MESSAGE_FEE + " integer"+ ");";
+            + MESSAGE_DATE + " bigint not null,"
+            + RECEIVER + " varchar(11) not null,"
+            + MESSAGE_FEE + " integer,"
+            + MESSAGE_TYPE + " integer" +");";
     //CREATE STATISTIC TABLE
     private static final String CREATE_STATISTIC_TABLE = "create table " + STATISTIC_TABLE + "("
             + MONTH + " integer,"
@@ -61,13 +70,23 @@ public class DbHelper extends SQLiteOpenHelper
             + OUTER_CALL_FEE + " integer,"
             + INNER_MESSAGE_FEE + " integer,"
             + OUTER_MESSAGE_FEE + " integer,"
-            + "constraint PK_Month_Year primary key (" + MONTH +"," + YEAR + ")" + ");";
+            + "primary key (" + MONTH +"," + YEAR + ")" + ");";
 
 
     public DbHelper(Context context)
     {
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
     }
+
+
+    //Singletton Pattern
+    public static synchronized DbHelper getInstance(Context context)
+    {
+        if(_singleton == null)
+            _singleton = new DbHelper(context);
+            return _singleton;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db)
     {
@@ -87,6 +106,33 @@ public class DbHelper extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS" + STATISTIC_TABLE);
 
         onCreate(db);
+    }
+
+    public long convertToMilisec(String date)
+    {
+        try
+        {
+            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+            Date d = format.parse(date);
+            return d.getTime();
+        }
+        catch(ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public String convertToDMYHms(String date)
+    {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+            Date d = format.parse(date);
+            SimpleDateFormat serverFormat = new SimpleDateFormat("MMM dd yyyy HH:mm::ss",Locale.ENGLISH);
+            return serverFormat.format(d);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

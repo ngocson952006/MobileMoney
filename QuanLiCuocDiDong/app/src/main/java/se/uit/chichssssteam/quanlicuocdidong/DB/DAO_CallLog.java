@@ -5,6 +5,7 @@ package se.uit.chichssssteam.quanlicuocdidong.DB;
  */
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -18,11 +19,11 @@ public class DAO_CallLog
     private SQLiteDatabase _database;
     private DbHelper _dbHelper;
     private String[] _listColumn = {_dbHelper.CALL_ID, _dbHelper.CALL_DATE,
-            _dbHelper.CALL_NUMBER,_dbHelper.DURATION, _dbHelper.CALL_FEE};
+            _dbHelper.CALL_NUMBER,_dbHelper.DURATION, _dbHelper.CALL_FEE, _dbHelper.CALL_TYPE};
 
     public DAO_CallLog(Context context)
     {
-        _dbHelper = new DbHelper(context);
+        _dbHelper = _dbHelper.getInstance(context);
     }
     public void Open() throws  SQLException
     {
@@ -38,21 +39,36 @@ public class DAO_CallLog
     {
         CallLog row = new CallLog();
         row.set_callId(c.getInt(0));
-        row.set_callDate(c.getString(1));
+        Date temp = new Date(c.getLong(1));
+        row.set_callDate(temp.toString());
         row.set_callNumber(c.getString(2));
         row.set_callDuration(c.getInt(3));
         row.set_callFee(c.getInt(4));
+        row.set_callType(c.getInt(5));
         return row;
     }
-
-    public CallLog CreateCallLogRow(String callDate, String callNumber, int duration, int callFee)
+    public CallLog GetLastedCallFromDB()
+    {
+        CallLog row = new CallLog();
+        String orderBy = _dbHelper.CALL_DATE + " DESC";
+        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,orderBy,null);
+        if(cursor.moveToFirst())
+        {
+            row = CursortoCallLog(cursor);
+        }
+        cursor.close();
+        return row;
+    }
+    public CallLog CreateCallLogRow(String callDate, String callNumber, int duration, int callFee, int callType)
     {
 
         ContentValues values = new ContentValues();
-        values.put(_dbHelper.CALL_DATE,callDate);
+        long milisecs = _dbHelper.convertToMilisec(callDate);
+        values.put(_dbHelper.CALL_DATE, milisecs);
         values.put(_dbHelper.CALL_NUMBER, callNumber);
         values.put(_dbHelper.DURATION, duration);
         values.put(_dbHelper.CALL_FEE, callFee);
+        values.put(_dbHelper.CALL_TYPE, callType);
         long insertId = _database.insert(_dbHelper.CALL_TABLE,null, values);
         Cursor cursor = _database.query(_dbHelper.CALL_TABLE, _listColumn,_dbHelper.CALL_ID + " = " + insertId,null,null,null,null);
         cursor.moveToFirst();
@@ -63,7 +79,7 @@ public class DAO_CallLog
     }
     public void DeleteCallLogRow(int callId)
     {
-        _database.delete(_dbHelper.CALL_TABLE, _dbHelper.CALL_ID + " = " + callId,null);
+        _database.delete(_dbHelper.CALL_TABLE, _dbHelper.CALL_ID + " = " + callId, null);
     }
     public List<CallLog> GetAllCallLog()
     {
@@ -95,4 +111,6 @@ public class DAO_CallLog
         cursor.close();
         return temp;
     }
+
+
 }

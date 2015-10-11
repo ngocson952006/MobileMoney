@@ -7,14 +7,14 @@ public class MessageLog
 {
     private int _messageId;
     private String _messageDate;
-    private String _recieverNumber;
+    private String _receiverNumber;
     private int _messageFee;
 
     public MessageLog()
     {
         _messageId = -1;
         _messageDate = "";
-        _recieverNumber = "";
+        _receiverNumber = "";
         _messageFee = 0;
     }
 
@@ -22,7 +22,7 @@ public class MessageLog
     {
         _messageId = -1;
         _messageDate = date;
-        _recieverNumber = number;
+        _receiverNumber = number;
         _messageFee = fee;
     }
 
@@ -38,9 +38,9 @@ public class MessageLog
     {
         return _messageDate;
     }
-    public String get_recieverNumber()
+    public String get_receiverNumber()
     {
-        return _recieverNumber;
+        return _receiverNumber;
     }
 
     public void set_messageId(int messageId)
@@ -57,6 +57,6 @@ public class MessageLog
     }
     public void set_recieverNumber(String recieverNumber)
     {
-        _recieverNumber = recieverNumber;
+        _receiverNumber = recieverNumber;
     }
 }
