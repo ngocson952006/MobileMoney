@@ -2,39 +2,18 @@
 <items version="2" >
 
     <item
-        jar="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jar="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\libs\httpcore-4.4.3.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-a5424e834fecc5e1ef059862b6e9684fc42b45e8.jar" />
+        sha1="e876a79d561e5c6207b78d347e198c8c4531a5e5">
+        <dex dex="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\httpcore-4.4.3-c581b49e76757a9e16ae15db187ee7e34ec1a402.jar" />
     </item>
     <item
-        jar="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jar="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\libs\httpclient-4.5.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\classes-6f5ed1055abfa68f45938599a0e7d5907d1a984c.jar" />
-    </item>
-    <item
-        jar="C:\Users\QNghi\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-6e48466229d8769d2c439726c9ecddff2a405832.jar" />
-    </item>
-    <item
-        jar="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
-        <dex dex="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\classes-14b1fd78241ea068909ad60af2df52ec07a7e996.jar" />
-    </item>
-    <item
-        jar="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\classes-3b238b655d40219fd99b1856a5280cab197305fc.jar" />
+        sha1="7e3cecc566df91338c6c67883b89ddd05a17db43">
+        <dex dex="E:\Project\Project Android\trunk\QuanLiCuocDiDong\app\build\intermediates\pre-dexed\debug\httpclient-4.5.1-2151203b7a44cbaf2dfde4fffac5b00f1819c1e3.jar" />
     </item>
 
 </items>
