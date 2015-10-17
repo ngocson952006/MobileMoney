@@ -22,7 +22,7 @@ public class QTeen extends PackageFee
 
     public int CalculateCallFee()
     {
-        if(this._numberHeader.isInternalNetwork(this._ownNumber, this._outGoingPhoneNumber))
+        if(this._numberHeader.isInternalNetwork(this._myNetwork, this._outGoingPhoneNumber))
         {
             if(this.isSpecialTime())
             {

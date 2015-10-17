@@ -128,6 +128,18 @@ public abstract class PackageFee
     public int CalculateCallFee()
     {
         this.get_type();
+        if(this._numberHeader.isMobifoneCareCostRequire(this._myNetwork,this._outGoingPhoneNumber))
+        {
+            if(this._callDuration <= this._callBlock)
+            {
+                this._callFee = 200/10;
+            }
+            else
+            {
+                int remainDuration = this._callDuration - this._callBlock;
+                this._callFee = (200/10) + remainDuration*Math.round((float)(200/60));
+            }
+        }
         if(this._numberHeader.isEmergencyCall(this._outGoingPhoneNumber))
         {
             this._callFee = 0;
@@ -140,7 +152,7 @@ public abstract class PackageFee
             else
             {
                 int remainDuration = this._callDuration- this._callBlock;
-                this._callFee = (this._internalCallFee/10) + remainDuration*Math.round((this._internalCallFee/60));
+                this._callFee = (this._internalCallFee/10) + remainDuration*Math.round((float)(this._internalCallFee/60));
             }
         }
         else

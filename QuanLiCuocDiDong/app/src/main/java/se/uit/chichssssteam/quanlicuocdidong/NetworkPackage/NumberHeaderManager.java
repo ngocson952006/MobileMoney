@@ -26,6 +26,7 @@ public class NumberHeaderManager
     private List<String> _vietnamobile;
     private List<String> _Gmobile;
     private List<String> _emergencyNumber;
+    private List<String> _mobifoneCareNumber;
     public NumberHeaderManager()
     {
         this._mobifone = Arrays.asList("090","093","0120","0121","0122","0126","0128");
@@ -34,6 +35,19 @@ public class NumberHeaderManager
         this._vietnamobile = Arrays.asList("092","0188", "0186");
         this._Gmobile = Arrays.asList("0993","0994","0995","0996","0199");
         this._emergencyNumber = Arrays.asList("113","114","115", "119");
+        this._mobifoneCareNumber = Arrays.asList("9090", "18001090");
+    }
+
+    public boolean isMobifoneCareCostRequire(networkName name, String callNumber)
+    {
+        if(name == networkName.mobifone)
+        {
+            if(callNumber.equals(this._mobifoneCareNumber.get(0)))
+                return true;
+            if(callNumber.equals(this._mobifoneCareNumber.get(1)))
+                return false;
+        }
+        return false;
     }
 
     public boolean isEmergencyCall(String phoneNumber)
@@ -124,9 +138,9 @@ public class NumberHeaderManager
             return networkName.unknown;
 
     }
-    public boolean isInternalNetwork(String ownerNumber, String callNumber)
+    public boolean isInternalNetwork(networkName network, String callNumber)
     {
-        if(this.VerifyNetwork(ownerNumber).equals(this.VerifyNetwork(callNumber)))
+        if(network == this.VerifyNetwork(callNumber))
             return true;
         return false;
 
