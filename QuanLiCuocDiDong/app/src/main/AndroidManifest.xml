@@ -6,9 +6,12 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -42,17 +45,28 @@
         <activity
             android:name=".Activity.KhuyenMaiActivity"
             android:label="@string/title_activity_khuyen_mai"
-            android:theme="@android:style/Theme.Holo.Light">
+            android:theme="@android:style/Theme.Holo.Light" >
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
         </activity>
 
-        <receiver android:name=".BackgroundService.PhoneStateReceiver">
+        <activity
+            android:name=".Activity.UngTienActivity"
+            android:label="@string/title_activity_ung_tien"
+            android:theme="@android:style/Theme.Holo.Light">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.MainActivity" />
+        </activity>
+
+        <receiver android:name=".BackgroundService.PhoneStateReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE">
-                </action></intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" >
+                </action>
+            </intent-filter>
         </receiver>
     </application>
 
