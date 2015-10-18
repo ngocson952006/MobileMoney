@@ -1,11 +1,19 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,14 +51,28 @@ public class KhuyenMaiActivity extends Activity {
         setContentView(R.layout.activity_khuyen_mai);
 
         editActionBar();
-        initListView();
-        addEventListItems();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new ReadXML().execute(getUrlPromotion());
-            }
-        });
+        if(isNetworkConnected() == false) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(KhuyenMaiActivity.this);
+            dialog.setMessage("Bạn phải kết nối internet mới sử dụng được tiện ích này");
+            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            dialog.create().show();
+        }
+        else
+        {
+            initListView();
+            addEventListItems();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    new ReadXML().execute(getUrlPromotion());
+                }
+            });
+        }
     }
     private void addEventListItems()
     {
@@ -69,16 +91,19 @@ public class KhuyenMaiActivity extends Activity {
     {
         lstViewKM = (ListView) findViewById(R.id.list);
         arrayAdapterPromotion = new ArrayAdapter<PromotionItem>(KhuyenMaiActivity.this,
-                android.R.layout.simple_list_item_1,
+                /*android.R.layout.simple_list_item_1*/R.layout.custom_promotion_items,
                 arrayListPromotion);
         lstViewKM.setAdapter(arrayAdapterPromotion);
     }
     private void editActionBar()
     {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(false);
-        getActionBar().setDisplayShowCustomEnabled(false);
-        setTitle("Trang thông tin khuyến mãi");
+        ActionBar bar = getActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setDisplayShowHomeEnabled(false);
+        bar.setDisplayShowCustomEnabled(false);
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
+        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Trang thông tin khuyến mãi </font>"));
+
     }
 
     private String getUrlPromotion()
@@ -181,5 +206,10 @@ public class KhuyenMaiActivity extends Activity {
         }
         // return XML
         return xml;
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 }

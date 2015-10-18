@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity
     private String mangDiDong;
     private String goiCuoc;
     private int idImage;
-    boolean doubleBackToExitPressedOnce = false;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,5 +236,6 @@ public class MainActivity extends ActionBarActivity
     {
         return goiCuoc;
     }
+
 
 }
