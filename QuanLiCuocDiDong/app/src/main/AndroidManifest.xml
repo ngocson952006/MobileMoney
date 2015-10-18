@@ -24,19 +24,20 @@
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Activity.ChonMangDiDongActivity"
             android:label="@string/title_activity_chon_mang_di_dong"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Activity.ChonGoiCuocActivity"
             android:label="@string/title_activity_chon_goi_cuoc"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Activity.MainActivity"
@@ -52,14 +53,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
         </activity>
-
         <activity
             android:name=".Activity.UngTienActivity"
             android:label="@string/title_activity_ung_tien"
-            android:theme="@android:style/Theme.Holo.Light">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activity.MainActivity" />
+            android:theme="@android:style/Theme.Holo.Light" >
         </activity>
 
         <receiver android:name=".BackgroundService.PhoneStateReceiver" >
@@ -68,6 +65,22 @@
                 </action>
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".Activity.YeuCauGoiLaiActivity"
+            android:label="@string/title_activity_yeu_cau_goi_lai"
+            android:theme="@android:style/Theme.Holo.Light" >
+        </activity>
+        <activity
+            android:name=".Activity.TraCuuTTTBActivity"
+            android:label="@string/title_activity_tra_cuu_tttb"
+            android:theme="@android:style/Theme.Holo.Light" >
+        </activity>
+        <activity
+            android:name=".Activity.KiemTraSoDuActivity"
+            android:label="@string/title_activity_kiem_tra_so_du"
+            android:theme="@android:style/Theme.Holo.Light">
+        </activity>
     </application>
 
 </manifest>

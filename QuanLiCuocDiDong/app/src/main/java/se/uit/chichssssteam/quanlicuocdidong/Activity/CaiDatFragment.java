@@ -1,9 +1,7 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,7 +29,6 @@ public class CaiDatFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private Button buttonClear;
     CheckBox checkBoxPopup;
     SharedPreferences settings;
 
@@ -93,33 +90,7 @@ public class CaiDatFragment extends Fragment {
         ImageView imageViewLogo = (ImageView) view.findViewById(R.id.imageViewLogoGoiCuoc);
         imageViewLogo.setImageResource(idImage);
 
-        Button button1 = (Button) view.findViewById(R.id.button1);
-        Button button2 = (Button) view.findViewById(R.id.button2);
-        Button buttonTTTB = (Button) view.findViewById(R.id.buttonTTTB);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*101#"));
-                startActivity(callIntent);
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*102#"));
-                startActivity(callIntent);
-            }
-        });
-        buttonTTTB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                smsIntent.setType("vnd.android-dir/mms-sms");
-                smsIntent.putExtra("address", "1414");
-                smsIntent.putExtra("sms_body","TTTB");
-                startActivity(smsIntent);
-            }
-        });
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -163,23 +134,7 @@ public class CaiDatFragment extends Fragment {
         super.onStop();
     }
 
-    private Uri ussdToCallableUri(String ussd) {
 
-        String uriString = "";
-
-        if(!ussd.startsWith("tel:"))
-            uriString += "tel:";
-
-        for(char c : ussd.toCharArray()) {
-
-            if(c == '#')
-                uriString += Uri.encode("#");
-            else
-                uriString += c;
-        }
-
-        return Uri.parse(uriString);
-    }
     public static String getNameFragment()
     {
         return "Cài đặt";

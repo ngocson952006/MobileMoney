@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Tiện ích ứng tiền"
+                    android:text="Tiện ích kiểm tra số dư ở tài khoản chính và tài khoản khuyến mãi"
                     android:id="@+id/textViewGioithieu"
                     android:textSize="15dp" />
 
@@ -58,8 +58,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Hướng dẫn sử dụng bằng tin nhắn và USSD"
+                    android:text="Kiểm tra tài khoản chính: Nhấn *101#"
                     android:id="@+id/textViewHuongDan"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Kiểm tra tài khoản khuyến mãi: Nhấn *102#"
+                    android:id="@+id/textView3"
                     android:textSize="15dp" />
 
             </LinearLayout>
@@ -77,36 +85,32 @@
                     android:text="Phím tắt"
                     android:id="@+id/textView" />
 
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/buttonOk"
-                    android:background="@drawable/ic_action_action_perm_phone_msg"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="0dp" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp">
 
-            </LinearLayout>
+                    <Button
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/buttonChinh"
+                        android:background="@drawable/cal_ltk_chinh"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="15dp" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp">
+                    <Button
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/buttonKM"
+                        android:background="@drawable/cal_ltk_km"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="15dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Thông tin chi tiết"
-                    android:id="@+id/textView20" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây"
-                    android:id="@+id/textViewTTChiTiet"
-                    android:textSize="15dp" />
             </LinearLayout>
 
         </LinearLayout>

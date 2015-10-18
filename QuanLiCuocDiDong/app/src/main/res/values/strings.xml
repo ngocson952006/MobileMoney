@@ -13,4 +13,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_khuyen_mai">KhuyenMaiActivity</string>
     <string name="title_activity_ung_tien">UngTienActivity</string>
+    <string name="title_activity_yeu_cau_goi_lai">YeuCauGoiLaiActivity</string>
+    <string name="title_activity_tra_cuu_tttb">TraCuuTTTBActivity</string>
+    <string name="title_activity_kiem_tra_so_du">KiemTraSoDuActivity</string>
 </resources>

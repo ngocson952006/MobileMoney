@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Tiện ích ứng tiền"
+                    android:text="Tiện ích kiểm tra thông tin thuê bao bạn đang sử dụng"
                     android:id="@+id/textViewGioithieu"
                     android:textSize="15dp" />
 
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Hướng dẫn sử dụng bằng tin nhắn và USSD"
+                    android:text="Soạn tin TTTB gửi 1414"
                     android:id="@+id/textViewHuongDan"
                     android:textSize="15dp" />
 

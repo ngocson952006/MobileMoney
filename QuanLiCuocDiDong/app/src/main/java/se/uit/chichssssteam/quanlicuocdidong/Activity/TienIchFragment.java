@@ -120,13 +120,13 @@ public class TienIchFragment extends Fragment {
                     tienichClass = UngTienActivity.class;
                     break;
                 case R.id.imageViewThumbaiGoiLai:case R.id.textViewTitleGoiLai:case R.id.textViewDesGoiLai:
-
+                    tienichClass = YeuCauGoiLaiActivity.class;
                     break;
                 case R.id.imageViewThumbaiKTSoDu:case R.id.textViewTitleKTSoDu:case R.id.textViewDesKTSoDu:
-
+                    tienichClass = KiemTraSoDuActivity.class;
                     break;
                 case R.id.imageViewThumbaiTraCuu:case R.id.textViewTitleTraCuu:case R.id.textViewDesTraCuu:
-
+                    tienichClass = TraCuuTTTBActivity.class;
                     break;
             }
             Intent myIntent = new Intent(getActivity(),tienichClass);

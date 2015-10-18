@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Tiện ích ứng tiền"
+                    android:text="Tiện ích gọi lại cho tôi"
                     android:id="@+id/textViewGioithieu"
                     android:textSize="15dp" />
 
@@ -77,13 +77,22 @@
                     android:text="Phím tắt"
                     android:id="@+id/textView" />
 
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/editTextSDT"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Nhập vào số điện thoại"
+                    android:inputType="number" />
+
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/buttonOk"
                     android:background="@drawable/ic_action_action_perm_phone_msg"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="0dp" />
+                    android:layout_marginTop="5dp" />
 
             </LinearLayout>
 

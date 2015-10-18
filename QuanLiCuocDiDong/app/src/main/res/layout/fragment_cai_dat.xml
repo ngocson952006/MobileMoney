@@ -41,37 +41,7 @@
         </LinearLayout>
 
 
-
-        <LinearLayout android:gravity="center" android:orientation="vertical"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip" android:layout_marginBottom="7.0dip"
-            android:background="#e0e0e0">
-            <TextView android:textStyle="bold" android:textColor="#626359" android:gravity="center_vertical" android:id="@+id/text6" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip" android:text="3. Hỗ trợ tra cứu tài khoản:" />
-            <LinearLayout android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="wrap_content">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kiểm tra số dư tài khoản"
-                    android:textColor="#626359"
-                    android:layout_marginLeft="20dp" />
-                <Button android:textColor="@color/primary_text_default_material_dark" android:id="@+id/button1" android:background="@color/button_material_dark" android:layout_width="60dp" android:layout_height="40.0dip"
-                    android:layout_marginRight="10dp" android:text="*101#"
-                    android:layout_marginLeft="20dp" />
-                <Button android:textColor="@color/primary_text_default_material_dark" android:id="@+id/button2" android:background="@color/button_material_dark" android:layout_width="60dp" android:layout_height="40.0dip"
-                    android:text="*102#"
-                    android:layout_marginLeft="10dp" />
-            </LinearLayout>
-            <LinearLayout android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                android:weightSum="1">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kiểm tra thông tin thuê bao" android:textColor="#626359"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp" />
-                <Button android:textColor="@color/primary_text_default_material_dark" android:id="@+id/buttonTTTB" android:background="@color/button_material_dark" android:layout_width="60dp" android:layout_height="40.0dip"
-                    android:text="TTTB"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-
-    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
         android:background="#e0e0e0"
         android:baselineAligned="true">
         <TextView android:textStyle="bold" android:textColor="#626359" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:text="4. Chế độ Widget:" android:layout_weight="1.0"
