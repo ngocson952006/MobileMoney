@@ -1,10 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:clickable="true"
     android:background="@android:color/background_light">
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/listViewUtilty" />
-</LinearLayout>
+
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:clickable="true"
+        android:background="@android:color/background_light">
+
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+            android:background="#e0e0e0">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageViewThumbaiKhuyenMai"
+                android:layout_margin="5dp"
+                android:src="@drawable/khuyenmai" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Tra cứu thông tin khuyến mãi"
+                    android:id="@+id/textViewTitleKhuyenMai"
+                    android:layout_margin="5dp"
+                    android:textSize="19dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Khuyến mãi nạp thẻ, hoà mạng..."
+                    android:id="@+id/textViewDesKhuyenMai"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+            android:background="#e0e0e0">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageViewThumbaiUngTien"
+                android:layout_margin="5dp"
+                android:src="@drawable/ungtien" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Ứng tiền nhanh"
+                    android:id="@+id/textViewTitleUngTien"
+                    android:layout_margin="5dp"
+                    android:textSize="19dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Ứng tiền khi tài khoản của bạn hết tiền"
+                    android:id="@+id/textViewDesUngTien"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+            android:background="#e0e0e0">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageViewThumbaiGoiLai"
+                android:layout_margin="5dp"
+                android:src="@drawable/goilai" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Yêu cầu gọi lại"
+                    android:id="@+id/textViewTitleGoiLai"
+                    android:layout_margin="5dp"
+                    android:textSize="19dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Nhắn tin cho bạn bè nhờ gọi lại cho bạn"
+                    android:id="@+id/textViewDesGoiLai"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+            android:background="#e0e0e0">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageViewThumbaiTraCuu"
+                android:layout_margin="5dp"
+                android:src="@drawable/tracuuthongtin" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Tra cứu thông tin thuê bao"
+                    android:id="@+id/textViewTitleTraCuu"
+                    android:layout_margin="5dp"
+                    android:textSize="19dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tra cứu thông tin chi tiết thuê bao"
+                    android:id="@+id/textViewDesTraCuu"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
+            android:background="#e0e0e0">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageViewThumbaiKTSoDu"
+                android:layout_margin="5dp"
+                android:src="@drawable/kiemtrasodu" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Kiểm tra tài khoản"
+                    android:id="@+id/textViewTitleKTSoDu"
+                    android:layout_margin="5dp"
+                    android:textSize="19dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Kiểm tra tài khoản gốc và khuyến mãi"
+                    android:id="@+id/textViewDesKTSoDu"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
