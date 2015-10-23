@@ -5,19 +5,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="se.uit.chichssssteam.quanlicuocdidong.Activity.ChonMangDiDongActivity"
-    android:background="#2196F3">
+    android:background="@color/background_material_light">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Chọn nhà mạng"
+        android:text="Chọn nhà mạng bạn đang sử dụng"
         android:id="@+id/textViewCuocphi"
         android:layout_marginTop="25dp"
         android:gravity="center"
-        android:textSize="35dp"
-        android:background="#2196F3"
-        android:textColor="#fffffa"
+        android:textSize="20dp"
+        android:background="@color/background_material_light"
+        android:textColor="#2196F3"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -31,60 +31,65 @@
         android:fillViewport="false"
         android:layout_below="@+id/textViewCuocphi"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp">
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageButton
-                android:layout_width="200dp"
-                android:layout_height="65dp"
+                android:layout_width="126dp"
+                android:layout_height="41dp"
                 android:id="@+id/imageButtonMobifone"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:src="@drawable/mobifone"
+                android:layout_centerHorizontal="true"
                 android:background="@android:color/white"
-                android:layout_centerHorizontal="true" />
+                android:scaleType="fitXY" />
 
             <ImageButton
-                android:layout_width="200dp"
-                android:layout_height="65dp"
+                android:layout_width="126dp"
+                android:layout_height="41dp"
                 android:id="@+id/imageButtonVinaPhone"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_below="@+id/imageButtonMobifone"
                 android:layout_centerHorizontal="true"
+                android:src="@drawable/vinaphonne"
                 android:background="@android:color/white"
-                android:src="@drawable/vinaphonne" />
+                android:scaleType="fitXY" />
 
             <ImageButton
-                android:layout_width="200dp"
-                android:layout_height="65dp"
+                android:layout_width="126dp"
+                android:layout_height="41dp"
                 android:id="@+id/imageButtonViettel"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_below="@+id/imageButtonVinaPhone"
                 android:layout_centerHorizontal="true"
+                android:src="@drawable/vietel"
                 android:background="@android:color/white"
-                android:src="@drawable/vietel" />
+                android:scaleType="fitXY" />
 
             <ImageButton
-                android:layout_width="200dp"
-                android:layout_height="65dp"
+                android:layout_width="126dp"
+                android:layout_height="41dp"
                 android:id="@+id/imageButtonGMobile"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_below="@+id/imageButtonViettel"
                 android:layout_centerHorizontal="true"
+                android:src="@drawable/gmobile"
                 android:background="@android:color/white"
-                android:src="@drawable/gmobile" />
+                android:scaleType="fitXY" />
 
             <ImageButton
-                android:layout_width="200dp"
-                android:layout_height="65dp"
+                android:layout_width="126dp"
+                android:layout_height="41dp"
                 android:id="@+id/imageButtonVietnamMobile"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_below="@+id/imageButtonGMobile"
                 android:layout_centerHorizontal="true"
+                android:src="@drawable/vietnamobile"
                 android:background="@android:color/white"
-                android:src="@drawable/vietnamobile" />
+                android:scaleType="fitXY" />
 
         </RelativeLayout>
     </ScrollView>

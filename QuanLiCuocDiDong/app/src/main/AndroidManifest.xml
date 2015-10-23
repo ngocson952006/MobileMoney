@@ -31,13 +31,13 @@
         <activity
             android:name=".Activity.ChonMangDiDongActivity"
             android:label="@string/title_activity_chon_mang_di_dong"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+            android:theme="@android:style/Theme.Holo.Light" >
         </activity>
         <activity
             android:name=".Activity.ChonGoiCuocActivity"
             android:label="@string/title_activity_chon_goi_cuoc"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+            android:theme="@android:style/Theme.Holo.Light" >
         </activity>
         <activity
             android:name=".Activity.MainActivity"
@@ -58,14 +58,6 @@
             android:label="@string/title_activity_ung_tien"
             android:theme="@android:style/Theme.Holo.Light" >
         </activity>
-
-        <receiver android:name=".BackgroundService.PhoneStateReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" >
-                </action>
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".Activity.YeuCauGoiLaiActivity"
             android:label="@string/title_activity_yeu_cau_goi_lai"
@@ -81,6 +73,14 @@
             android:label="@string/title_activity_kiem_tra_so_du"
             android:theme="@android:style/Theme.Holo.Light">
         </activity>
+
+        <receiver android:name=".BackgroundService.PhoneStateReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" >
+                </action>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

@@ -1,8 +1,12 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,14 +27,16 @@ public class ChonMangDiDongActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chon_mang_di_dong);
-        this.getControl();
+        editActionBar();
+        getControl();
         this.addEvents();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_chon_mang_di_dong, menu);
+        //getMenuInflater().inflate(R.menu.menu_chon_mang_di_dong, menu);
         return true;
     }
 
@@ -45,7 +51,6 @@ public class ChonMangDiDongActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
     private void getControl() {
@@ -93,5 +98,13 @@ public class ChonMangDiDongActivity extends Activity {
             startActivity(myIntent);
         }
 
+    }
+    private void editActionBar()
+    {
+        ActionBar bar = getActionBar();
+        bar.setDisplayShowHomeEnabled(false);
+        bar.setDisplayShowCustomEnabled(false);
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
+        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Chọn mạng di động</font>"));
     }
 }

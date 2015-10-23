@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -73,7 +72,7 @@ public class KiemTraSoDuActivity extends Activity {
         buttonChinh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*101#"));
+                Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri("*101#"));
                 startActivity(callIntent);
             }
         });
@@ -82,27 +81,10 @@ public class KiemTraSoDuActivity extends Activity {
         buttonKM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*102#"));
+                Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri("*102#"));
                 startActivity(callIntent);
             }
         });
-    }
-    private Uri ussdToCallableUri(String ussd) {
-
-        String uriString = "";
-
-        if(!ussd.startsWith("tel:"))
-            uriString += "tel:";
-
-        for(char c : ussd.toCharArray()) {
-
-            if(c == '#')
-                uriString += Uri.encode("#");
-            else
-                uriString += c;
-        }
-
-        return Uri.parse(uriString);
     }
 }
 

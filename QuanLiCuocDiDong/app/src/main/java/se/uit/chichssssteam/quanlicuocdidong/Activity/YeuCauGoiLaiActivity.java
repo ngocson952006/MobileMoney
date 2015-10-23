@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -123,7 +122,7 @@ public class YeuCauGoiLaiActivity extends Activity {
                     public void onClick(View v) {
                         if(checkEditTextSDT())
                         {
-                            Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*105*"+ editTextSDT.getText().toString() +"#"));
+                            Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri("*105*" + editTextSDT.getText().toString() + "#"));
                             startActivity(callIntent);
                         }
                     }
@@ -144,7 +143,7 @@ public class YeuCauGoiLaiActivity extends Activity {
                     public void onClick(View v) {
                         if(checkEditTextSDT())
                         {
-                            Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*110*"+ editTextSDT.getText().toString() +"#"));
+                            Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri("*110*" + editTextSDT.getText().toString() + "#"));
                             startActivity(callIntent);
                         }
 
@@ -183,7 +182,7 @@ public class YeuCauGoiLaiActivity extends Activity {
                     public void onClick(View v) {
                         if(checkEditTextSDT())
                         {
-                            Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*9119*"+ editTextSDT.getText().toString() +"#"));
+                            Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri("*9119*" + editTextSDT.getText().toString() + "#"));
                             startActivity(callIntent);
                         }
                     }
@@ -213,22 +212,5 @@ public class YeuCauGoiLaiActivity extends Activity {
             textViewTTCT.setText(Html.fromHtml("<a href=" + urlTTCT + "> Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây "));
             textViewTTCT.setMovementMethod(LinkMovementMethod.getInstance());
         }
-    }
-    private Uri ussdToCallableUri(String ussd) {
-
-        String uriString = "";
-
-        if(!ussd.startsWith("tel:"))
-            uriString += "tel:";
-
-        for(char c : ussd.toCharArray()) {
-
-            if(c == '#')
-                uriString += Uri.encode("#");
-            else
-                uriString += c;
-        }
-
-        return Uri.parse(uriString);
     }
 }

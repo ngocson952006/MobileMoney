@@ -1,13 +1,16 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +23,6 @@ import se.uit.chichssssteam.quanlicuocdidong.R;
 public class ChonGoiCuocActivity extends Activity {
 
     String mangDiDong;
-    ImageView imgViewMangDiDong;
     ListView lstViewGoiCuoc;
     TextView textViewTut;
     ArrayList<PackageNetwork> arrayListPackageNw = new ArrayList<PackageNetwork>();
@@ -32,6 +34,7 @@ public class ChonGoiCuocActivity extends Activity {
         setContentView(R.layout.activity_chon_goi_cuoc);
         getControl();
         getMobileNetwork();
+        editActionBar();
         addItemToListView();
         addEvents();
 
@@ -40,7 +43,7 @@ public class ChonGoiCuocActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_chon_goi_cuoc, menu);
+        //getMenuInflater().inflate(R.menu.menu_chon_goi_cuoc, menu);
         return true;
     }
 
@@ -55,18 +58,19 @@ public class ChonGoiCuocActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
+        if (id == android.R.id.home) {
+            this.finish();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
     private void getControl()
     {
-        imgViewMangDiDong = (ImageView) findViewById(R.id.imageViewMangDiDong);
         lstViewGoiCuoc = (ListView) findViewById(R.id.listViewGoiCuoc);
         textViewTut = (TextView) findViewById(R.id.textViewTut);
     }
     private void addEvents()
     {
-        imgViewMangDiDong.setOnClickListener(new ProcessMyEvent());
         lstViewGoiCuoc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -82,19 +86,6 @@ public class ChonGoiCuocActivity extends Activity {
             }
         });
     }
-    private class ProcessMyEvent implements View.OnClickListener
-    {
-        @Override
-        public void onClick(View arg0) {
-            switch(arg0.getId())
-            {
-                case R.id.imageViewMangDiDong: {
-                    finish();
-                    break;
-                }
-            }
-        }
-    }
     private void getMobileNetwork()
     {
         Intent callerIntent = getIntent();
@@ -104,7 +95,6 @@ public class ChonGoiCuocActivity extends Activity {
         {
             case "Mobifone": {
                 stringTut = "Nhấn *101#";
-                imgViewMangDiDong.setImageResource(R.drawable.mobifone);
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Mobicard", R.drawable.mobicard));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"MobiGold",R.drawable.mobigold));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"MobiQ",R.drawable.mobiq));
@@ -115,7 +105,6 @@ public class ChonGoiCuocActivity extends Activity {
             }
             case "VinaPhone": {
                 stringTut = "Nhấn *110#";
-                imgViewMangDiDong.setImageResource(R.drawable.vinaphonne);
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VinaCard", R.drawable.vinacard));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VinaXtra", R.drawable.vinaxtra));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"TalkEZ", R.drawable.talkez));
@@ -123,7 +112,6 @@ public class ChonGoiCuocActivity extends Activity {
             }
             case "Viettel": {
                 stringTut = "Gửi sms GC tới 195";
-                imgViewMangDiDong.setImageResource(R.drawable.vietel);
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Economy", R.drawable.vietel));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Tomato", R.drawable.vietel));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Student", R.drawable.vietel));
@@ -135,7 +123,6 @@ public class ChonGoiCuocActivity extends Activity {
             }
             case "GMobile": {
                 stringTut = "Nhấn *110#";
-                imgViewMangDiDong.setImageResource(R.drawable.gmobile);
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Big Save", R.drawable.gmobile));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Big & Kool", R.drawable.gmobile));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"Tỉ phú 2", R.drawable.gmobile));
@@ -145,7 +132,6 @@ public class ChonGoiCuocActivity extends Activity {
             }
             case "VietNamMobile": {
                 stringTut = "Nhấn *101#";
-                imgViewMangDiDong.setImageResource(R.drawable.vietnamobile);
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VM One", R.drawable.vietnamobile));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VMax", R.drawable.vietnamobile));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"SV 2014", R.drawable.vietnamobile));
@@ -159,5 +145,14 @@ public class ChonGoiCuocActivity extends Activity {
         adapter = new MyArrayAdapter(this,R.layout.custom_listview,arrayListPackageNw);
         lstViewGoiCuoc.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+    private void editActionBar()
+    {
+        ActionBar bar = getActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setDisplayShowHomeEnabled(false);
+        bar.setDisplayShowCustomEnabled(false);
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
+        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Nhà mạng: " + mangDiDong +  "</font>"));
     }
 }

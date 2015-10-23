@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -76,6 +75,19 @@ public class UngTienActivity extends Activity {
         buttonExcute = (Button) findViewById(R.id.buttonOk);
     }
 
+    private void sendSmS(String address, String sms_body)
+    {
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.putExtra("address", address);
+        smsIntent.putExtra("sms_body",sms_body);
+        startActivity(smsIntent);
+    }
+    private void callUSSD(String code)
+    {
+        Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri(code));
+        startActivity(callIntent);
+    }
     private void Init()
     {
         SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
@@ -97,11 +109,7 @@ public class UngTienActivity extends Activity {
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                        smsIntent.setType("vnd.android-dir/mms-sms");
-                        smsIntent.putExtra("address", "900");
-                        smsIntent.putExtra("sms_body","UT");
-                        startActivity(smsIntent);
+                        sendSmS("900", "UT");
                     }
                 });
                 break;
@@ -117,11 +125,7 @@ public class UngTienActivity extends Activity {
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                        smsIntent.setType("vnd.android-dir/mms-sms");
-                        smsIntent.putExtra("address", "1576");
-                        smsIntent.putExtra("sms_body","Y");
-                        startActivity(smsIntent);
+                        sendSmS("1576", "Y");
                     }
                 });
                 break;
@@ -137,8 +141,7 @@ public class UngTienActivity extends Activity {
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*911#"));
-                        startActivity(callIntent);
+                        callUSSD("*911#");
                     }
                 });
                 break;
@@ -155,8 +158,7 @@ public class UngTienActivity extends Activity {
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent callIntent = new Intent(Intent.ACTION_CALL, ussdToCallableUri("*911#"));
-                        startActivity(callIntent);
+                        callUSSD("*911#");
                     }
                 });
                 break;
@@ -181,22 +183,5 @@ public class UngTienActivity extends Activity {
             textViewTTCT.setText(Html.fromHtml("<a href=" + urlTTCT + "> Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây "));
             textViewTTCT.setMovementMethod(LinkMovementMethod.getInstance());
         }
-    }
-    private Uri ussdToCallableUri(String ussd) {
-
-        String uriString = "";
-
-        if(!ussd.startsWith("tel:"))
-            uriString += "tel:";
-
-        for(char c : ussd.toCharArray()) {
-
-            if(c == '#')
-                uriString += Uri.encode("#");
-            else
-                uriString += c;
-        }
-
-        return Uri.parse(uriString);
     }
 }
