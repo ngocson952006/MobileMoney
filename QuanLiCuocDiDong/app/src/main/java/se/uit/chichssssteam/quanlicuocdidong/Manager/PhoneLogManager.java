@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import android.os.Message;
 import android.provider.CallLog;
+import android.telecom.Call;
 import android.telephony.TelephonyManager;
 
 import se.uit.chichssssteam.quanlicuocdidong.DB.*;
@@ -27,7 +28,18 @@ public class PhoneLogManager {
     List<MessageLog> _listMessage;
     Context _context;
     PackageFee _packageFee;
-    public PhoneLogManager(Context context, PackageFee packageFee) {
+    DateTimeManager _dateTimeManager;
+    private static PhoneLogManager _instance;
+
+
+    public static  synchronized  PhoneLogManager get_instance(Context context, PackageFee packageFee)
+    {
+        if(_instance == null)
+            _instance = new PhoneLogManager(context,packageFee);
+        return _instance;
+    }
+    public PhoneLogManager(Context context, PackageFee packageFee)
+    {
         _listCall = new ArrayList<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog>();
         _listMessage = new ArrayList<MessageLog>();
         _context = context;
@@ -61,13 +73,17 @@ public class PhoneLogManager {
                 String _callType = cursor.getString(callType);
                 String _callDate = cursor.getString(date);
                 int _callDuration = cursor.getInt(duration);
-                _packageFee.set_outGoingPhoneNumber(_number);
+
                 int dircode = Integer.parseInt(_callType);
-                if (dircode == CallLog.Calls.OUTGOING_TYPE) {
-                    _packageFee.set_callTime(_callDate);
+                if (dircode == CallLog.Calls.OUTGOING_TYPE)
+                {
+                    _packageFee.set_callDuration(_callDuration);
+                    _packageFee.set_outGoingPhoneNumber(_number);
+                    String time = _dateTimeManager.convertToHm(_callDate);
+                    _packageFee.set_callTime(time);
                     int _fee = _packageFee.CalculateCallFee();
                     se.uit.chichssssteam.quanlicuocdidong.DB.CallLog newElement = new
-                            se.uit.chichssssteam.quanlicuocdidong.DB.CallLog(-1, _callDate, _number, _callDuration, _fee,-1);
+                            se.uit.chichssssteam.quanlicuocdidong.DB.CallLog(-1, _callDate, _number, _callDuration, _fee,_packageFee.get_type());
                     _logList.add(newElement);
                 }
             }
@@ -76,7 +92,43 @@ public class PhoneLogManager {
         cursor.close();
         return _logList;
     }
+    public List<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog> LoadCallLogAfterTimeSpan(long time)
+    {
+        List<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog> _logList = new ArrayList<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog>();
+        Date temp = new Date(time);
+        String formateddatetime = _dateTimeManager.normalizeDateTime(temp.toString());
+        Cursor cursor = _context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, CallLog.Calls.DATE + " >= " + formateddatetime, null, CallLog.Calls.DATE + " DESC");
+        int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
+        int callType = cursor.getColumnIndex(CallLog.Calls.TYPE);
+        int date = cursor.getColumnIndex(CallLog.Calls.DATE);
+        int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
+        if(cursor.moveToFirst())
+        {
+            do
+            {
+                String _number = cursor.getString(number);
+                String _callType = cursor.getString(callType);
+                String _callDate = cursor.getString(date);
+                int _callDuration = cursor.getInt(duration);
 
+                int dircode = Integer.parseInt(_callType);
+                if (dircode == CallLog.Calls.OUTGOING_TYPE)
+                {
+                    _packageFee.set_callDuration(_callDuration);
+                    _packageFee.set_outGoingPhoneNumber(_number);
+                    String datetime = _dateTimeManager.convertToHm(_callDate);
+                    _packageFee.set_callTime(datetime);
+                    int _fee = _packageFee.CalculateCallFee();
+                    se.uit.chichssssteam.quanlicuocdidong.DB.CallLog newElement = new
+                            se.uit.chichssssteam.quanlicuocdidong.DB.CallLog(-1, _callDate, _number, _callDuration, _fee,_packageFee.get_type());
+                    _logList.add(newElement);
+                }
+            }
+            while(cursor.moveToNext() ==true);
+        }
+        cursor.close();
+        return _logList;
+    }
     public List<MessageLog> LoadMessageLogFromPhone() {
         List<MessageLog> _logList = new ArrayList<MessageLog>();
         Uri _uri = Uri.parse("content://sms/sent");
@@ -88,9 +140,10 @@ public class PhoneLogManager {
                 String number = cursor.getString(cursor.getColumnIndexOrThrow("address"));
                 String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
                 _packageFee.set_outGoingPhoneNumber(number);
+
                 _packageFee.set_sendMessageTime(date);
                 int _fee = _packageFee.CalculateMessageFee();
-                MessageLog newElement = new MessageLog(date, number, _fee);
+                MessageLog newElement = new MessageLog(date, number, _fee, _packageFee.get_type());
                 _logList.add(newElement);
 
             }
@@ -100,6 +153,29 @@ public class PhoneLogManager {
         return _logList;
     }
 
+    public List<MessageLog> LoadMessageLogAfterTimeSpan(long time)
+    {
+        List<MessageLog> _logList = new ArrayList<MessageLog>();
+        Uri _uri = Uri.parse("content://sms/sent");
+        Cursor cursor = _context.getContentResolver().query(_uri, null, null, null, "date DESC");
+        if (cursor.moveToFirst()) {
+            do {
+
+                String number = cursor.getString(cursor.getColumnIndexOrThrow("address"));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                _packageFee.set_outGoingPhoneNumber(number);
+
+                _packageFee.set_sendMessageTime(date);
+                int _fee = _packageFee.CalculateMessageFee();
+                MessageLog newElement = new MessageLog(date, number, _fee, _packageFee.get_type());
+                _logList.add(newElement);
+
+            }
+            while (cursor.moveToNext() == true);
+        }
+        cursor.close();
+        return _logList;
+    }
     public int CalculateTotalCallFee() {
         int totalFee = 0;
         for (Iterator<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog> i = _listCall.iterator(); i.hasNext(); ) {
@@ -154,13 +230,13 @@ public class PhoneLogManager {
             String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
             _packageFee.set_outGoingPhoneNumber(number);
             int _fee = _packageFee.CalculateMessageFee();
-            MessageLog newElement = new MessageLog(date, number, _fee);
+            MessageLog newElement = new MessageLog(date, number, _fee, _packageFee.get_type());
             this._listMessage.add(0,newElement);
         }
         cursor.close();
     }
 
-    public MessageLog GetLastestSentSMS()
+    public MessageLog GetLastedSentSMS()
     {
 
         Uri _uri = Uri.parse("content://sms/sent");
@@ -173,13 +249,13 @@ public class PhoneLogManager {
             _packageFee.set_sendMessageTime(date);
             _packageFee.set_outGoingPhoneNumber(number);
             int _fee = _packageFee.CalculateMessageFee();
-            MessageLog row = new MessageLog(date,number,_fee);
+            MessageLog row = new MessageLog(date,number,_fee,_packageFee.get_type());
             return row;
         }
         cursor.close();
         return null;
     }
-    public se.uit.chichssssteam.quanlicuocdidong.DB.CallLog GetLastestOutGoingCall()
+    public se.uit.chichssssteam.quanlicuocdidong.DB.CallLog GetLastedOutGoingCall()
     {
 
         Cursor cursor = _context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, CallLog.Calls.DATE + " DESC");
@@ -192,14 +268,15 @@ public class PhoneLogManager {
             String _callType = cursor.getString(callType);
             String _callDate = cursor.getString(date);
             int _callDuration = cursor.getInt(duration);
-            _packageFee.set_outGoingPhoneNumber(_number);
             int dircode = Integer.parseInt(_callType);
             if (dircode == CallLog.Calls.OUTGOING_TYPE) {
+                _packageFee.set_callDuration(_callDuration);
+                _packageFee.set_outGoingPhoneNumber(_number);
                 _packageFee.set_callTime(ConvertToTimeSpan(_callDate));
                 int _fee = _packageFee.CalculateCallFee();
                 se.uit.chichssssteam.quanlicuocdidong.DB.CallLog target;
                 target = new
-                        se.uit.chichssssteam.quanlicuocdidong.DB.CallLog(-1, _callDate, _number, _callDuration, _fee, -1);
+                        se.uit.chichssssteam.quanlicuocdidong.DB.CallLog(-1, _callDate, _number, _callDuration, _fee, _packageFee.get_type());
                 return target;
 
             }
