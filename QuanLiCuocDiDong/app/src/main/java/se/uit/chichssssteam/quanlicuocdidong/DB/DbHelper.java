@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -41,7 +42,10 @@ public class DbHelper extends SQLiteOpenHelper
     public static final String OUTER_CALL_FEE = "OuterCallFee";
     public static final String INNER_MESSAGE_FEE = "InnerMessageFee";
     public static final String OUTER_MESSAGE_FEE = "OuterMessageFee";
-
+    public static final String INNER_CALL_DURATION = "InnerCallDuration";
+    public static final String OUTER_CALL_DURATION = "OuterCallDuration";
+    public static final String TOTAL_INNER_MESSAGE = "InnerMessage";
+    public static final String TOTAL_OUTER_MESSAGE = "OuterMessage";
     //DATABASE INFO
     private static final String DATABASE_NAME = "MyDatabase.db";
     private static final int DATABASE_VERSION = 1;
@@ -52,24 +56,28 @@ public class DbHelper extends SQLiteOpenHelper
             + CALL_ID + " integer primary key autoincrement,"
             + CALL_DATE + " bigint not null,"
             + CALL_NUMBER + " varchar(11) not null,"
-            + DURATION + " integer not null,"
-            + CALL_FEE + " integer,"
+            + DURATION + " integer not null default 0,"
+            + CALL_FEE + " integer default 0,"
             + CALL_TYPE + " integer" +");";
     //CREATE MESSAGE LOG TABLE
     private static final String CREATE_MESSAGE_LOG_TABLE ="create table " + MESSAGE_TABLE + "("
             + MESS_ID + " integer primary key autoincrement,"
             + MESSAGE_DATE + " bigint not null,"
             + RECEIVER + " varchar(11) not null,"
-            + MESSAGE_FEE + " integer,"
+            + MESSAGE_FEE + " integer default 0,"
             + MESSAGE_TYPE + " integer" +");";
     //CREATE STATISTIC TABLE
     private static final String CREATE_STATISTIC_TABLE = "create table " + STATISTIC_TABLE + "("
             + MONTH + " integer,"
             + YEAR + " integer,"
-            + INNER_CALL_FEE + " integer,"
-            + OUTER_CALL_FEE + " integer,"
-            + INNER_MESSAGE_FEE + " integer,"
-            + OUTER_MESSAGE_FEE + " integer,"
+            + INNER_CALL_FEE + " integer default 0,"
+            + OUTER_CALL_FEE + " integer default 0,"
+            + INNER_MESSAGE_FEE + " integer default 0,"
+            + OUTER_MESSAGE_FEE + " integer default 0,"
+            + INNER_CALL_DURATION + " bigint default 0,"
+            + OUTER_CALL_DURATION + " bigint default 0,"
+            + TOTAL_INNER_MESSAGE + " int default 0,"
+            + TOTAL_OUTER_MESSAGE + " int default 0,"
             + "primary key (" + MONTH +"," + YEAR + ")" + ");";
 
 
@@ -108,31 +116,5 @@ public class DbHelper extends SQLiteOpenHelper
         onCreate(db);
     }
 
-    public long convertToMilisec(String date)
-    {
-        try
-        {
-            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
-            Date d = format.parse(date);
-            return d.getTime();
-        }
-        catch(ParseException e)
-        {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-    public String convertToDMYHms(String date)
-    {
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
-            Date d = format.parse(date);
-            SimpleDateFormat serverFormat = new SimpleDateFormat("MMM dd yyyy HH:mm::ss",Locale.ENGLISH);
-            return serverFormat.format(d);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 
 }

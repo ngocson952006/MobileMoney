@@ -9,6 +9,7 @@ public class MessageLog
     private String _messageDate;
     private String _receiverNumber;
     private int _messageFee;
+    private int _messageType;
 
     public MessageLog()
     {
@@ -16,14 +17,16 @@ public class MessageLog
         _messageDate = "";
         _receiverNumber = "";
         _messageFee = 0;
+        _messageType = -1;
     }
 
-    public MessageLog(String date, String number, int fee)
+    public MessageLog(String date, String number, int fee, int type)
     {
         _messageId = -1;
         _messageDate = date;
         _receiverNumber = number;
         _messageFee = fee;
+        _messageType = type;
     }
 
     public int get_messageId()
@@ -42,6 +45,7 @@ public class MessageLog
     {
         return _receiverNumber;
     }
+    public int get_messageType(){return _messageType;}
 
     public void set_messageId(int messageId)
     {
@@ -59,4 +63,5 @@ public class MessageLog
     {
         _receiverNumber = recieverNumber;
     }
+    public void set_messageType(int type){_messageType = type;}
 }

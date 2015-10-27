@@ -13,11 +13,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.telecom.Call;
+
+import se.uit.chichssssteam.quanlicuocdidong.Manager.DateTimeManager;
 
 public class DAO_CallLog
 {
     private SQLiteDatabase _database;
     private DbHelper _dbHelper;
+    private DateTimeManager _dateTimeManager;
     private String[] _listColumn = {_dbHelper.CALL_ID, _dbHelper.CALL_DATE,
             _dbHelper.CALL_NUMBER,_dbHelper.DURATION, _dbHelper.CALL_FEE, _dbHelper.CALL_TYPE};
 
@@ -63,7 +67,8 @@ public class DAO_CallLog
     {
 
         ContentValues values = new ContentValues();
-        long milisecs = _dbHelper.convertToMilisec(callDate);
+
+        long milisecs = _dateTimeManager.convertToMilisec(callDate);
         values.put(_dbHelper.CALL_DATE, milisecs);
         values.put(_dbHelper.CALL_NUMBER, callNumber);
         values.put(_dbHelper.DURATION, duration);
@@ -77,6 +82,18 @@ public class DAO_CallLog
         return  newRow;
 
     }
+    public void CreateCallLogRow(CallLog callLog)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(_dbHelper.CALL_DATE, _dateTimeManager.convertToMilisec(callLog.get_callDate()));
+        values.put(_dbHelper.CALL_NUMBER, callLog.get_callNumber());
+        values.put(_dbHelper.DURATION, callLog.get_callDuration());
+        values.put(_dbHelper.CALL_FEE, callLog.get_callFee());
+        values.put(_dbHelper.CALL_TYPE, callLog.get_callType());
+        long insertId = _database.insert(_dbHelper.CALL_TABLE, null, values);
+
+    }
     public void DeleteCallLogRow(int callId)
     {
         _database.delete(_dbHelper.CALL_TABLE, _dbHelper.CALL_ID + " = " + callId, null);
@@ -85,7 +102,8 @@ public class DAO_CallLog
     {
 
         List<CallLog> _listCall = new ArrayList<CallLog>();
-        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,null);
+         //_database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,null);
+        Cursor cursor =_database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,_dbHelper.CALL_DATE + " DESC",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast())
         {
@@ -100,17 +118,36 @@ public class DAO_CallLog
     public CallLog FindCallLogById(int _id)
     {
         CallLog temp;
-        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,_dbHelper.CALL_ID + "=" + _id,null,null,null,null);
-        if(cursor == null)
+        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,_dbHelper.CALL_ID + " = " + _id,null,null,null,null);
+        if(!cursor.moveToFirst())
             return null;
         else
         {
-            cursor.moveToFirst();
+
             temp = CursortoCallLog(cursor);
         }
         cursor.close();
         return temp;
     }
+    public long getLastedCallTime()
+    {
+        long time;
+        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,_dbHelper.CALL_DATE + " DESC",null);
+        if(cursor.moveToFirst())
+        {
+            CallLog temp;
+            temp = CursortoCallLog(cursor);
+            return _dateTimeManager.convertToMilisec(temp.get_callDate());
 
+        }
+        return 0;
+    }
+
+    public boolean isDatabaseOpening()
+    {
+        if(_database.isOpen())
+            return true;
+        return false;
+    }
 
 }

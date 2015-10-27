@@ -12,6 +12,10 @@ public class Statistic
     private int _innerMessageFee;
     private int _outerMessageFee;
 
+    private long _innerCallDuration;
+    private long _outerCallDuration;
+    private int _innerMessageCount;
+    private int _outerMessageCount;
     public Statistic() {
         _month = 0;
         _year = 0;
@@ -19,6 +23,10 @@ public class Statistic
         _outerCallFee = 0;
         _innerMessageFee = 0;
         _outerMessageFee = 0;
+        _innerCallDuration = 0;
+        _outerCallDuration = 0;
+        _innerMessageCount = 0;
+        _outerMessageCount = 0;
     }
 
     public int get_month() {
@@ -29,6 +37,14 @@ public class Statistic
         return _year;
     }
 
+    public long get_innerCallDuration(){return _innerCallDuration;}
+
+    public long get_outerCallDuration(){return _outerCallDuration;}
+
+    public int get_innerMessageCount() {return _innerMessageCount;}
+
+    public int get_outerMessageCount() {return _outerMessageCount;
+    }
     public int get_innerCallFee() {
         return _innerCallFee;
     }
@@ -69,4 +85,10 @@ public class Statistic
     {
         _outerMessageFee = outerMessageFee;
     }
+
+    public void set_innerCallDuration(long innerCallDuration){_innerCallDuration = innerCallDuration;}
+    public void set_outerCallDuration(long outerCallDuration) {_outerCallDuration = outerCallDuration;}
+
+    public void set_innerMessageCount(int innerMessageCount) {_innerMessageCount = innerMessageCount;}
+    public void set_outerMessageCount (int outerMessageCount) {_outerMessageCount = outerMessageCount;}
 }

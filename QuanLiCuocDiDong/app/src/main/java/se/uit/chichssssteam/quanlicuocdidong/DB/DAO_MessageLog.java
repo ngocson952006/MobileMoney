@@ -13,6 +13,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import se.uit.chichssssteam.quanlicuocdidong.Manager.DateTimeManager;
+
 /**
  * Created by justinvan on 03-Oct-15.
  */
@@ -24,8 +26,8 @@ public class DAO_MessageLog
 
     private SQLiteDatabase _database;
     private DbHelper _dbHelper;
-    private String[] _listColumn = {_dbHelper.MESS_ID, _dbHelper.MESSAGE_DATE, _dbHelper.RECEIVER, _dbHelper.MESSAGE_FEE};
-
+    private String[] _listColumn = {_dbHelper.MESS_ID, _dbHelper.MESSAGE_DATE, _dbHelper.RECEIVER, _dbHelper.MESSAGE_FEE, _dbHelper.MESSAGE_TYPE};
+    private DateTimeManager _dateTimeManager;
     public DAO_MessageLog(Context context) {
         _dbHelper = _dbHelper.getInstance(context);
     }
@@ -54,13 +56,15 @@ public class DAO_MessageLog
     }
 
 
-    public MessageLog CreateMessageLogRow(String messageDate, String receiver, int messageFee)
+    public MessageLog CreateMessageLogRow(String messageDate, String receiver, int messageFee, int type)
     {
         MessageLog msgLog  = new MessageLog();
         ContentValues values = new ContentValues();
-        values.put(_dbHelper.MESSAGE_DATE, _dbHelper.convertToMilisec(messageDate));
+
+        values.put(_dbHelper.MESSAGE_DATE, _dateTimeManager.convertToMilisec(messageDate));
         values.put(_dbHelper.RECEIVER , receiver);
         values.put(_dbHelper.MESSAGE_FEE, messageFee);
+        values.put(_dbHelper.MESSAGE_TYPE, type );
         long insertId = _database.insert(_dbHelper.MESSAGE_TABLE,null,values);
         Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn, _dbHelper.MESS_ID + " = " + insertId, null,null,null,null);
         cursor.moveToFirst();
@@ -70,6 +74,15 @@ public class DAO_MessageLog
 
     }
 
+    public void CreateMessageLogRow(MessageLog messageLog)
+    {
+        ContentValues values = new ContentValues();
+        values.put(_dbHelper.MESSAGE_DATE, _dateTimeManager.convertToMilisec(messageLog.get_messageDate()));
+        values.put(_dbHelper.RECEIVER, messageLog.get_receiverNumber());
+        values.put(_dbHelper.MESSAGE_FEE,messageLog.get_messageFee());
+        values.put(_dbHelper.MESSAGE_TYPE, messageLog.get_messageType());
+        _database.insert(_dbHelper.MESSAGE_TABLE,null,values);
+    }
     public void DeleteMessageLog(int _id)
     {
         _database.delete(_dbHelper.MESSAGE_TABLE, _dbHelper.MESS_ID + " = " + _id, null);
@@ -95,15 +108,35 @@ public class DAO_MessageLog
     public MessageLog FindMessageLogbyId(int _id)
     {
         MessageLog messageLog;
-        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE, _listColumn, _dbHelper.MESS_ID + "=" + _id, null, null, null, null);
-        if(cursor == null)
+        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE, _listColumn, _dbHelper.MESS_ID + " = " + _id, null, null, null, null);
+        if(!cursor.moveToFirst())
             return null;
         else
         {
-            cursor.moveToFirst();
+
             messageLog = CursortoMessageLog(cursor);
         }
         cursor.close();
         return messageLog;
+    }
+    public long GetLastedMessageTime()
+    {
+        long lastedMessageLog;
+        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,null,null,null,null,_dbHelper.MESSAGE_DATE + " DESC",null);
+        if(cursor.moveToFirst())
+        {
+            MessageLog lastMessage = CursortoMessageLog(cursor);
+
+            lastedMessageLog = _dateTimeManager.convertToMilisec(lastMessage.get_messageDate());
+            return lastedMessageLog;
+        }
+        return 0;
+
+    }
+    public boolean isDatabaseOpening()
+    {
+        if(_database.isOpen())
+            return true;
+        return false;
     }
 }
