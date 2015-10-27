@@ -246,6 +246,7 @@ public class PhoneStateReceiver extends BroadcastReceiver
         @Override
         public void onCallStateChanged(int state, String incomingNumber)
         {
+            
             if(_isReceived == true)
                 return;
             if(incomingNumber != null && incomingNumber.length()>0)
@@ -281,7 +282,7 @@ public class PhoneStateReceiver extends BroadcastReceiver
             if(_isOutGoingCallEnd == true)
             {
                 //Toast.makeText(_context, "Cuoc goi di cua tao da xong!!!!!!", Toast.LENGTH_SHORT).show();
-                CallLog lastCall = _phoneCallLog.GetLastestOutGoingCall();
+                CallLog lastCall = _phoneCallLog.GetLastedOutGoingCall();
                 _myPackageFee.set_outGoingPhoneNumber(lastCall.get_callNumber());
                 _myPackageFee.set_callTime(lastCall.get_callDate());
                 _myPackageFee.set_callDuration(lastCall.get_callDuration());
