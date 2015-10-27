@@ -2,6 +2,7 @@ package se.uit.chichssssteam.quanlicuocdidong.NetworkPackage;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,7 +30,7 @@ public abstract class PackageFee
     protected int _outerMessageFee;
     //
 
-    protected  int _type;
+    protected  int _type;   // 0.Goi noi mang, 1. Goi ngoai mang, 2. Goi so khan cap
     //get methods
     public String get_sendMessageTime(){return this._sendMessageTime;}
     public String get_callTime()
@@ -55,14 +56,6 @@ public abstract class PackageFee
     }
     public int get_type()
     {
-        if(this._type == -1) {
-            if (this._numberHeader.isEmergencyCall(this._outGoingPhoneNumber))
-                this._type = 2;
-            if (this._numberHeader.isInternalNetwork(this._myNetwork, this._outGoingPhoneNumber))
-                this._type = 0;
-            else
-                this._type = 1;
-        }
         return this._type;
     }
      public NumberHeaderManager.networkName get_myNetwork()
@@ -80,6 +73,12 @@ public abstract class PackageFee
     public void set_outGoingPhoneNumber(String number)
     {
         this._outGoingPhoneNumber = number;
+        if (this._numberHeader.isEmergencyCall(this._outGoingPhoneNumber))
+            this._type = 2;
+        if (this._numberHeader.isInternalNetwork(this._myNetwork, this._outGoingPhoneNumber))
+            this._type = 0;
+        else
+            this._type = 1;
     }
     public void set_callDuration(int callduration)
     {
