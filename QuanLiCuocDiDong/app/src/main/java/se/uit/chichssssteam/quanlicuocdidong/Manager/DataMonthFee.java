@@ -18,6 +18,7 @@ public class DataMonthFee {
     public static final String TAG = DataMonthFee.class.getSimpleName();
     public static Context _myContext;
     public static List<Statistic> monthStatistics;
+    public static Statistic temp;
     public static List<MonthFee> monthFeeList;
     public static String[] titles;
     public static MonthFee[][] monthFeess;
@@ -30,9 +31,13 @@ public class DataMonthFee {
         titles = new String[n];
         monthFeess = new MonthFee[n][1];
         for (int i = 0; i < n; i++) {
-            monthFeeList.add(new MonthFee(monthStatistics.get(i)));
-            titles[i] = "Tháng " + monthFeeList.get(i).getMonth() + "/" +  monthFeeList.get(i).getYear();
-            monthFeess[i][1] = new MonthFee("10", "2015","1",12,"2",23,3,34,4,45);
+            temp = monthStatistics.get(i);
+            titles[i] = "Tháng " + temp.get_month() + "/" +  temp.get_year();
+            monthFeess[i][1] = new MonthFee(String.valueOf(temp.get_month()),String.valueOf(temp.get_year()),
+                                    DateTimeManager.get_instance().convertToMinutesAndSec(temp.get_innerCallDuration()),temp.get_innerCallFee(),
+                                    DateTimeManager.get_instance().convertToMinutesAndSec(temp.get_outerCallDuration()),temp.get_outerCallFee(),
+                                    temp.get_innerMessageCount(),temp.get_innerMessageFee(),
+                                    temp.get_outerMessageCount(),temp.get_outerMessageFee());
         }
         List<Pair<String, List<MonthFee>>> res = new ArrayList<Pair<String, List<MonthFee>>>();
 
