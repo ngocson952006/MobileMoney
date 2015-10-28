@@ -1,24 +1,30 @@
 package se.uit.chichssssteam.quanlicuocdidong.Manager;
 
+import se.uit.chichssssteam.quanlicuocdidong.DB.Statistic;
+
 /**
  * Created by QNghi on 23/10/2015.
  */
 public class MonthFee {
     public static final String TAG = MonthFee.class.getSimpleName();
 
-    private String month;
-    private String year;
+    protected String month;
+    protected String year;
     //Call variable
-    private String minutes_outerCall;
-    private String minutes_innerCall;
-    private int fee_outerCall;
-    private int fee_innerCall;
+    protected String minutes_outerCall;
+    protected String minutes_innerCall;
+    protected int fee_outerCall;
+    protected int fee_innerCall;
     //Message variaable
-    private int number_outerMess;
-    private int number_innerMess;
-    private int fee_outerMess;
-    private int fee_innerMess;
+    protected int number_outerMess;
+    protected int number_innerMess;
+    protected int fee_outerMess;
+    protected int fee_innerMess;
 
+    public MonthFee()
+    {
+
+    }
     public MonthFee(String month, String year) {
         this.month = month;
         this.year = year;
@@ -39,6 +45,20 @@ public class MonthFee {
         this.fee_innerMess = fee_innerMess;
         this.number_outerMess = number_outerMess;
         this.fee_outerMess = fee_outerMess;
+    }
+
+    public MonthFee(Statistic statistic)
+    {
+        this.month = String.valueOf(statistic.get_month());
+        this.year = String.valueOf(statistic.get_year());
+        this.minutes_innerCall = DateTimeManager.get_instance().convertToMinutesAndSec(statistic.get_innerCallDuration());
+        this.fee_innerCall = statistic.get_innerCallFee();
+        this.minutes_outerCall = DateTimeManager.get_instance().convertToMinutesAndSec(statistic.get_outerCallDuration());
+        this.fee_outerCall = statistic.get_outerCallFee();
+        this.number_innerMess = statistic.get_innerMessageCount();
+        this.fee_innerMess = statistic.get_innerMessageFee();
+        this.number_outerMess = statistic.get_outerMessageCount();
+        this.fee_outerMess = statistic.get_outerMessageFee();
     }
 
     public String getMinutes_outerCall() {
@@ -105,4 +125,19 @@ public class MonthFee {
         this.fee_innerMess = fee_innerMess;
     }
 
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 }

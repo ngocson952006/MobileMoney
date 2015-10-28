@@ -109,4 +109,15 @@ public class DateTimeManager
         }
         return 0;
     }
+    public String convertToMinutesAndSec( long sec)
+    {
+        int minutes = 0;
+        if(sec > 60)
+        {
+            minutes = (int) (sec/60);
+            sec = sec - minutes*60;
+            return minutes + "p" + sec + "s";
+        }
+        return sec + "s";
+    }
 }

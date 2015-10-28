@@ -108,7 +108,7 @@ public class ThongKeFragment extends Fragment {
     }
 
     class SectionMonthFeeAdapter extends AmazingAdapter {
-        List<Pair<String, List<MonthFee>>> all = DataMonthFee.getAllData();
+        List<Pair<String, List<MonthFee>>> all = DataMonthFee.getAllData(getContext());
 
         @Override
         public int getCount() {

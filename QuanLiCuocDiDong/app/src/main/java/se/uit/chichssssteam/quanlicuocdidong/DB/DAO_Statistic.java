@@ -1,14 +1,14 @@
 package se.uit.chichssssteam.quanlicuocdidong.DB;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by justinvan on 03-Oct-15.
@@ -152,7 +152,7 @@ public class DAO_Statistic
         return false;
     }
 
-    public void UpdateInnerCallInfo(int month, int year, int callFee, int callDuration)
+    public void UpdateInnerCallInfo(int month, int year, int callFee, long callDuration)
     {
         String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
         Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE,_listColumn,whereClause,null,null,null,null);
@@ -171,7 +171,7 @@ public class DAO_Statistic
         int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,values,whereClause,null);
     }
 
-    public void UpdateOuterCallInfo(int month, int year, int callFee, int callDuration)
+    public void UpdateOuterCallInfo(int month, int year, int callFee, long callDuration)
     {
         String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
         Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE,_listColumn,whereClause,null,null,null,null);
