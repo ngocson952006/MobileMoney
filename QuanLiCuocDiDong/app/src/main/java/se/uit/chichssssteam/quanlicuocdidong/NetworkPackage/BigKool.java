@@ -9,6 +9,7 @@ public class BigKool extends PackageFee
     private int _initCallFee;
     public BigKool()
     {
+
         this._initCallFee = 200;
         this._internalCallFee = 900;
         this._outerCallFee = 900;

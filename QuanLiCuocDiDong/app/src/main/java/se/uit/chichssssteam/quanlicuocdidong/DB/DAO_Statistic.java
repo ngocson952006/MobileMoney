@@ -152,7 +152,7 @@ public class DAO_Statistic
         return false;
     }
 
-    public void UpdateInnerCallInfo(int month, int year, int callFee, long callDuration)
+    public int UpdateInnerCallInfo(int month, int year, int callFee, long callDuration)
     {
         String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
         Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE,_listColumn,whereClause,null,null,null,null);
@@ -169,9 +169,10 @@ public class DAO_Statistic
         values.put(_dbHelper.INNER_CALL_FEE, currentCallFee);
         values.put(_dbHelper.INNER_CALL_DURATION, currentCallDuration);
         int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,values,whereClause,null);
+        return rowAffect;
     }
 
-    public void UpdateOuterCallInfo(int month, int year, int callFee, long callDuration)
+    public int UpdateOuterCallInfo(int month, int year, int callFee, long callDuration)
     {
         String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
         Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE,_listColumn,whereClause,null,null,null,null);
@@ -188,6 +189,7 @@ public class DAO_Statistic
         values.put(_dbHelper.OUTER_CALL_FEE, currentCallFee);
         values.put(_dbHelper.OUTER_CALL_DURATION, currentCallDuration);
         int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,values,whereClause,null);
+        return rowAffect;
     }
     public void UpdateInnerMessageInfo(int month, int year, int messageFee)
     {

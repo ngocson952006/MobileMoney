@@ -29,7 +29,7 @@ public class TalkTeen extends PackageFee
                 else
                 {
                     int remainDuration  = this._callDuration - this._callBlock;
-                    this._callFee = this._innerExceptionCallFee/10 +  remainDuration*Math.round((float)(this._innerExceptionCallFee/60));
+                    this._callFee = this._innerExceptionCallFee/10 +  remainDuration*Math.round(((float)this._innerExceptionCallFee/60));
 
                 }
                 return this._callFee;
@@ -45,7 +45,7 @@ public class TalkTeen extends PackageFee
                 else
                 {
                     int remainDuration  = this._callDuration - this._callBlock;
-                    this._callFee = this._outerExceptionCallFee/10 +  remainDuration*Math.round((float)(this._outerExceptionCallFee/60));
+                    this._callFee = this._outerExceptionCallFee/10 +  remainDuration*Math.round(((float)this._outerExceptionCallFee/60));
 
                 }
                 return this._callFee;

@@ -54,7 +54,8 @@ public class NumberHeaderManager
     {
         for(Iterator<String> i = this._emergencyNumber.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber).equals(i.next()))
+            String temp = i.next();
+            if(getHeadNumber(phoneNumber).equals(temp))
                 return true;
         }
         return false;
@@ -79,7 +80,8 @@ public class NumberHeaderManager
     {
         for(Iterator<String> i = this._mobifone.iterator(); i.hasNext();)
         {
-            if(getHeadNumber(phoneNumber).equals(i.next()))
+            String temp = i.next();
+            if(getHeadNumber(phoneNumber).equals(temp))
                 return true;
         }
         return false;

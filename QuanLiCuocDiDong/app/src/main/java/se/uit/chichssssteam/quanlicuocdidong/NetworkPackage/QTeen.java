@@ -31,7 +31,7 @@ public class QTeen extends PackageFee
                 else
                 {
                     int remainDuration  = this._callDuration - this._callBlock;
-                    this._callFee = this._exceptionCallFee/10 +  remainDuration*Math.round((float)(this._exceptionCallFee/60));
+                    this._callFee = this._exceptionCallFee/10 +  remainDuration*Math.round(((float)this._exceptionCallFee/60));
 
                 }
             }

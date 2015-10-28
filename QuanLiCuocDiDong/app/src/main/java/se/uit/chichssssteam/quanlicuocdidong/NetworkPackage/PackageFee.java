@@ -136,7 +136,7 @@ public abstract class PackageFee
             else
             {
                 int remainDuration = this._callDuration - this._callBlock;
-                this._callFee = (200/10) + remainDuration*Math.round((float)(200/60));
+                this._callFee = (200/10) + remainDuration*Math.round(((float)200/60));
             }
         }
         if(this._numberHeader.isEmergencyCall(this._outGoingPhoneNumber))
@@ -151,7 +151,7 @@ public abstract class PackageFee
             else
             {
                 int remainDuration = this._callDuration- this._callBlock;
-                this._callFee = (this._internalCallFee/10) + remainDuration*Math.round((float)(this._internalCallFee/60));
+                this._callFee = (this._internalCallFee/10) + remainDuration*Math.round(((float)this._internalCallFee/60));
             }
         }
         else
@@ -161,7 +161,7 @@ public abstract class PackageFee
             else
             {
                 int remainDuration = this._callDuration - this._callBlock;
-                this._callFee  = (this._outerCallFee/10) + remainDuration*Math.round((float)(this._outerCallFee/60));
+                this._callFee  = (this._outerCallFee/10) + remainDuration*Math.round(((float)this._outerCallFee/60));
             }
         }
         return this._callFee ;

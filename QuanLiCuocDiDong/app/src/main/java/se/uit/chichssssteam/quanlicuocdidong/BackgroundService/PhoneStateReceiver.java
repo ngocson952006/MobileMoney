@@ -225,6 +225,7 @@ public class PhoneStateReceiver extends BroadcastReceiver
     {
         _context = context;
         _callAdapter = new DAO_CallLog(context);
+        _callAdapter.Open();
         _phoneCallLog = new PhoneLogManager(_context,_myPackageFee);
         this.InitPackage();
         TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -287,7 +288,7 @@ public class PhoneStateReceiver extends BroadcastReceiver
                 _myPackageFee.set_callTime(lastCall.get_callDate());
                 _myPackageFee.set_callDuration(lastCall.get_callDuration());
                 _myPackageFee.get_type();
-                _callAdapter.Open();
+               // _callAdapter.Open();
                 _callAdapter.CreateCallLogRow(lastCall.get_callDate(),lastCall.get_callNumber(),lastCall.get_callDuration(),_myPackageFee.CalculateCallFee(),_myPackageFee.get_type());
                 _isOutGoingCallEnd = false;
             }
