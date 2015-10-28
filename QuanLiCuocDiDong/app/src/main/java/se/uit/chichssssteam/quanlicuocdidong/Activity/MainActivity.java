@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -101,7 +102,9 @@ public class MainActivity extends ActionBarActivity
         this._callLogTableAdapter = new DAO_CallLog(this);
         this._statisticTableAdapter = new DAO_Statistic(this);
         this._messageLogTableAdapter = new DAO_MessageLog(this);
-
+        this._callLogTableAdapter.Open();
+        this._messageLogTableAdapter.Open();
+        this._statisticTableAdapter.Open();
         initNavigationDrawer();
 
         // Get infomation from ChonGoiCuocActivitity
@@ -277,33 +280,29 @@ public class MainActivity extends ActionBarActivity
     }
     public void RenewCallData()
     {
-        if(!_callLogTableAdapter.isDatabaseOpening())
-            _callLogTableAdapter.Open();
+
         List<CallLog> _listCall = _logManager.LoadCallLogAfterTimeSpan(_lastCallUpdate);
         for(Iterator<CallLog> i = _listCall.iterator(); i.hasNext();)
         {
-
-            _callLogTableAdapter.CreateCallLogRow(i.next());
-            String callDate = _dateTimeManager.convertToDMYHms(i.next().get_callDate());
-            int callFee = i.next().get_callFee();
-            int callDuration = i.next().get_callDuration();
+            CallLog temp = i.next();
+            _callLogTableAdapter.CreateCallLogRow(temp);
+            String callDate = _dateTimeManager.convertToDMYHms(temp.get_callDate());
+            int callFee = temp.get_callFee();
+            int callDuration = temp.get_callDuration();
             if(_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(callDate), _dateTimeManager.getYear(callDate)) == null)
             {
                 _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(callDate), _dateTimeManager.getYear(callDate));
             }
-            if(i.next().get_callType() == 1)
+            if(temp.get_callType() == 1)
             {
                 _statisticTableAdapter.UpdateInnerCallInfo( _dateTimeManager.getMonth(callDate),
                         _dateTimeManager.getYear(callDate),callFee,callDuration);
-                //_statisticTableAdapter.UpdateStatisticRow(
-                // _dateTimeManager.getMonth(callDate),_dateTimeManager.getYear(callDate),callFee,DbHelper.INNER_CALL_FEE);
+
             }
-            else if (i.next().get_callType() == 2)
+            else if (temp.get_callType() == 2)
             {
                 _statisticTableAdapter.UpdateOuterCallInfo( _dateTimeManager.getMonth(callDate),
                         _dateTimeManager.getYear(callDate),callFee,callDuration);
-                //_statisticTableAdapter.UpdateStatisticRow(
-                // _dateTimeManager.getMonth(callDate),_dateTimeManager.getYear(callDate),callFee,DbHelper.OUTER_CALL_FEE);
             }
 
         }
@@ -311,26 +310,26 @@ public class MainActivity extends ActionBarActivity
     }
     public void RenewMessageData()
     {
-        if(!_messageLogTableAdapter.isDatabaseOpening())
-            _messageLogTableAdapter.Open();
+
         List<MessageLog> _listMessage = _logManager.LoadMessageLogAfterTimeSpan(_lastMessageUpdate);
         for(Iterator<MessageLog> i = _listMessage.iterator();i.hasNext();)
         {
-            _messageLogTableAdapter.CreateMessageLogRow(i.next());
-            String messageDate = _dateTimeManager.convertToDMYHms(i.next().get_messageDate());
-            int messageFee = i.next().get_messageFee();
+            MessageLog temp = i.next();
+            _messageLogTableAdapter.CreateMessageLogRow(temp);
+            String messageDate = _dateTimeManager.convertToDMYHms(temp.get_messageDate());
+            int messageFee = temp.get_messageFee();
             if(_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate)) == null)
             {
                 _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(messageDate),_dateTimeManager.getYear(messageDate));
 
             }
-            if(i.next().get_messageType() == 1)
+            if(temp.get_messageType() == 1)
             {
                 //_statisticTableAdapter.UpdateStatisticRow(
                 // _dateTimeManager.getMonth(messageDate),_dateTimeManager.getYear(messageDate),messageFee,DbHelper.INNER_MESSAGE_FEE);
                 _statisticTableAdapter.UpdateInnerMessageInfo(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate), messageFee);
             }
-            else if (i.next().get_messageType() == 2)
+            else if (temp.get_messageType() == 2)
             {
                 // _statisticTableAdapter.UpdateStatisticRow(
                 //_dateTimeManager.getMonth(messageDate),_dateTimeManager.getYear(messageDate),messageFee,DbHelper.OUTER_MESSAGE_FEE);
@@ -351,23 +350,23 @@ public class MainActivity extends ActionBarActivity
         List<CallLog> _listCall = _logManager.LoadCallLogFromPhone();
         for(Iterator<CallLog> i = _listCall.iterator(); i.hasNext();)
         {
-
-            _callLogTableAdapter.CreateCallLogRow(i.next());
-            String callDate = _dateTimeManager.convertToDMYHms(i.next().get_callDate());
-            int callFee = i.next().get_callFee();
-            int callDuration = i.next().get_callDuration();
+            CallLog temp = i.next();
+            _callLogTableAdapter.CreateCallLogRow(temp);
+            String callDate = _dateTimeManager.convertToDMYHms(temp.get_callDate());
+            int callFee = temp.get_callFee();
+            int callDuration = temp.get_callDuration();
             if(_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(callDate), _dateTimeManager.getYear(callDate)) == null)
             {
                 _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(callDate), _dateTimeManager.getYear(callDate));
             }
-            if(i.next().get_callType() == 1)
+            if(temp.get_callType() == 1)
             {
                 _statisticTableAdapter.UpdateInnerCallInfo( _dateTimeManager.getMonth(callDate),
                                         _dateTimeManager.getYear(callDate),callFee,callDuration);
                 //_statisticTableAdapter.UpdateStatisticRow(
                        // _dateTimeManager.getMonth(callDate),_dateTimeManager.getYear(callDate),callFee,DbHelper.INNER_CALL_FEE);
             }
-            else if (i.next().get_callType() == 2)
+            else if (temp.get_callType() == 2)
             {
                 _statisticTableAdapter.UpdateOuterCallInfo( _dateTimeManager.getMonth(callDate),
                         _dateTimeManager.getYear(callDate),callFee,callDuration);
@@ -380,26 +379,26 @@ public class MainActivity extends ActionBarActivity
     }
     public void FirstInitMessageLog()
     {
-        if(!_messageLogTableAdapter.isDatabaseOpening())
-            _messageLogTableAdapter.Open();
+
         List<MessageLog> _listMessage = _logManager.LoadMessageLogFromPhone();
         for(Iterator<MessageLog> i = _listMessage.iterator();i.hasNext();)
         {
-            _messageLogTableAdapter.CreateMessageLogRow(i.next());
-            String messageDate = _dateTimeManager.convertToDMYHms(i.next().get_messageDate());
-            int messageFee = i.next().get_messageFee();
+            MessageLog temp = i.next();
+            _messageLogTableAdapter.CreateMessageLogRow(temp);
+            String messageDate = _dateTimeManager.convertToDMYHms(temp.get_messageDate());
+            int messageFee = temp.get_messageFee();
             if(_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate)) == null)
             {
                 _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(messageDate),_dateTimeManager.getYear(messageDate));
 
             }
-            if(i.next().get_messageType() == 1)
+            if(temp.get_messageType() == 1)
             {
                 //_statisticTableAdapter.UpdateStatisticRow(
                        // _dateTimeManager.getMonth(messageDate),_dateTimeManager.getYear(messageDate),messageFee,DbHelper.INNER_MESSAGE_FEE);
                 _statisticTableAdapter.UpdateInnerMessageInfo(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate), messageFee);
             }
-            else if (i.next().get_messageType() == 2)
+            else if (temp.get_messageType() == 2)
             {
                // _statisticTableAdapter.UpdateStatisticRow(
                         //_dateTimeManager.getMonth(messageDate),_dateTimeManager.getYear(messageDate),messageFee,DbHelper.OUTER_MESSAGE_FEE);
@@ -437,9 +436,9 @@ public class MainActivity extends ActionBarActivity
             idImage = settings.getInt(KEY_IDIMAGE, 0);
             _lastCallUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_CALL, TIME_DEDAULT);
             _lastMessageUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_MESSAGE, TIME_DEDAULT);
-            this.InitPackage(this.goiCuoc);
-            this._logManager = PhoneLogManager.get_instance(this,_myPackageFee);
-            RenewData();
+            //this.InitPackage(this.goiCuoc);
+            //this._logManager = PhoneLogManager.get_instance(this,_myPackageFee);
+            //RenewData();
         }
 
 

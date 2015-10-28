@@ -115,8 +115,11 @@ public class DAO_Statistic
     public Statistic FindStatisticByMonthYear(int month, int year)
     {
         Statistic result;
-        Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn,  _dbHelper.MONTH + " = " + month + " AND "
-                + _dbHelper.YEAR + " = " + year,null,null,null,null);
+        //Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn,  _dbHelper.MONTH + " = " + month + " AND "
+              //  + _dbHelper.YEAR + " = " + year,null,null,null,null);
+        String rawQuery = "SELECT * FROM " + _dbHelper.STATISTIC_TABLE + " WHERE " + _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " + year;
+        _database = _dbHelper.getReadableDatabase();
+        Cursor cursor = _database.rawQuery(rawQuery,null);
         if(!cursor.moveToFirst())
             return null;
         else

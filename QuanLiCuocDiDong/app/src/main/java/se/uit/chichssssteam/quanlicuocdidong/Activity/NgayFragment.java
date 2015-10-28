@@ -12,6 +12,7 @@ import java.util.List;
 import se.uit.chichssssteam.quanlicuocdidong.DB.CallLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_CallLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_MessageLog;
+import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_Statistic;
 import se.uit.chichssssteam.quanlicuocdidong.DB.MessageLog;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.OnFragmentInteractionListener;
 import se.uit.chichssssteam.quanlicuocdidong.NetworkPackage.PackageFee;
@@ -62,6 +63,7 @@ public class NgayFragment extends Fragment {
         }
         _myActivity = (MainActivity)getActivity();
         _mycallLog = new DAO_CallLog(_myActivity);
+        List<CallLog> a = _mycallLog.GetAllCallLog();
         _myMessageLog = new DAO_MessageLog(_myActivity);
         _mycallLog.Open();
 

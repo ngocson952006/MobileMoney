@@ -28,6 +28,7 @@ public class DAO_CallLog
     public DAO_CallLog(Context context)
     {
         _dbHelper = _dbHelper.getInstance(context);
+        _dateTimeManager = DateTimeManager.get_instance();
     }
     public void Open() throws  SQLException
     {

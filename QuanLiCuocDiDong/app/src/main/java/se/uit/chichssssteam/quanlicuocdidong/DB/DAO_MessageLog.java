@@ -30,6 +30,7 @@ public class DAO_MessageLog
     private DateTimeManager _dateTimeManager;
     public DAO_MessageLog(Context context) {
         _dbHelper = _dbHelper.getInstance(context);
+        _dateTimeManager = DateTimeManager.get_instance();
     }
 
     public void Open() throws SQLException
