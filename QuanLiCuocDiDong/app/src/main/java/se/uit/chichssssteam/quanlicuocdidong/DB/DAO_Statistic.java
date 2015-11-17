@@ -176,7 +176,7 @@ public class DAO_Statistic
 
     public int UpdateOuterCallInfo(int month, int year, int callFee, long callDuration)
     {
-        String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
+       /* String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
         Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE,_listColumn,whereClause,null,null,null,null);
         int currentCallFee = 0;
         int currentCallDuration = 0;
@@ -191,6 +191,26 @@ public class DAO_Statistic
         values.put(_dbHelper.OUTER_CALL_FEE, currentCallFee);
         values.put(_dbHelper.OUTER_CALL_DURATION, currentCallDuration);
         int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,values,whereClause,null);
+        cursor.close();
+        return rowAffect;*/
+        String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
+        Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn, whereClause, null, null, null, null);
+
+        int currentCallFee = 0;
+        int currentCallDuration = 0;
+        if(cursor.moveToFirst())
+        {
+
+            currentCallFee = cursor.getInt(cursor.getColumnIndex(_dbHelper.OUTER_CALL_FEE));
+            currentCallDuration = cursor.getInt(cursor.getColumnIndex(_dbHelper.OUTER_CALL_DURATION));
+        }
+        currentCallFee += callFee;
+        currentCallDuration += callDuration;
+        ContentValues values = new ContentValues();
+        values.put(_dbHelper.OUTER_CALL_FEE, currentCallFee);
+        values.put(_dbHelper.OUTER_CALL_DURATION, currentCallDuration);
+        int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE, values, whereClause, null);
+
         cursor.close();
         return rowAffect;
     }

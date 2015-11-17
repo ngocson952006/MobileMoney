@@ -75,7 +75,7 @@ public class Statistic
 
     public void set_outerCallFee(int outerCallFee)
     {
-        _outerMessageFee = outerCallFee;
+        _outerCallFee = outerCallFee;
     }
     public void set_innerMessageFee(int innerMessageFee)
     {
