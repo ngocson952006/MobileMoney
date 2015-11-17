@@ -3,13 +3,17 @@ package se.uit.chichssssteam.quanlicuocdidong.BackgroundService;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 
 import java.util.Date;
@@ -285,7 +289,8 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                         layoutParams.packageName  = _context.getPackageName();
                         layoutParams.buttonBrightness = 1f;
                         layoutParams.windowAnimations = android.R.style.Animation_Dialog;*/
-                        final AlertDialog alertDialog = new AlertDialog.Builder(_context).create();
+                        final AlertDialog alertDialog = new AlertDialog.Builder(_context,AlertDialog.THEME_HOLO_LIGHT).create();
+                        //final AlertDialog alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(_context,android.R.style.Theme_Material_Light_Dialog)).create();
                         alertDialog.setTitle("Call Information");
                         alertDialog.setMessage("Duration: " + lastCall.get_callDuration() + "secs" + "\nCost: " + lastCall.get_callFee() + " VND");
 
@@ -302,6 +307,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                         layoutParams.alpha = 1.0f;
                         layoutParams.buttonBrightness = 1.0f;
                         layoutParams.windowAnimations = android.R.style.Theme_Material_Light_Dialog_Alert;
+
 
                         //alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
                         alertDialog.getWindow().setAttributes(layoutParams);
