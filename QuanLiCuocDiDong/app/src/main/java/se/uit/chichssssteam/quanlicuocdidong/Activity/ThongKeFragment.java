@@ -33,6 +33,7 @@ public class ThongKeFragment extends Fragment {
 
     AmazingListView lsComposer;
     SectionMonthFeeAdapter adapter;
+    String currency = "đ";
 
     /**
      * Use this factory method to create a new instance of
@@ -170,18 +171,18 @@ public class ThongKeFragment extends Fragment {
 
             MonthFee monthFee = getItem(position);
 
-            textViewTongTienGoi.setText(String.valueOf(monthFee.getFee_innerCall() + monthFee.getFee_outerCall()) + "đ");
+            textViewTongTienGoi.setText(String.valueOf(monthFee.getFee_innerCall() + monthFee.getFee_outerCall()) + currency);
             textViewSoPhutGoiNoiMang.setText(monthFee.getMinutes_innerCall());
-            textViewTienGoiNoiMang.setText(String.valueOf(monthFee.getFee_innerCall()) + "đ");
+            textViewTienGoiNoiMang.setText(String.valueOf(monthFee.getFee_innerCall()) + currency);
             textViewSoPhutGoiNgoaiMang.setText(monthFee.getMinutes_outerCall());
-            textViewTienGoiNgoaiMang.setText(String.valueOf(monthFee.getFee_outerCall()) + "đ");
-            textViewTongTienSmS.setText(String.valueOf(monthFee.getFee_innerMess() + monthFee.getFee_outerMess()) + "đ");
+            textViewTienGoiNgoaiMang.setText(String.valueOf(monthFee.getFee_outerCall()) + currency);
+            textViewTongTienSmS.setText(String.valueOf(monthFee.getFee_innerMess() + monthFee.getFee_outerMess()) + currency);
             textViewSoSmsNoiMang.setText(String.valueOf(monthFee.getNumber_innerMess()));
-            textViewTienSmSNoiMang.setText(String.valueOf(monthFee.getFee_innerMess()) + "đ");
+            textViewTienSmSNoiMang.setText(String.valueOf(monthFee.getFee_innerMess()) + currency);
             textViewSoSmsNgoaiMang.setText(String.valueOf(monthFee.getNumber_outerMess()));
-            textViewTienSmsNgoaiMang.setText(String.valueOf(monthFee.getFee_outerMess()) + "đ");
-            textViewTongTien.setText(String.valueOf(Integer.parseInt(textViewTongTienGoi.getText().toString()
-                                    ) + Integer.parseInt(textViewTongTienSmS.getText().toString())) + "đ");
+            textViewTienSmsNgoaiMang.setText(String.valueOf(monthFee.getFee_outerMess()) + currency);
+            textViewTongTien.setText(String.valueOf(monthFee.getFee_innerCall() + monthFee.getFee_outerCall() +
+                                                    monthFee.getFee_innerMess() + monthFee.getFee_outerMess()) + currency);
 
             return res;
         }

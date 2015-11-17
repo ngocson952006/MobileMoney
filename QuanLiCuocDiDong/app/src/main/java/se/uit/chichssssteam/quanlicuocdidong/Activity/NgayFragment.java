@@ -96,7 +96,7 @@ public class NgayFragment extends Fragment
         this.day = now.getYear();
         this.month = now.getMonthOfYear();
         this.year = now.getDayOfMonth();
-        upDateData();
+        //upDateData();
 
         return view;
     }
