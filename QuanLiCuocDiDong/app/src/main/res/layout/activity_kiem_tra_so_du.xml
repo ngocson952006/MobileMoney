@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Kiểm tra tài khoản khuyến mãi: Nhấn *102#"
-                    android:id="@+id/textView3"
+                    android:id="@+id/textViewKhuyenMai"
                     android:textSize="15dp" />
 
             </LinearLayout>

@@ -107,7 +107,8 @@ public class ChonGoiCuocActivity extends Activity {
                 stringTut = "Nhấn *110#";
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VinaCard", R.drawable.vinacard));
                 arrayListPackageNw.add(new PackageNetwork(mangDiDong,"VinaXtra", R.drawable.vinaxtra));
-                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"TalkEZ", R.drawable.talkez));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"TalkTeen", R.drawable.talkez));
+                arrayListPackageNw.add(new PackageNetwork(mangDiDong,"TalkStudent", R.drawable.talkez));
                 break;
             }
             case "Viettel": {

@@ -170,18 +170,18 @@ public class ThongKeFragment extends Fragment {
 
             MonthFee monthFee = getItem(position);
 
-            textViewTongTienGoi.setText(String.valueOf(monthFee.getFee_innerCall() + monthFee.getFee_outerCall()));
+            textViewTongTienGoi.setText(String.valueOf(monthFee.getFee_innerCall() + monthFee.getFee_outerCall()) + "đ");
             textViewSoPhutGoiNoiMang.setText(monthFee.getMinutes_innerCall());
-            textViewTienGoiNoiMang.setText(String.valueOf(monthFee.getFee_innerCall()));
+            textViewTienGoiNoiMang.setText(String.valueOf(monthFee.getFee_innerCall()) + "đ");
             textViewSoPhutGoiNgoaiMang.setText(monthFee.getMinutes_outerCall());
-            textViewTienGoiNgoaiMang.setText(String.valueOf(monthFee.getFee_outerCall()));
-            textViewTongTienSmS.setText(String.valueOf(monthFee.getFee_innerMess() + monthFee.getFee_outerMess()));
+            textViewTienGoiNgoaiMang.setText(String.valueOf(monthFee.getFee_outerCall()) + "đ");
+            textViewTongTienSmS.setText(String.valueOf(monthFee.getFee_innerMess() + monthFee.getFee_outerMess()) + "đ");
             textViewSoSmsNoiMang.setText(String.valueOf(monthFee.getNumber_innerMess()));
-            textViewTienSmSNoiMang.setText(String.valueOf(monthFee.getFee_innerMess()));
+            textViewTienSmSNoiMang.setText(String.valueOf(monthFee.getFee_innerMess()) + "đ");
             textViewSoSmsNgoaiMang.setText(String.valueOf(monthFee.getNumber_outerMess()));
-            textViewTienSmsNgoaiMang.setText(String.valueOf(monthFee.getFee_outerMess()));
+            textViewTienSmsNgoaiMang.setText(String.valueOf(monthFee.getFee_outerMess()) + "đ");
             textViewTongTien.setText(String.valueOf(Integer.parseInt(textViewTongTienGoi.getText().toString()
-                                    ) + Integer.parseInt(textViewTongTienSmS.getText().toString())));
+                                    ) + Integer.parseInt(textViewTongTienSmS.getText().toString())) + "đ");
 
             return res;
         }

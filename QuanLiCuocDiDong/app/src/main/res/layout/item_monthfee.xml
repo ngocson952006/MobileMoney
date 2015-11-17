@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.000đ"
+                android:text="1.000"
                 android:id="@+id/textViewTongTienGoi"
                 android:gravity="right"
                 android:textColor="@color/abc_primary_text_material_light" />

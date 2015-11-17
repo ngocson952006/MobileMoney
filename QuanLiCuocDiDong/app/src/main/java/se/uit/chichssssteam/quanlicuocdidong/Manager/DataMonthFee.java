@@ -15,11 +15,9 @@ import se.uit.chichssssteam.quanlicuocdidong.DB.Statistic;
  * Created by QNghi on 23/10/2015.
  */
 public class DataMonthFee {
-    public static final String TAG = DataMonthFee.class.getSimpleName();
     public static Context _myContext;
     public static List<Statistic> monthStatistics;
     public static Statistic temp;
-    public static MonthFee tempMonthFee;
     public static String[] titles;
     public static MonthFee[][] monthFeess;
     public static List<Pair<String, List<MonthFee>>> getAllData(Context myContext) {
@@ -33,12 +31,11 @@ public class DataMonthFee {
         for (int i = 0; i < n; i++) {
             temp = monthStatistics.get(i);
             titles[i] = "Tháng " + temp.get_month() + "/" +  temp.get_year();
-            tempMonthFee = new MonthFee(String.valueOf(temp.get_month()),String.valueOf(temp.get_year()),
+            monthFeess[i][0] = new MonthFee(String.valueOf(temp.get_month()),String.valueOf(temp.get_year()),
                                     DateTimeManager.get_instance().convertToMinutesAndSec(temp.get_innerCallDuration()),temp.get_innerCallFee(),
                                     DateTimeManager.get_instance().convertToMinutesAndSec(temp.get_outerCallDuration()),temp.get_outerCallFee(),
                                     temp.get_innerMessageCount(),temp.get_innerMessageFee(),
                                     temp.get_outerMessageCount(),temp.get_outerMessageFee());
-            monthFeess[i][0] = tempMonthFee;
         }
         List<Pair<String, List<MonthFee>>> res = new ArrayList<Pair<String, List<MonthFee>>>();
 

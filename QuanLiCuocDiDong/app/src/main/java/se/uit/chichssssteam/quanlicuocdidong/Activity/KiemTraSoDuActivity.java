@@ -3,6 +3,7 @@ package se.uit.chichssssteam.quanlicuocdidong.Activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.jar.Manifest;
+
 import se.uit.chichssssteam.quanlicuocdidong.R;
 
 public class KiemTraSoDuActivity extends Activity {
@@ -20,6 +23,7 @@ public class KiemTraSoDuActivity extends Activity {
     private TextView textViewGT;
     private TextView textViewHD;
     private TextView textViewTTCT;
+    private TextView textViewKM;
     private Button buttonChinh;
     private Button buttonKM;
     @Override
@@ -65,6 +69,9 @@ public class KiemTraSoDuActivity extends Activity {
     }
     private void getControl()
     {
+        String mangDiDong;
+        SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
+        mangDiDong = settings.getString(MainActivity.KEY_NHAMANG, MainActivity.VALUE_DEFAULT);
         textViewGT = (TextView) findViewById(R.id.textViewGioithieu);
         textViewHD = (TextView) findViewById(R.id.textViewHuongDan);
         textViewTTCT = (TextView) findViewById(R.id.textViewTTChiTiet);
@@ -76,8 +83,14 @@ public class KiemTraSoDuActivity extends Activity {
                 startActivity(callIntent);
             }
         });
-
         buttonKM= (Button) findViewById(R.id.buttonKM);
+        textViewKM = (TextView) findViewById(R.id.textViewKhuyenMai);
+        if (!mangDiDong.equals("Viettel"))
+        {
+            buttonKM.setVisibility(View.INVISIBLE);
+            textViewKM.setVisibility(View.INVISIBLE);
+            return;
+        }
         buttonKM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +98,7 @@ public class KiemTraSoDuActivity extends Activity {
                 startActivity(callIntent);
             }
         });
+
     }
 }
 

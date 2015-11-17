@@ -1,14 +1,10 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
-import android.app.FragmentBreadCrumbs;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -26,7 +22,6 @@ import se.uit.chichssssteam.quanlicuocdidong.DB.CallLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_CallLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_MessageLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_Statistic;
-import se.uit.chichssssteam.quanlicuocdidong.DB.DbHelper;
 import se.uit.chichssssteam.quanlicuocdidong.DB.MessageLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.Statistic;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.DateTimeManager;
@@ -163,22 +158,18 @@ public class MainActivity extends ActionBarActivity
                 setTitle(ThongKeFragment.getNameFragment());
                 break;
             case 1:
-                fragmentClass = ThangFragment.class;
-                setTitle(ThangFragment.getNameFragment());
-                break;
-            case 2:
                 fragmentClass = NgayFragment.class;
                 setTitle(NgayFragment.getNameFragment());
                 break;
-            case 3:
+            case 2:
                 fragmentClass = CaiDatFragment.class;
                 setTitle(CaiDatFragment.getNameFragment());
                 break;
-            case 4:
+            case 3:
                 fragmentClass = TienIchFragment.class;
                 setTitle(TienIchFragment.getNameFragment());
                 break;
-            case 5:
+            case 4:
                 fragmentClass = GioiThieuFragment.class;
                 setTitle(GioiThieuFragment.getNameFragment());
                 break;

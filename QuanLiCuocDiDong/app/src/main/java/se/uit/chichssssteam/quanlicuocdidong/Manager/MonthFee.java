@@ -1,7 +1,5 @@
 package se.uit.chichssssteam.quanlicuocdidong.Manager;
 
-import se.uit.chichssssteam.quanlicuocdidong.DB.Statistic;
-
 /**
  * Created by QNghi on 23/10/2015.
  */
@@ -45,20 +43,6 @@ public class MonthFee {
         this.fee_innerMess = fee_innerMess;
         this.number_outerMess = number_outerMess;
         this.fee_outerMess = fee_outerMess;
-    }
-
-    public MonthFee(Statistic statistic)
-    {
-        this.month = String.valueOf(statistic.get_month());
-        this.year = String.valueOf(statistic.get_year());
-        this.minutes_innerCall = DateTimeManager.get_instance().convertToMinutesAndSec(statistic.get_innerCallDuration());
-        this.fee_innerCall = statistic.get_innerCallFee();
-        this.minutes_outerCall = DateTimeManager.get_instance().convertToMinutesAndSec(statistic.get_outerCallDuration());
-        this.fee_outerCall = statistic.get_outerCallFee();
-        this.number_innerMess = statistic.get_innerMessageCount();
-        this.fee_innerMess = statistic.get_innerMessageFee();
-        this.number_outerMess = statistic.get_outerMessageCount();
-        this.fee_outerMess = statistic.get_outerMessageFee();
     }
 
     public String getMinutes_outerCall() {
