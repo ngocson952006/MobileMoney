@@ -120,4 +120,17 @@ public class DateTimeManager
         }
         return sec + "s";
     }
+
+    public String ConvertToTimeSpan(String date)
+    {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+            Date d = format.parse(date);
+            SimpleDateFormat serverFormat = new SimpleDateFormat("HH:mm:ss",Locale.ENGLISH);
+            return serverFormat.format(d);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

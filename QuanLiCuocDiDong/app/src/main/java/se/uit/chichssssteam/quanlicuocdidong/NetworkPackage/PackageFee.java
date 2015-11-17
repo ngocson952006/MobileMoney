@@ -70,10 +70,23 @@ public abstract class PackageFee
     {
         this._callTime = time;
     }
-
+    public void NormalizePhoneNumber(String number)
+    {
+        String result = "";
+        if(number.contains("+"))
+        {
+            result = "0" + number.substring(3);
+        }
+        if(number.contains("-"))
+            result = result.replaceAll("-", "");
+        //return result;
+    }
     public void set_outGoingPhoneNumber(String number)
     {
         this._outGoingPhoneNumber = number;
+        NormalizePhoneNumber(this._outGoingPhoneNumber);
+        //this._outGoingPhoneNumber = NormalizePhoneNumber(number);
+
         if (this._numberHeader.isEmergencyCall(this._outGoingPhoneNumber))
             this._type = 2;
         if (this._numberHeader.isInternalNetwork(this._myNetwork, this._outGoingPhoneNumber))
@@ -128,6 +141,8 @@ public abstract class PackageFee
     public int CalculateCallFee()
     {
         this.get_type();
+        if(this._callDuration == 0)
+            return 0;
         if(this._numberHeader.isMobifoneCareCostRequire(this._myNetwork,this._outGoingPhoneNumber))
         {
             if(this._callDuration <= this._callBlock)

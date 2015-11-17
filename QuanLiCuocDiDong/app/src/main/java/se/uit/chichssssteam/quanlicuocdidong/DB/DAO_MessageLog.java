@@ -131,13 +131,8 @@ public class DAO_MessageLog
             lastedMessageLog = _dateTimeManager.convertToMilisec(lastMessage.get_messageDate());
             return lastedMessageLog;
         }
+        cursor.close();
         return 0;
 
-    }
-    public boolean isDatabaseOpening()
-    {
-        if(_database.isOpen())
-            return true;
-        return false;
     }
 }

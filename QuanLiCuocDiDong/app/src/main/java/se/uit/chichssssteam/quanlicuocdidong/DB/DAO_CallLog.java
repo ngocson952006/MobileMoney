@@ -103,7 +103,6 @@ public class DAO_CallLog
     {
 
         List<CallLog> _listCall = new ArrayList<CallLog>();
-         //_database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,null);
         Cursor cursor =_database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,_dbHelper.CALL_DATE + " DESC",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast())
@@ -132,23 +131,19 @@ public class DAO_CallLog
     }
     public long getLastedCallTime()
     {
-        long time;
         Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,_dbHelper.CALL_DATE + " DESC",null);
+
         if(cursor.moveToFirst())
         {
             CallLog temp;
             temp = CursortoCallLog(cursor);
-            return _dateTimeManager.convertToMilisec(temp.get_callDate());
+           return _dateTimeManager.convertToMilisec(temp.get_callDate());
 
         }
+        cursor.close();
         return 0;
     }
 
-    public boolean isDatabaseOpening()
-    {
-        if(_database.isOpen())
-            return true;
-        return false;
-    }
+
 
 }
