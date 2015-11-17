@@ -180,7 +180,7 @@ public abstract class PackageFee
                 this._callFee  = (this._outerCallFee/10) + remainDuration*Math.round(((float)this._outerCallFee/60));
             }
         }
-        return this._callFee ;
+        return this._callFee;
     }
     public boolean isSpecialTime()
     {
