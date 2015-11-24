@@ -268,27 +268,13 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                     break;
                 }
             }
-            if(_isOutGoingCallEnd == true)
+            if(_isOutGoingCallEnd == true && !_isReceivingCall)
             {
                 CallLog lastCall = getNewCallLog();
-                if(lastCall.get_callDuration() >0)
+                if(lastCall != null && lastCall.get_callDuration() >0)
                 {
                     try
                     {
-                        //Thread.sleep(2000);
-                     //   _listenerIntent.putExtra(TAG_DURATION, lastCall.get_callDuration());
-                     //   _listenerIntent.putExtra(TAG_FEE, lastCall.get_callFee());
-                      //  _context.startActivity(_listenerIntent);
-                        /*final WindowManager windowManager = (WindowManager)_context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-                        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                        layoutParams.gravity = Gravity.CENTER;
-                        layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-                        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                        layoutParams.alpha = 1.0f;
-                        layoutParams.packageName  = _context.getPackageName();
-                        layoutParams.buttonBrightness = 1f;
-                        layoutParams.windowAnimations = android.R.style.Animation_Dialog;*/
                         final AlertDialog alertDialog = new AlertDialog.Builder(_context,AlertDialog.THEME_HOLO_LIGHT).create();
                         //final AlertDialog alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(_context,android.R.style.Theme_Material_Light_Dialog)).create();
                         alertDialog.setTitle("Call Information");
@@ -313,6 +299,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                         alertDialog.getWindow().setAttributes(layoutParams);
                         alertDialog.show();
 
+
                     }
                     catch(Exception e)
                     {
@@ -325,25 +312,30 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         public CallLog getNewCallLog()
         {
             CallLog _newCall = new CallLog();
-            Cursor cursor = this._context.getContentResolver().query(android.provider.CallLog.Calls.CONTENT_URI,null, null/*android.provider.CallLog.Calls.DURATION*/,
-                                            null, android.provider.CallLog.Calls.DATE + " DESC");
+            Cursor cursor = this._context.getContentResolver().query(android.provider.CallLog.Calls.CONTENT_URI, null, null,
+                    null, android.provider.CallLog.Calls.DATE + " DESC");
             int number = cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER);
             int callType = cursor.getColumnIndex(android.provider.CallLog.Calls.TYPE);
             int date = cursor.getColumnIndex(android.provider.CallLog.Calls.DATE);
             int duration = cursor.getColumnIndex(android.provider.CallLog.Calls.DURATION);
-            if(cursor.moveToFirst())
+
+            if(cursor.moveToFirst() )
             {
-                String _number = cursor.getString(number);
-                String _callDate = cursor.getString(date);
-                Date _callDayTime = new Date(Long.valueOf(_callDate));
-                int _callDuration = cursor.getInt(duration);
-                _package.set_callDuration(_callDuration);
-                _package.set_callTime(DateTimeManager.get_instance().convertToHm(_callDayTime.toString()));
-                _package.set_outGoingPhoneNumber(_number);
-                int fee = _package.CalculateCallFee();
-                _newCall.set_callDuration(_callDuration);
-                _newCall.set_callFee(fee);
-                return _newCall;
+                String _callType = cursor.getString(callType);
+                int dircode = Integer.parseInt(_callType);
+                if(dircode == android.provider.CallLog.Calls.OUTGOING_TYPE) {
+                    String _number = cursor.getString(number);
+                    String _callDate = cursor.getString(date);
+                    Date _callDayTime = new Date(Long.valueOf(_callDate));
+                    int _callDuration = cursor.getInt(duration);
+                    _package.set_callDuration(_callDuration);
+                    _package.set_callTime(DateTimeManager.get_instance().convertToHm(_callDayTime.toString()));
+                    _package.set_outGoingPhoneNumber(_number);
+                    int fee = _package.CalculateCallFee();
+                    _newCall.set_callDuration(_callDuration);
+                    _newCall.set_callFee(fee);
+                    return _newCall;
+                }
             }
             return null;
         }
