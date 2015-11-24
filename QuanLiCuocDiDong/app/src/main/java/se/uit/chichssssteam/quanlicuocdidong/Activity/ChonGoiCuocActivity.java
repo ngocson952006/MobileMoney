@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import se.uit.chichssssteam.quanlicuocdidong.Manager.MyArrayAdapter;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.PackageNetworkArrayAdapter;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.PackageNetwork;
 import se.uit.chichssssteam.quanlicuocdidong.R;
 
@@ -26,7 +26,7 @@ public class ChonGoiCuocActivity extends Activity {
     ListView lstViewGoiCuoc;
     TextView textViewTut;
     ArrayList<PackageNetwork> arrayListPackageNw = new ArrayList<PackageNetwork>();
-    MyArrayAdapter adapter = null;
+    PackageNetworkArrayAdapter adapter = null;
     String stringTut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +143,7 @@ public class ChonGoiCuocActivity extends Activity {
     }
     private void addItemToListView()
     {
-        adapter = new MyArrayAdapter(this,R.layout.custom_listview,arrayListPackageNw);
+        adapter = new PackageNetworkArrayAdapter(this,R.layout.custom_listview,arrayListPackageNw);
         lstViewGoiCuoc.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

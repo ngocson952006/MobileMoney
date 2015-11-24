@@ -16,4 +16,6 @@
     <string name="title_activity_yeu_cau_goi_lai">YeuCauGoiLaiActivity</string>
     <string name="title_activity_tra_cuu_tttb">TraCuuTTTBActivity</string>
     <string name="title_activity_kiem_tra_so_du">KiemTraSoDuActivity</string>
+    <string name="title_activity_day_detail">DayDetailActivity</string>
+    <string name="currency">đ</string>
 </resources>

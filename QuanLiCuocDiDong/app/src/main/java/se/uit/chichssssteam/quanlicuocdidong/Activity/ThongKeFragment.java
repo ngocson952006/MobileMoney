@@ -33,7 +33,7 @@ public class ThongKeFragment extends Fragment {
 
     AmazingListView lsComposer;
     SectionMonthFeeAdapter adapter;
-    String currency = "đ";
+    public static final String currency = "đ";
 
     /**
      * Use this factory method to create a new instance of

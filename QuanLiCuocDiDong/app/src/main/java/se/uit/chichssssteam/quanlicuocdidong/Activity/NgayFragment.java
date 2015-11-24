@@ -8,20 +8,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
-import com.codetroopers.betterpickers.datepicker.DatePickerBuilder;
-import com.codetroopers.betterpickers.datepicker.DatePickerDialogFragment;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import se.uit.chichssssteam.quanlicuocdidong.DB.CallLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_CallLog;
+import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_MessageLog;
+import se.uit.chichssssteam.quanlicuocdidong.DB.MessageLog;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.CalllogArrayAdapter;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.DateTimeManager;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.DayFee;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.MessLogArrayAdapter;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.OnFragmentInteractionListener;
 import se.uit.chichssssteam.quanlicuocdidong.R;
 public class NgayFragment extends Fragment
@@ -38,7 +44,6 @@ public class NgayFragment extends Fragment
     private OnFragmentInteractionListener mListener;
     private ImageButton imageButtonCalendar;
     private TextView textViewCalendarValue;
-    private ImageButton imageButtonDetail;
     private int day;
     private int month;
     private int year;
@@ -53,6 +58,15 @@ public class NgayFragment extends Fragment
     TextView textViewSoSmsNgoaiMang;
     TextView textViewTienSmsNgoaiMang;
     TextView textViewTongTien;
+    List<CallLog> callLogList;
+    List<MessageLog> messLogList;
+    int tempDay,tempMonth,tempYear;
+    CalllogArrayAdapter calllogAdapter;
+    MessLogArrayAdapter messLogAdapter;
+    ListView listViewCallLog;
+    ListView listViewMessLog;
+    int numCallLog;
+    int numMessLog;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -82,7 +96,7 @@ public class NgayFragment extends Fragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        getLog();
     }
 
     @Override
@@ -91,21 +105,22 @@ public class NgayFragment extends Fragment
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ngay, container, false);
-        getControlAndAddEvent(view);
+        getControl(view);
         DateTime now = DateTime.now();
-        this.day = now.getYear();
+        this.year = now.getYear();
         this.month = now.getMonthOfYear();
-        this.year = now.getDayOfMonth();
-        //upDateData();
+        this.day = now.getDayOfMonth();
+        Init();
+        addEvent();
+
 
         return view;
     }
 
-    private void getControlAndAddEvent(View view)
+    private void getControl(View view)
     {
         imageButtonCalendar = (ImageButton) view.findViewById(R.id.imageButtonCalendar);
         textViewCalendarValue = (TextView) view.findViewById(R.id.textViewValueOfCalendar);
-        imageButtonDetail = (ImageButton) view.findViewById(R.id.imageButtonDetail);
         textViewTongTienGoi = (TextView) view.findViewById(R.id.textViewTongTienGoi);
         textViewSoPhutGoiNoiMang = (TextView) view.findViewById(R.id.textViewSoPhutGoiNoiMang);
         textViewTienGoiNoiMang = (TextView) view.findViewById(R.id.textViewTienGoiNoiMang);
@@ -117,6 +132,30 @@ public class NgayFragment extends Fragment
         textViewSoSmsNgoaiMang = (TextView) view.findViewById(R.id.textViewSoSmsNgoaiMang);
         textViewTienSmsNgoaiMang = (TextView) view.findViewById(R.id.textViewTienSmsNgoaiMang);
         textViewTongTien = (TextView) view.findViewById(R.id.textViewTongTien);
+
+        listViewCallLog = (ListView) view.findViewById(R.id.listViewCallLog);
+        listViewMessLog = (ListView) view.findViewById(R.id.listViewMessLog);
+
+        final TabHost tab = (TabHost) view.findViewById(R.id.tabLog);
+        tab.setup();
+        TabHost.TabSpec spec;
+        //Tạo tab1
+        spec = tab.newTabSpec("t1");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("Cuộc gọi");
+        tab.addTab(spec);
+        //Tạo tab2
+        spec = tab.newTabSpec("t2");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("Tin nhắn");
+        tab.addTab(spec);
+        //Thiết lập tab mặc định được chọn ban đầu là tab 0
+        tab.setCurrentTab(0);
+
+    }
+
+    private void addEvent()
+    {
         imageButtonCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,12 +166,12 @@ public class NgayFragment extends Fragment
                                 now.getDayOfMonth());
 
                 calendarDatePickerDialogFragment.setDateRange(
-                        new MonthAdapter.CalendarDay(now.getYear(), now.getMonthOfYear() - 2, now.getDayOfMonth()),
+                        new MonthAdapter.CalendarDay(tempYear, tempMonth - 1, tempDay),
                         new MonthAdapter.CalendarDay(now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth()));
 
                 calendarDatePickerDialogFragment.show(fm, FRAG_TAG_DATE_PICKER);
             }
-        });
+        });;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -170,38 +209,148 @@ public class NgayFragment extends Fragment
 
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-        Toast.makeText(getContext(), "Year: " + year + "\nMonth: " + monthOfYear + "\nDay: " + dayOfMonth, Toast.LENGTH_SHORT).show();
-        this.day = dayOfMonth;
-        this.month = monthOfYear;
-        this.year = year;
-        upDateData();
+        if (this.day != dayOfMonth || this.month != monthOfYear || this.year != year)
+        {
+            this.day = dayOfMonth;
+            this.month = monthOfYear +1 ;
+            this.year = year;
+            Init();
+        }
     }
-    private void upDateData()
+
+    private void getLog()
     {
-        List<CallLog> callLogList;
-        int n;
         DAO_CallLog dao_callLog = new DAO_CallLog(getContext());
         dao_callLog.Open();
         callLogList = dao_callLog.GetAllCallLog();
-        n = callLogList.size();
-        for (int i=0;i<n;i++)
+        numCallLog = callLogList.size();
+        DAO_MessageLog dao_messageLog = new DAO_MessageLog(getContext());
+        dao_messageLog.Open();
+        messLogList = dao_messageLog.GetAllMessageLog();
+        numMessLog = messLogList.size();
+    }
+    private void Init()
+    {
+        CallLog tempCall;
+        MessageLog tempMess;
+        List<CallLog> callLogListTemp = new ArrayList<CallLog>();
+        List<MessageLog> messageLogListTemp = new ArrayList<MessageLog>();
+        String logDate;
+        DayFee dayFee = new DayFee(this.day,this.month,this.year);
+        int minutes_innerCall = 0;
+        int minutes_outerCall = 0;
+        int i;
+
+        for (i=0;i< numCallLog;i++)
         {
-            Toast.makeText(getContext(), callLogList.get(i).get_callDate(), Toast.LENGTH_SHORT).show();
+            tempCall = callLogList.get(i);
+            logDate = DateTimeManager.get_instance().convertToDMYHms(tempCall.get_callDate()).substring(0, 10);
+            tempYear = Integer.parseInt(logDate.substring(6, 10));
+            tempMonth = Integer.parseInt(logDate.substring(0, 2));
+            tempDay = Integer.parseInt(logDate.substring(3, 5));
+            if(tempYear == year && tempMonth == month && tempDay == day)
+            {
+                if (tempCall.get_callType() == 0)
+                {
+                    minutes_innerCall += tempCall.get_callDuration();
+                    dayFee.addFee_innerCall(tempCall.get_callFee());
+
+                } else
+                {
+                    minutes_outerCall += tempCall.get_callDuration();
+                    dayFee.addFee_outerCall(tempCall.get_callFee());
+                }
+                callLogListTemp.add(tempCall);
+            }
+            else
+            {
+                continue;
+            }
+        }
+        dayFee.setMinutes_innerCall(DateTimeManager.get_instance().convertToMinutesAndSec(minutes_innerCall));
+        dayFee.setMinutes_outerCall(DateTimeManager.get_instance().convertToMinutesAndSec(minutes_outerCall));
+        textViewTongTienGoi.setText(String.valueOf(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()) + "đ");
+        textViewSoPhutGoiNoiMang.setText(dayFee.getMinutes_innerCall());
+        textViewTienGoiNoiMang.setText(String.valueOf(dayFee.getFee_innerCall()) + "đ");
+        textViewSoPhutGoiNgoaiMang.setText(dayFee.getMinutes_outerCall());
+        textViewTienGoiNgoaiMang.setText(String.valueOf(dayFee.getFee_outerCall()) + "đ");
+
+
+        int tempYearMess = 0;
+        int tempMonthMess = 0;
+        int tempDayMess = 0;
+        for (i=0;i< numMessLog;i++)
+        {
+            tempMess = messLogList.get(i);
+            logDate = DateTimeManager.get_instance().convertToDMYHms(tempMess.get_messageDate()).substring(0, 10);
+            tempYearMess = Integer.parseInt(logDate.substring(6, 10));
+            tempMonthMess = Integer.parseInt(logDate.substring(0, 2));
+            tempDayMess = Integer.parseInt(logDate.substring(3, 5));
+            if(tempYearMess == year && tempMonthMess == month && tempDayMess == day)
+            {
+                if (tempMess.get_messageType() == 0)
+                {
+                    dayFee.countUpNumber_innerMess();
+                    dayFee.addFee_innerMess(tempMess.get_messageFee());
+
+                } else
+                {
+                    dayFee.countUpNumber_outerMess();
+                    dayFee.addFee_outerMess(tempMess.get_messageFee());
+                }
+                messLogList.add(tempMess);
+            }
+            else
+            {
+                continue;
+            }
+        }
+        textViewTongTienSmS.setText(String.valueOf(dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + "đ");
+        textViewSoSmsNoiMang.setText(String.valueOf(dayFee.getNumber_innerMess()));
+        textViewTienSmSNoiMang.setText(String.valueOf(dayFee.getFee_innerMess()) + "đ");
+        textViewSoSmsNgoaiMang.setText(String.valueOf(dayFee.getNumber_outerMess()));
+        textViewTienSmsNgoaiMang.setText(String.valueOf(dayFee.getFee_outerMess()) + "đ");
+
+        textViewTongTien.setText(String.valueOf(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()
+         + dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + "đ");
+
+        calllogAdapter = new CalllogArrayAdapter(getActivity(),R.layout.daydetail_item_listview,callLogListTemp);
+        listViewCallLog.setAdapter(calllogAdapter);
+        calllogAdapter.notifyDataSetChanged();
+
+        messLogAdapter = new MessLogArrayAdapter(getActivity(),R.layout.daydetail_item_listview,messageLogListTemp);
+        listViewMessLog.setAdapter(messLogAdapter);
+        messLogAdapter.notifyDataSetChanged();
+
+        textViewCalendarValue.setText(String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year));
+        if(tempYearMess < tempYear)
+        {
+            tempDay = tempDayMess;
+            tempMonth = tempMonthMess;
+            tempYear = tempYearMess;
+        }
+        else
+        {
+            if(tempYearMess == tempYear)
+            {
+                if(tempMonthMess < tempMonth)
+                {
+                    tempDay = tempDayMess;
+                    tempMonth = tempMonthMess;
+                }
+                else
+                {
+                    if(tempMonthMess == tempMonth)
+                    {
+                        if(tempDayMess < tempDay)
+                        {
+                            tempDay = tempDayMess;
+                        }
+                    }
+                }
+            }
         }
 
-        /*MonthFee monthFee = getItem(position);
-        textViewTongTienGoi.setText(String.valueOf(monthFee.getFee_innerCall() + monthFee.getFee_outerCall()) + "đ");
-        textViewSoPhutGoiNoiMang.setText(monthFee.getMinutes_innerCall());
-        textViewTienGoiNoiMang.setText(String.valueOf(monthFee.getFee_innerCall()) + "đ");
-        textViewSoPhutGoiNgoaiMang.setText(monthFee.getMinutes_outerCall());
-        textViewTienGoiNgoaiMang.setText(String.valueOf(monthFee.getFee_outerCall()) + "đ");
-        textViewTongTienSmS.setText(String.valueOf(monthFee.getFee_innerMess() + monthFee.getFee_outerMess()) + "đ");
-        textViewSoSmsNoiMang.setText(String.valueOf(monthFee.getNumber_innerMess()));
-        textViewTienSmSNoiMang.setText(String.valueOf(monthFee.getFee_innerMess()) + "đ");
-        textViewSoSmsNgoaiMang.setText(String.valueOf(monthFee.getNumber_outerMess()));
-        textViewTienSmsNgoaiMang.setText(String.valueOf(monthFee.getFee_outerMess()) + "đ");
-        textViewTongTien.setText(String.valueOf(Integer.parseInt(textViewTongTienGoi.getText().toString()
-        ) + Integer.parseInt(textViewTongTienSmS.getText().toString())) + "đ");
-        */
     }
+
 }

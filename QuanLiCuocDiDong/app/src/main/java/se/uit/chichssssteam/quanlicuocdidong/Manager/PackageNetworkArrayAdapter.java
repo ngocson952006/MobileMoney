@@ -12,16 +12,16 @@ import java.util.ArrayList;
 
 import se.uit.chichssssteam.quanlicuocdidong.R;
 
-public class MyArrayAdapter extends
+public class PackageNetworkArrayAdapter extends
         ArrayAdapter<PackageNetwork>
 {
     Activity context=null;
     ArrayList<PackageNetwork>myArrayPackageNetwork=null;
     int layoutId;
 
-    public MyArrayAdapter(Activity context,
-                          int layoutId,
-                          ArrayList<PackageNetwork>arr){
+    public PackageNetworkArrayAdapter(Activity context,
+                                      int layoutId,
+                                      ArrayList<PackageNetwork> arr){
         super(context, layoutId, arr);
         this.context=context;
         this.layoutId=layoutId;

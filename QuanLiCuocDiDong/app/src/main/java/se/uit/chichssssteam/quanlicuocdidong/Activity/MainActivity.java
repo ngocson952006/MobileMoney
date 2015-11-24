@@ -259,7 +259,8 @@ public class MainActivity extends ActionBarActivity
     public void onCaiDatFragmentInteraction() {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.clear();
+        editor.putString(KEY_GOICUOC, "");
+        editor.putString(KEY_NHAMANG, "");
         editor.commit();
         Intent myIntent = new Intent(MainActivity.this, ChonMangDiDongActivity.class);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

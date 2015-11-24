@@ -50,7 +50,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
-
         </activity>
         <activity
             android:name=".Activity.UngTienActivity"
@@ -70,7 +69,7 @@
         <activity
             android:name=".Activity.KiemTraSoDuActivity"
             android:label="@string/title_activity_kiem_tra_so_du"
-            android:theme="@android:style/Theme.Holo.Light">
+            android:theme="@android:style/Theme.Holo.Light" >
         </activity>
 
         <receiver android:name=".BackgroundService.PhoneStateReceiver" >
@@ -80,6 +79,11 @@
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".Activity.DayDetailActivity"
+            android:label="@string/title_activity_day_detail"
+            android:theme="@style/AppTheme" >
+        </activity>
     </application>
 
 </manifest>
