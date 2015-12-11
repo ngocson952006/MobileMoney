@@ -268,7 +268,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                     break;
                 }
             }
-            if(_isOutGoingCallEnd == true && !_isReceivingCall)
+            if(_isOutGoingCallEnd == true && _isReceivingCall == false)
             {
                 CallLog lastCall = getNewCallLog();
                 if(lastCall != null && lastCall.get_callDuration() >0)
@@ -307,6 +307,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                     }
                 }
                 _isOutGoingCallEnd = false;
+                _isReceivingCall = false;
             }
         }
         public CallLog getNewCallLog()
