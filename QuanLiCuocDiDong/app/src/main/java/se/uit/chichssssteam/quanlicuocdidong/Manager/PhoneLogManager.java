@@ -52,7 +52,7 @@ public class PhoneLogManager {
 
         List<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog> _logList = new ArrayList<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog>();
         Cursor cursor = _context.getContentResolver().query(CallLog.Calls.CONTENT_URI
-                ,null, CallLog.Calls.DURATION + " >0", null, CallLog.Calls.DATE + " DESC");
+                ,null, CallLog.Calls.DURATION + " > 0", null, CallLog.Calls.DATE + " DESC");
         int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
         int callType = cursor.getColumnIndex(CallLog.Calls.TYPE);
         int date = cursor.getColumnIndex(CallLog.Calls.DATE);
@@ -152,6 +152,7 @@ public class PhoneLogManager {
         List<MessageLog> _logList = new ArrayList<MessageLog>();
         Uri _uri = Uri.parse("content://sms/sent");
         Cursor cursor = _context.getContentResolver().query(_uri, null, "date" + " > " + time, null, "date DESC");
+
         if (cursor.moveToFirst()) {
             do {
 
@@ -175,9 +176,11 @@ public class PhoneLogManager {
     {
         Uri _uri = Uri.parse("content://sms/sent");
         Cursor cursor = _context.getContentResolver().query(_uri, null, null, null, "date DESC");
+
         cursor.moveToFirst();
         long time = 0;
         time = cursor.getLong(cursor.getColumnIndex("date"));
+        cursor.close();
         return time;
     }
     public MessageLog GetLastedSentSMS()
@@ -203,6 +206,7 @@ public class PhoneLogManager {
     public long GetLastedCallTime()
     {
         Cursor cursor = _context.getContentResolver().query(CallLog.Calls.CONTENT_URI,null,null,null,CallLog.Calls.DATE + " DESC");
+
         cursor.moveToFirst();
         long time = 0;
         time = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));

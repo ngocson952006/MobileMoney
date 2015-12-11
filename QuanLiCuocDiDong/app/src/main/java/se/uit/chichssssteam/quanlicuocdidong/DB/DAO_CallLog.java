@@ -115,6 +115,24 @@ public class DAO_CallLog
         cursor.close();
         return _listCall;
     }
+    public List<CallLog> GetCallLogInDay(long day)
+    {
+        List<CallLog> _listCall = new ArrayList<CallLog>();
+        long lasttime = day + (86400-1)*1000;
+        String whereClause = _dbHelper.CALL_DATE + ">=?" + " AND " + _dbHelper.CALL_DATE + " <=?";
+        String[] selectionArgs = {Long.toString(day), Long.toString(lasttime)};
+        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,whereClause,selectionArgs,null,null,_dbHelper.CALL_DATE + " DESC");
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast())
+        {
+
+            CallLog callLog = CursortoCallLog(cursor);
+            _listCall.add(callLog);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return  _listCall;
+    }
     public CallLog FindCallLogById(int _id)
     {
         CallLog temp;
@@ -131,7 +149,7 @@ public class DAO_CallLog
     }
     public long getLastedCallTime()
     {
-        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,_dbHelper.CALL_DATE + " DESC",null);
+        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,_dbHelper.CALL_DATE + " DESC","1");
 
         if(cursor.moveToFirst())
         {
@@ -144,5 +162,18 @@ public class DAO_CallLog
         return 0;
     }
 
+    public long getOldestCallTime()
+    {
+        Cursor cursor = _database.query(_dbHelper.CALL_TABLE,_listColumn,null,null,null,null,_dbHelper.CALL_DATE + " ASC","1");
 
+        if(cursor.moveToFirst())
+        {
+            CallLog temp;
+            temp = CursortoCallLog(cursor);
+            return _dateTimeManager.convertToMilisec(temp.get_callDate());
+
+        }
+        cursor.close();
+        return 0;
+    }
 }

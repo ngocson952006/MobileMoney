@@ -118,18 +118,27 @@ public class DAO_Statistic
     public Statistic FindStatisticByMonthYear(int month, int year)
     {
         Statistic result;
+
         //Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn,  _dbHelper.MONTH + " = " + month + " AND "
               //  + _dbHelper.YEAR + " = " + year,null,null,null,null);
-        String rawQuery = "SELECT * FROM " + _dbHelper.STATISTIC_TABLE + " WHERE " + _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " + year;
+
+        //String rawQuery = "SELECT * FROM " + _dbHelper.STATISTIC_TABLE + " WHERE " + _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " + year;
         _database = _dbHelper.getReadableDatabase();
-        Cursor cursor = _database.rawQuery(rawQuery,null);
-        if(!cursor.moveToFirst())
+        String[] selectionArgs= {Integer.toString(month), Integer.toString(year)};
+        Cursor cur = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn,
+                _dbHelper.MONTH + " =?" + " AND " + _dbHelper.YEAR + " =?",
+                selectionArgs,
+                null,
+                null,
+                _dbHelper.MONTH + " DESC, " + _dbHelper.YEAR + " DESC", null);
+        //Cursor cursor = _database.rawQuery(rawQuery,null);
+        if(!cur.moveToFirst())
             return null;
         else
         {
-            result = CursortoStatistic(cursor);
+            result = CursortoStatistic(cur);
         }
-        cursor.close();
+        cur.close();
         return result;
     }
     public void UpdateStatisticRow(int month, int year, int value, String columnName)
@@ -152,8 +161,9 @@ public class DAO_Statistic
 
     public int UpdateInnerCallInfo(int month, int year, int callFee, long callDuration)
     {
-        String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
-        Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn, whereClause, null, null, null, null);
+        String whereClause = _dbHelper.MONTH + " = ?"  + " AND " + _dbHelper.YEAR + " = ?";
+        String[] selectionArgs = {Integer.toString(month), Integer.toString(year)};
+        Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn, whereClause , selectionArgs, null, null, null);
 
         int currentCallFee = 0;
         int currentCallDuration = 0;
@@ -168,7 +178,7 @@ public class DAO_Statistic
         ContentValues values = new ContentValues();
         values.put(_dbHelper.INNER_CALL_FEE, currentCallFee);
         values.put(_dbHelper.INNER_CALL_DURATION, currentCallDuration);
-        int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE, values, whereClause, null);
+        int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE, values, whereClause, selectionArgs);
 
         cursor.close();
         return rowAffect;
@@ -193,9 +203,10 @@ public class DAO_Statistic
         int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,values,whereClause,null);
         cursor.close();
         return rowAffect;*/
-        String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
-        Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn, whereClause, null, null, null, null);
-
+        String whereClause = _dbHelper.MONTH + " = ?"  + " AND " + _dbHelper.YEAR + " = ?" ;
+       // Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn, whereClause, null, null, null, null);
+        String[] selectionArgs = {Integer.toString(month), Integer.toString(year)};
+        Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE, _listColumn, whereClause , selectionArgs, null, null, null);
         int currentCallFee = 0;
         int currentCallDuration = 0;
         if(cursor.moveToFirst())
@@ -209,15 +220,16 @@ public class DAO_Statistic
         ContentValues values = new ContentValues();
         values.put(_dbHelper.OUTER_CALL_FEE, currentCallFee);
         values.put(_dbHelper.OUTER_CALL_DURATION, currentCallDuration);
-        int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE, values, whereClause, null);
+        int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE, values, whereClause,selectionArgs);
 
         cursor.close();
         return rowAffect;
     }
     public void UpdateInnerMessageInfo(int month, int year, int messageFee)
     {
-        String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
-        Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE,_listColumn,whereClause,null,null,null,null);
+        String[] selectionArgs = {Integer.toString(month), Integer.toString(year)};
+        String whereClause = _dbHelper.MONTH + " = ?"  + " AND " + _dbHelper.YEAR + " = ?" ;
+        Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE,_listColumn,whereClause,selectionArgs,null,null,null);
         int currentMessageFee = 0;
         int currentMessageQuantity = 0;
         if(cursor.moveToFirst())
@@ -230,12 +242,13 @@ public class DAO_Statistic
         ContentValues values = new ContentValues();
         values.put(_dbHelper.INNER_MESSAGE_FEE, currentMessageFee);
         values.put(_dbHelper.TOTAL_INNER_MESSAGE, currentMessageQuantity);
-        int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,values,whereClause,null);
+        int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,values,whereClause,selectionArgs);
         cursor.close();
     }
 
     public void UpdateOuterMessageInfo(int month, int year, int messageFee)
     {
+        String[] selectionArgs = {Integer.toString(month), Integer.toString(year)};
         String whereClause = _dbHelper.MONTH + " = " + month + " AND " + _dbHelper.YEAR + " = " +year;
         Cursor cursor = _database.query(_dbHelper.STATISTIC_TABLE,_listColumn,whereClause,null,null,null,null);
         int currentMessageFee = 0;

@@ -109,6 +109,23 @@ public class DateTimeManager
         }
         return 0;
     }
+    /*public int getDay(String date)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
+        Calendar calendar = Calendar.getInstance();
+        try
+        {
+            calendar.setTime(simpleDateFormat.parse(date));
+            int year = calendar.get(Calendar.DAY_OF_MONTH);
+            return year;
+
+        }
+        catch(ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
+    }*/
     public String convertToMinutesAndSec( long sec)
     {
         int minutes = 0;

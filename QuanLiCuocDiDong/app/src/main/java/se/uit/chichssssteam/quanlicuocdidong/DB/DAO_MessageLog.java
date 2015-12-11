@@ -65,7 +65,7 @@ public class DAO_MessageLog
         values.put(_dbHelper.MESSAGE_DATE, _dateTimeManager.convertToMilisec(messageDate));
         values.put(_dbHelper.RECEIVER , receiver);
         values.put(_dbHelper.MESSAGE_FEE, messageFee);
-        values.put(_dbHelper.MESSAGE_TYPE, type );
+        values.put(_dbHelper.MESSAGE_TYPE, type);
         long insertId = _database.insert(_dbHelper.MESSAGE_TABLE,null,values);
         Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn, _dbHelper.MESS_ID + " = " + insertId, null,null,null,null);
         cursor.moveToFirst();
@@ -80,9 +80,9 @@ public class DAO_MessageLog
         ContentValues values = new ContentValues();
         values.put(_dbHelper.MESSAGE_DATE, _dateTimeManager.convertToMilisec(messageLog.get_messageDate()));
         values.put(_dbHelper.RECEIVER, messageLog.get_receiverNumber());
-        values.put(_dbHelper.MESSAGE_FEE,messageLog.get_messageFee());
+        values.put(_dbHelper.MESSAGE_FEE, messageLog.get_messageFee());
         values.put(_dbHelper.MESSAGE_TYPE, messageLog.get_messageType());
-        _database.insert(_dbHelper.MESSAGE_TABLE,null,values);
+        _database.insert(_dbHelper.MESSAGE_TABLE, null, values);
     }
     public void DeleteMessageLog(int _id)
     {
@@ -92,7 +92,7 @@ public class DAO_MessageLog
     public List<MessageLog> GetAllMessageLog()
     {
         List<MessageLog> _listMessage = new ArrayList<MessageLog>();
-        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,null,null,null,null,null);
+        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,null,null,null,null,_dbHelper.MESSAGE_DATE + " DESC",null);
         cursor.moveToFirst();
 
         while(!cursor.isAfterLast())
@@ -105,7 +105,23 @@ public class DAO_MessageLog
         cursor.close();
         return _listMessage;
     }
-
+    public List<MessageLog> GetMessageLogInDay(long day)
+    {
+        List<MessageLog> _listMessage = new ArrayList<MessageLog>();
+        long lasttime = day + (86400-1)*1000;
+        String whereClause = _dbHelper.MESSAGE_DATE + ">=?" + " AND " + _dbHelper.MESSAGE_DATE + "<=?";
+        String[] selectionArgs= {Long.toString(day),Long.toString(lasttime)};
+        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,whereClause,selectionArgs,null,null,_dbHelper.MESSAGE_DATE + " DESC",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast())
+        {
+            MessageLog temp = CursortoMessageLog(cursor);
+            _listMessage.add(temp);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return  _listMessage;
+    }
     public MessageLog FindMessageLogbyId(int _id)
     {
         MessageLog messageLog;
@@ -123,7 +139,7 @@ public class DAO_MessageLog
     public long GetLastedMessageTime()
     {
         long lastedMessageLog;
-        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,null,null,null,null,_dbHelper.MESSAGE_DATE + " DESC",null);
+        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,null,null,null,null,_dbHelper.MESSAGE_DATE + " DESC","1");
         if(cursor.moveToFirst())
         {
             MessageLog lastMessage = CursortoMessageLog(cursor);
@@ -134,5 +150,19 @@ public class DAO_MessageLog
         cursor.close();
         return 0;
 
+    }
+    public long GetOldestMessageTime()
+    {
+        long lastedMessageLog;
+        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,null,null,null,null,_dbHelper.MESSAGE_DATE + " ASC","1");
+        if(cursor.moveToFirst())
+        {
+            MessageLog lastMessage = CursortoMessageLog(cursor);
+
+            lastedMessageLog = _dateTimeManager.convertToMilisec(lastMessage.get_messageDate());
+            return lastedMessageLog;
+        }
+        cursor.close();
+        return 0;
     }
 }
