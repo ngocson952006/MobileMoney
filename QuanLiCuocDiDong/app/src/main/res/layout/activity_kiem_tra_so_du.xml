@@ -7,10 +7,6 @@
     tools:context="se.uit.chichssssteam.quanlicuocdidong.Activity.UngTienActivity"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView2" >
 
         <LinearLayout
             android:orientation="vertical"
@@ -21,7 +17,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp">
 
                 <TextView
@@ -44,7 +40,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp">
 
                 <TextView
@@ -114,5 +110,4 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
 </LinearLayout>
