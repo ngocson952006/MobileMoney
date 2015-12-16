@@ -64,8 +64,8 @@ public class KiemTraSoDuActivity extends Activity {
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setDisplayShowHomeEnabled(false);
         bar.setDisplayShowCustomEnabled(false);
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
-        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Kiểm tra thông tin thuê bao </font>"));
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getString(R.string.colorActionBar))));
+        bar.setTitle(Html.fromHtml(getString(R.string.textTitlebarKTSoDu)));
     }
     private void getControl()
     {

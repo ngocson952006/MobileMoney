@@ -60,8 +60,8 @@ public class TraCuuTTTBActivity extends Activity {
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setDisplayShowHomeEnabled(false);
         bar.setDisplayShowCustomEnabled(false);
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
-        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Kiểm tra thông tin thuê bao </font>"));
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getString(R.string.colorActionBar))));
+        bar.setTitle(Html.fromHtml(getString(R.string.textTitleBarTraCuuTTTB)));
     }
     private void getControl()
     {
@@ -79,7 +79,7 @@ public class TraCuuTTTBActivity extends Activity {
                 startActivity(smsIntent);
             }
         });
-        textViewTTCT.setText(Html.fromHtml("<a href=" + "http://dichvudidong.vn/huong-dan-tra-cuu-thong-tin-thue-bao-cua-sim-tra-truoc.html" + "> Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây "));
+        textViewTTCT.setText(Html.fromHtml(getString(R.string.urlTTCTTraCuuTTTB)));
         textViewTTCT.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

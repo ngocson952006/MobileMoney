@@ -54,8 +54,8 @@ public class KhuyenMaiActivity extends Activity {
         editActionBar();
         if(isNetworkConnected() == false) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(KhuyenMaiActivity.this);
-            dialog.setMessage("Bạn phải kết nối internet mới sử dụng được tiện ích này");
-            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            dialog.setMessage(R.string.textNeedNetworkToUse);
+            dialog.setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
@@ -102,8 +102,8 @@ public class KhuyenMaiActivity extends Activity {
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setDisplayShowHomeEnabled(false);
         bar.setDisplayShowCustomEnabled(false);
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
-        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Trang thông tin khuyến mãi </font>"));
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getString(R.string.colorActionBar))));
+        bar.setTitle(Html.fromHtml(getString(R.string.textTitleBarKhuyenMai)));
 
     }
 
@@ -115,23 +115,23 @@ public class KhuyenMaiActivity extends Activity {
         switch (mangDiDong)
         {
             case "Mobifone": {
-                url = "http://qnghiauit.16mb.com/RssFile/mobiRss.xml";
+                url = getString(R.string.rssMobi);
                 break;
             }
             case "VinaPhone": {
-                url = "http://qnghiauit.16mb.com/RssFile/vinaphoneRss.xml";
+                url = getString(R.string.rssVina);
                 break;
             }
             case "Viettel": {
-                url = "http://qnghiauit.16mb.com/RssFile/viettelRss.xml";
+                url = getString(R.string.rssViettel);
                 break;
             }
             case "GMobile": {
-                url = "http://vnexpress.net/rss/so-hoa.rss";
+                url = getString(R.string.rssGmobi);
                 break;
             }
             case "VietNamMobile": {
-                url = "http://vnexpress.net/rss/so-hoa.rss";
+                url = getString(R.string.rssVNMobi);
                 break;
             }
         }

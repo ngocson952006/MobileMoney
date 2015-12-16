@@ -67,9 +67,8 @@ public class YeuCauGoiLaiActivity extends Activity {
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setDisplayShowHomeEnabled(false);
         bar.setDisplayShowCustomEnabled(false);
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
-        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Dịch vụ yêu cầu gọi lại </font>"));
-
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getString(R.string.colorActionBar))));
+        bar.setTitle(Html.fromHtml(getString(R.string.textTitleBarYeuCauGoiLai)));
     }
 
     private void getControl()
@@ -87,8 +86,8 @@ public class YeuCauGoiLaiActivity extends Activity {
         if(SDT.matches(""))
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(YeuCauGoiLaiActivity.this);
-            dialog.setMessage("Bạn phải nhập vào số diện thoại");
-            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            dialog.setMessage(R.string.textNeedFillPhoneNumber);
+            dialog.setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     editTextSDT.requestFocus();
@@ -111,52 +110,38 @@ public class YeuCauGoiLaiActivity extends Activity {
         switch (mangDiDong)
         {
             case "Mobifone": {
-                gioithieu = "Call me là dịch vụ giúp bạn gửi tin nhắn đề nghị gọi lại đến thuê bao" +
-                        " nội mạng, ngoại mạng MobiFone.";
-                huongdan = "- Bạn nhập: *105*SDT#OK\n" +
-                        "Trong đó: SDT là số điện thoại bạn muốn gửi đề nghị gọi lại.";
-                urlTTCT = "http://www.mobifone.vn/wps/portal/public/dich-vu/tien-ich/tien-ich-chi-tiet/call-me";
+                gioithieu = getString(R.string.textYCGLMobi);
+                huongdan = getString(R.string.textHDMobi) +
+                        getString(R.string.textYCGL_HD);
+                urlTTCT = getString(R.string.urlTTCTMobi);
 
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(checkEditTextSDT())
-                        {
-                            Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri("*105*" + editTextSDT.getText().toString() + "#"));
-                            startActivity(callIntent);
-                        }
+                        eventClick("*105*");
                     }
                 });
                 break;
             }
             case "VinaPhone": {
-                gioithieu = "Dịch vụ Call Me Back là một tiện ích nhằm giúp các thuê bao VinaPhone " +
-                        "trả trước, đặc biệt là các thuê bao VinaPhone trả trước không còn tiền " +
-                        "trong tài khoản, thuê bao hết thời hạn sử dụng, thuê bao bị khóa 1 chiều" +
-                        " có thể gửi đề nghị gọi lại cho thuê bao di động khác";
-                huongdan = "- Bạn nhập: *110*SDT# rồi bấm OK\n" +
-                        "Trong đó: SDT là số điện thoại bạn muốn gửi đề nghị gọi lại.";
-                urlTTCT = "http://vinaphone.com.vn/services/cmb";
+                gioithieu = getString(R.string.textYCGLVina);
+                huongdan = getString(R.string.textHDVina) +
+                        getString(R.string.textYCGL_HD);
+                urlTTCT = getString(R.string.urlTTCTVina);
 
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(checkEditTextSDT())
-                        {
-                            Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri("*110*" + editTextSDT.getText().toString() + "#"));
-                            startActivity(callIntent);
-                        }
-
+                        eventClick("*110*");
                     }
                 });
                 break;
             }
             case "Viettel": {
-                gioithieu = "Call me là dịch vụ giúp bạn gửi tin nhắn đề nghị gọi lại đến thuê bao" +
-                        " nội mạng, ngoại mạng Viettel.";
-                huongdan = "- Bạn soạn tin nhắn: SDT gửi 9119\n" +
-                        "Trong đó: SDT là số điện thoại bạn muốn gửi đề nghị gọi lại.";
-                urlTTCT = "http://vietteltelecom.vn/index.php/chi-tiet-gtgt/de-nghi-goi-lai-call-me-back";
+                gioithieu = getString(R.string.textYCGLViettel);
+                huongdan = getString(R.string.textHDViettel) +
+                        getString(R.string.textYCGL_HD);
+                urlTTCT = getString(R.string.urlTTCTViettel);
 
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -171,20 +156,15 @@ public class YeuCauGoiLaiActivity extends Activity {
                 break;
             }
             case "GMobile": {
-                gioithieu = "Call me là dịch vụ giúp bạn gửi tin nhắn đề nghị gọi lại đến thuê bao" +
-                        " nội mạng, ngoại mạng Gmobile.";
-                huongdan = "- Bạn nhập: *9119*SDT#\n" +
-                        "Trong đó: SDT là số điện thoại bạn muốn gửi đề nghị gọi lại.";
-                urlTTCT = "http://gmobile.vn/content/740";
+                gioithieu = getString(R.string.textYCGLGmobi);
+                huongdan = getString(R.string.textHDGmobi) +
+                        getString(R.string.textYCGL_HD);
+                urlTTCT = getString(R.string.urlTTCTGmobi);
 
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(checkEditTextSDT())
-                        {
-                            Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri("*9119*" + editTextSDT.getText().toString() + "#"));
-                            startActivity(callIntent);
-                        }
+                        eventClick("*9119*");
                     }
                 });
                 break;
@@ -196,8 +176,8 @@ public class YeuCauGoiLaiActivity extends Activity {
         if (gioithieu == null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(YeuCauGoiLaiActivity.this);
-            dialog.setMessage("Xin lỗi, nhà mạng của bạn không có dịch vụ này");
-            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            dialog.setMessage(R.string.textServiceNotFound);
+            dialog.setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
@@ -209,8 +189,16 @@ public class YeuCauGoiLaiActivity extends Activity {
         {
             textViewGT.setText(gioithieu);
             textViewHD.setText(huongdan);
-            textViewTTCT.setText(Html.fromHtml("<a href=" + urlTTCT + "> Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây "));
+            textViewTTCT.setText(Html.fromHtml(getString(R.string.textTTCTpart2) + urlTTCT + getString(R.string.textTTCTpart1)));
             textViewTTCT.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+    }
+    private void eventClick(String string)
+    {
+        if(checkEditTextSDT())
+        {
+            Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri(string + editTextSDT.getText().toString() + "#"));
+            startActivity(callIntent);
         }
     }
 }

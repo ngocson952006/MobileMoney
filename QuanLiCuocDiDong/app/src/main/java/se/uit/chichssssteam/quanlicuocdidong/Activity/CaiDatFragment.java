@@ -86,6 +86,8 @@ public class CaiDatFragment extends Fragment {
 
         TextView textViewGoiCuoc = (TextView) view.findViewById(R.id.textViewTenGoiCuoc);
         textViewGoiCuoc.setText(mParam1);
+        TextView textViewTenNhaMang = (TextView) view.findViewById(R.id.textViewTenNhaMang);
+        textViewTenNhaMang.setText(mParam2);
 
         ImageView imageViewLogo = (ImageView) view.findViewById(R.id.imageViewLogoGoiCuoc);
         imageViewLogo.setImageResource(idImage);

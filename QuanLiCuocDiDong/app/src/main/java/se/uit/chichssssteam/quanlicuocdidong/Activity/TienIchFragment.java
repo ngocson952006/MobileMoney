@@ -8,10 +8,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import se.uit.chichssssteam.quanlicuocdidong.Manager.OnFragmentInteractionListener;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.TienIchArrayAdapter;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.UtiltyItem;
 import se.uit.chichssssteam.quanlicuocdidong.R;
 
 
@@ -26,7 +31,9 @@ public class TienIchFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    List<UtiltyItem> listUtiltyItem = new ArrayList<UtiltyItem>();
+    TienIchArrayAdapter tienIchArrayAdapter;
+    ListView listViewUtilty;
 
     /**
      * Use this factory method to create a new instance of
@@ -65,74 +72,55 @@ public class TienIchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tien_ich, container, false);
         getControlAndAddEvent(view);
+        initData();
         return view;
     }
 
+    void initData()
+    {
+        listUtiltyItem.add(new UtiltyItem("Tra cứu thông tin khuyến mãi","Khuyến mãi nạp thẻ, hoà mạng...",R.drawable.khuyenmai));
+        listUtiltyItem.add(new UtiltyItem("Ứng tiền nhanh","Ứng tiền khi tài khoản của bạn hết tiền",R.drawable.ungtien));
+        listUtiltyItem.add(new UtiltyItem("Yêu cầu gọi lại","Nhắn tin cho bạn bè nhờ gọi lại cho bạn",R.drawable.goilai));
+        listUtiltyItem.add(new UtiltyItem("Tra cứu thông tin thuê bao","Tra cứu thông tin chi tiết thuê bao",R.drawable.tracuuthongtin));
+        listUtiltyItem.add(new UtiltyItem("Kiểm tra tài khoản","Kiểm tra tài khoản gốc và khuyến mãi",R.drawable.kiemtrasodu));
+        listUtiltyItem.add(new UtiltyItem("Số điện thoại hữu ích","Số khẩn cấp, số xe Taxi, số tư vấn ..",R.drawable.kiemtrasodu));
+        tienIchArrayAdapter = new TienIchArrayAdapter(getActivity(),R.layout.tienich_listview_item,listUtiltyItem);
+        listViewUtilty.setAdapter(tienIchArrayAdapter);
+        tienIchArrayAdapter.notifyDataSetChanged();
+    }
     void getControlAndAddEvent(View view)
     {
-        ImageView imgKM = (ImageView) view.findViewById(R.id.imageViewThumbaiKhuyenMai);
-        ImageView imgUTN = (ImageView) view.findViewById(R.id.imageViewThumbaiUngTien);
-        ImageView imgYCGL = (ImageView) view.findViewById(R.id.imageViewThumbaiGoiLai);
-        ImageView imgTTTB = (ImageView) view.findViewById(R.id.imageViewThumbaiTraCuu);
-        ImageView imgKTTK = (ImageView) view.findViewById(R.id.imageViewThumbaiKTSoDu);
+        listViewUtilty = (ListView) view.findViewById(R.id.listViewUtilty);
+        listViewUtilty.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
 
-        TextView tvTittleKM = (TextView) view.findViewById(R.id.textViewTitleKhuyenMai);
-        TextView tvTittleUTN = (TextView) view.findViewById(R.id.textViewTitleUngTien);
-        TextView tvTittleYCGL = (TextView) view.findViewById(R.id.textViewTitleGoiLai);
-        TextView tvTittleTTTB = (TextView) view.findViewById(R.id.textViewTitleTraCuu);
-        TextView tvTittleKTTK = (TextView) view.findViewById(R.id.textViewTitleKTSoDu);
-
-        TextView tvDesKM = (TextView) view.findViewById(R.id.textViewDesKhuyenMai);
-        TextView tvDesUTN = (TextView) view.findViewById(R.id.textViewDesUngTien);
-        TextView tvDesYCGL = (TextView) view.findViewById(R.id.textViewDesGoiLai);
-        TextView tvDesTTTB = (TextView) view.findViewById(R.id.textViewDesTraCuu);
-        TextView tvDesKTTK = (TextView) view.findViewById(R.id.textViewDesKTSoDu);
-
-        imgKM.setOnClickListener(new MyClickItemEvent());
-        imgUTN.setOnClickListener(new MyClickItemEvent());
-        imgYCGL.setOnClickListener(new MyClickItemEvent());
-        imgTTTB.setOnClickListener(new MyClickItemEvent());
-        imgKTTK.setOnClickListener(new MyClickItemEvent());
-
-        tvTittleKM.setOnClickListener(new MyClickItemEvent());
-        tvTittleUTN.setOnClickListener(new MyClickItemEvent());
-        tvTittleYCGL.setOnClickListener(new MyClickItemEvent());
-        tvTittleTTTB.setOnClickListener(new MyClickItemEvent());
-        tvTittleKTTK.setOnClickListener(new MyClickItemEvent());
-
-        tvDesKM.setOnClickListener(new MyClickItemEvent());
-        tvDesUTN.setOnClickListener(new MyClickItemEvent());
-        tvDesYCGL.setOnClickListener(new MyClickItemEvent());
-        tvDesTTTB.setOnClickListener(new MyClickItemEvent());
-        tvDesKTTK.setOnClickListener(new MyClickItemEvent());
-    }
-    private class MyClickItemEvent implements View.OnClickListener
-    {
-        @Override
-        public void onClick(View arg0) {
-            Class tienichClass = null;
-            switch(arg0.getId())
-            {
-                case R.id.imageViewThumbaiKhuyenMai:case R.id.textViewTitleKhuyenMai:case R.id.textViewDesKhuyenMai:
-                    tienichClass = KhuyenMaiActivity.class;
-                    break;
-                case R.id.imageViewThumbaiUngTien:case R.id.textViewTitleUngTien:case R.id.textViewDesUngTien:
-                    tienichClass = UngTienActivity.class;
-                    break;
-                case R.id.imageViewThumbaiGoiLai:case R.id.textViewTitleGoiLai:case R.id.textViewDesGoiLai:
-                    tienichClass = YeuCauGoiLaiActivity.class;
-                    break;
-                case R.id.imageViewThumbaiKTSoDu:case R.id.textViewTitleKTSoDu:case R.id.textViewDesKTSoDu:
-                    tienichClass = KiemTraSoDuActivity.class;
-                    break;
-                case R.id.imageViewThumbaiTraCuu:case R.id.textViewTitleTraCuu:case R.id.textViewDesTraCuu:
-                    tienichClass = TraCuuTTTBActivity.class;
-                    break;
+                Class tienichClass = null;
+                switch(position) {
+                    case 0:
+                        tienichClass = KhuyenMaiActivity.class;
+                        break;
+                    case 1:
+                        tienichClass = UngTienActivity.class;
+                        break;
+                    case 2:
+                        tienichClass = YeuCauGoiLaiActivity.class;
+                        break;
+                    case 3:
+                        tienichClass = TraCuuTTTBActivity.class;
+                        break;
+                    case 4:
+                        tienichClass = KiemTraSoDuActivity.class;
+                        break;
+                    case 5:
+                        tienichClass = DanhBaActivity.class;
+                        break;
+                }
+                Intent myIntent = new Intent(getActivity(),tienichClass);
+                startActivity(myIntent);
             }
-            Intent myIntent = new Intent(getActivity(),tienichClass);
-            startActivity(myIntent);
-        }
-
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

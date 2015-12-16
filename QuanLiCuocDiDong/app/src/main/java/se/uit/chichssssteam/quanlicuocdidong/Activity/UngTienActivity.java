@@ -64,8 +64,8 @@ public class UngTienActivity extends Activity {
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setDisplayShowHomeEnabled(false);
         bar.setDisplayShowCustomEnabled(false);
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
-        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Dịch vụ ứng tiền </font>"));
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getString(R.string.colorActionBar))));
+        bar.setTitle(Html.fromHtml(getString(R.string.textTitleBarUngTien)));
     }
     private void getControl()
     {
@@ -98,13 +98,9 @@ public class UngTienActivity extends Activity {
         switch (mangDiDong)
         {
             case "Mobifone": {
-                gioithieu = "Ứng tiền là dịch vụ giúp thuê bao trả trước của MobiFone hết tiền" +
-                        " trong tài khoản được ứng trước 3.000 đồng để tiếp tục sử dụng.";
-                huongdan = "- Bước 1: soạn UT gửi 900. Hệ thống sẽ gửi tin nhắn yêu cầu xác nhận " +
-                        "việc ứng tiền.\n" +
-                        "- Bước 2: soạn CO gửi 900 trong vòng 10 phút kể từ khi bạn nhận được tin nhắn" +
-                        " yêu cầu xác nhận ứng tiền từ hệ thống.";
-                urlTTCT = "http://www.mobifone.vn/wps/portal/public/dich-vu/dich-vu-khac/dich-vu-khac-chi-tiet/ung-tien";
+                gioithieu = getString(R.string.textUngTienMobi);
+                huongdan = getString(R.string.textUngTienHDMobi);
+                urlTTCT = getString(R.string.urlUngTienMobi);
 
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -115,12 +111,9 @@ public class UngTienActivity extends Activity {
                 break;
             }
             case "VinaPhone": {
-                gioithieu = "Ứng tiền nhanh là dịch vụ ứng cho thuê bao trả trước của VinaPhone một" +
-                        " số tiền nhất định khi tài khoản chính của thuê bao không còn nhiều tiền " +
-                        "(bằng hoặc ít hơn 5.000 VNĐ) và thuê bao thỏa mãn các điều kiện sử dụng " +
-                        "dịch vụ của theo quy định của VinaPhone.";
-                huongdan = "- Soạn tin: Y gửi 1576.";
-                urlTTCT = "http://vinaphone.com.vn/services/ungtiennhanh#gioithieu-tab";
+                gioithieu = getString(R.string.textUngTienVina);
+                huongdan = getString(R.string.textUngTienHDVina);
+                urlTTCT = getString(R.string.urlUngTienVina);
 
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -131,12 +124,9 @@ public class UngTienActivity extends Activity {
                 break;
             }
             case "Viettel": {
-                gioithieu = "Ứng tiền khi hết tài khoản là dịch vụ giúp thuê bao di động trả " +
-                        "trước của Viettel có thể ứng trước 3.000đ vào tài khoản gốc để tiếp tục " +
-                        "tiêu dùng khi tài khoản hết tiền mà chưa kịp nạp thẻ.";
-                huongdan = "- Bước 1: Khách hàng bấm trực tiếp từ màn hình chính *911#.\n" +
-                        "- Bước 2: Khách hàng nhấn phím OK hoặc nhấn phím gọi.";
-                urlTTCT = "http://vietteltelecom.vn/index.php/chi-tiet-gtgt/ung-tien-khi-het-tai-khoan";
+                gioithieu = getString(R.string.textUngTienViettel);
+                huongdan = getString(R.string.textUngTienHDViettel);
+                urlTTCT = getString(R.string.urlUngTienViettel);
 
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -150,10 +140,9 @@ public class UngTienActivity extends Activity {
                 break;
             }
             case "VietNamMobile": {
-                gioithieu = "Ứng tiền là dịch vụ giúp thuê bao trả trước của Vietnamobile hết tiền" +
-                        " trong tài khoản được ứng trước 3.000 đồng để tiếp tục sử dụng.";
-                huongdan = "- Khách hàng bấm trực tiếp từ màn hình chính *911#OK";
-                urlTTCT = "http://www.vietnamobile.com.vn/layout1.php?pdid=66#";
+                gioithieu = getString(R.string.textUngTienVNMobi);
+                huongdan = getString(R.string.textUngTienHDVNMobi);
+                urlTTCT = getString(R.string.urlUngTienVNMobi);
 
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -167,8 +156,8 @@ public class UngTienActivity extends Activity {
         if (gioithieu == null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(UngTienActivity.this);
-            dialog.setMessage("Xin lỗi, nhà mạng của bạn không có dịch vụ này");
-            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            dialog.setMessage(R.string.textServiceNotFound);
+            dialog.setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
@@ -180,7 +169,7 @@ public class UngTienActivity extends Activity {
         {
             textViewGT.setText(gioithieu);
             textViewHD.setText(huongdan);
-            textViewTTCT.setText(Html.fromHtml("<a href=" + urlTTCT + "> Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây "));
+            textViewTTCT.setText(Html.fromHtml(getString(R.string.textTTCTpart2) + urlTTCT + getString(R.string.textTTCTpart1)));
             textViewTTCT.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
