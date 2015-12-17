@@ -140,7 +140,7 @@ public abstract class PackageFee
 
     public int CalculateCallFee()
     {
-        this.get_type();
+       // this.get_type();
         if(this._callDuration == 0)
             return 0;
         if(this._numberHeader.isMobifoneCareCostRequire(this._myNetwork,this._outGoingPhoneNumber))
@@ -240,7 +240,7 @@ public abstract class PackageFee
     }
     public int CalculateMessageFee()
     {
-        this.set_type(this.get_type());
+        //this.set_type(this.get_type());
         if(this._numberHeader.isInternalNetwork(this._myNetwork, this._outGoingPhoneNumber))
         {
             return this._internalMessageFee;

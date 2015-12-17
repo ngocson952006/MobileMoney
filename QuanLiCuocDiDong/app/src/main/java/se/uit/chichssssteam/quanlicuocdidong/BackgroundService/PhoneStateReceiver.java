@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.PixelFormat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.ContextThemeWrapper;
@@ -15,6 +16,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.Date;
 
@@ -45,6 +52,7 @@ import se.uit.chichssssteam.quanlicuocdidong.NetworkPackage.VMOne;
 import se.uit.chichssssteam.quanlicuocdidong.NetworkPackage.VMax;
 import se.uit.chichssssteam.quanlicuocdidong.NetworkPackage.VinaCard;
 import se.uit.chichssssteam.quanlicuocdidong.NetworkPackage.VinaXtra;
+import se.uit.chichssssteam.quanlicuocdidong.R;
 
 //<item name="android:windowBackground">@color/myWindowBackground</item>
 /**
@@ -223,8 +231,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
 
         private static final String TAG = "CustomPhoneStateListener";
-      //  public static final String TAG_DURATION = "CallDuration";
-      //  public static final String TAG_FEE = "CallFee";
+
         Context _context;
         PackageFee _package;
         //Intent _listenerIntent;
@@ -235,8 +242,6 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             this._context = context;
             this._package = packageFee;
 
-           // _listenerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          //  _listenerIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             _isReceivingCall = false;
         }
         @Override
@@ -244,71 +249,55 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             if (incomingNumber != null && incomingNumber.length() > 0) {
                 _incomingNumber = incomingNumber;
             }
-            _isReceivingCall = false;
-            switch (state) {
-                case TelephonyManager.CALL_STATE_RINGING: {
-                    _prev_state = state;
-                    _isReceivingCall = true;
-                    break;
-                }
-                case TelephonyManager.CALL_STATE_OFFHOOK: {
-                    _prev_state = state;
-                    break;
-                }
+           final WindowManager wm = (WindowManager) _context.getSystemService(Context.WINDOW_SERVICE);
+            final LinearLayout ly;
+
+            switch (state){
                 case TelephonyManager.CALL_STATE_IDLE: {
-                    if (_prev_state == TelephonyManager.CALL_STATE_OFFHOOK && _isReceivingCall == false)
-                    {
-                        _prev_state = state;
-                        _isOutGoingCallEnd = true;
+                    CallLog lastCall = getNewCallLog();
+                    if(lastCall.get_callDuration() >0) {
+                        //I check my value here and it work properly
+                        Toast.makeText(_context.getApplicationContext(),Integer.toString(lastCall.get_callDuration()) + "-" +Integer.toString(lastCall.get_callFee()),Toast.LENGTH_LONG).show();
+                        WindowManager.LayoutParams params = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
+                                WindowManager.LayoutParams.WRAP_CONTENT,
+                                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+                                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                                PixelFormat.TRANSPARENT);
 
-                    }
-                    if (_prev_state == TelephonyManager.CALL_STATE_RINGING) {
-                        _prev_state = state;
-                    }
-                    break;
-                }
-            }
-            if(_isOutGoingCallEnd == true && _isReceivingCall == false)
-            {
-                CallLog lastCall = getNewCallLog();
-                if(lastCall != null && lastCall.get_callDuration() >0)
-                {
-                    try
-                    {
-                        final AlertDialog alertDialog = new AlertDialog.Builder(_context,AlertDialog.THEME_HOLO_LIGHT).create();
-                        //final AlertDialog alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(_context,android.R.style.Theme_Material_Light_Dialog)).create();
-                        alertDialog.setTitle("Call Information");
-                        alertDialog.setMessage("Duration: " + lastCall.get_callDuration() + "secs" + "\nCost: " + lastCall.get_callFee() + " VND");
+                        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                        params.format = PixelFormat.TRANSPARENT;
+                        params.gravity = Gravity.TOP;
 
-                        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                alertDialog.dismiss();
+
+                        final LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        ly = (LinearLayout) inflater.inflate(R.layout.custom_dialog, null);
+                        TextView txtDuration =(TextView) ly.findViewById(R.id.txt_duration);
+
+                        TextView txtCost = (TextView) ly.findViewById(R.id.txt_cost);
+                        Button yesBtn = (Button) ly.findViewById(R.id.btn_yes);
+                        //Set value for textView here
+                        txtDuration.setText(Integer.toString(lastCall.get_callDuration()));
+                        txtDuration.setText(Integer.toString(lastCall.get_callDuration()));
+
+                        txtCost.setText(Integer.toString(lastCall.get_callFee()));
+                        yesBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                wm.removeView(ly);
                             }
                         });
-                        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                        layoutParams.gravity = Gravity.TOP;
-                        layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-                        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                        layoutParams.alpha = 1.0f;
-                        layoutParams.buttonBrightness = 1.0f;
-                        layoutParams.windowAnimations = android.R.style.Theme_Material_Light_Dialog_Alert;
-
-
-                        //alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                        alertDialog.getWindow().setAttributes(layoutParams);
-                        alertDialog.show();
-
-
+                        wm.addView(ly, params);
                     }
-                    catch(Exception e)
-                    {
-                        e.getLocalizedMessage();
-                    }
+                    break;
                 }
-                _isOutGoingCallEnd = false;
-                _isReceivingCall = false;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    break;
+                case TelephonyManager.CALL_STATE_RINGING:
+
+                    break;
             }
+
         }
         public CallLog getNewCallLog()
         {

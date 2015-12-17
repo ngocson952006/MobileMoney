@@ -53,6 +53,7 @@ public class DAO_MessageLog
         row.set_messageDate(temp.toString());
         row.set_recieverNumber(c.getString(2));
         row.set_messageFee(c.getInt(3));
+        row.set_messageType(c.getInt(4));
         return row;
     }
 
@@ -111,7 +112,7 @@ public class DAO_MessageLog
         long lasttime = day + (86400-1)*1000;
         String whereClause = _dbHelper.MESSAGE_DATE + ">=?" + " AND " + _dbHelper.MESSAGE_DATE + "<=?";
         String[] selectionArgs= {Long.toString(day),Long.toString(lasttime)};
-        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,whereClause,selectionArgs,null,null,_dbHelper.MESSAGE_DATE + " DESC",null);
+        Cursor cursor = _database.query(_dbHelper.MESSAGE_TABLE,_listColumn,whereClause,selectionArgs,null,null,_dbHelper.MESSAGE_DATE + " DESC");
         cursor.moveToFirst();
         while(!cursor.isAfterLast())
         {

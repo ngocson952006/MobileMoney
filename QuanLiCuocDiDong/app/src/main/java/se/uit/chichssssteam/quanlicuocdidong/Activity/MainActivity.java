@@ -493,7 +493,7 @@ public class MainActivity extends ActionBarActivity
             this.InitPackage(this.goiCuoc);
             this._logManager = PhoneLogManager.get_instance(this,_myPackageFee);
 
-            FirstInitLog();
+          //  FirstInitLog();
             _lastCallUpdate = _logManager.GetLastedCallTime();
             //_lastMessageUpdate = _logManager.GetLastedMessageTime();
 
