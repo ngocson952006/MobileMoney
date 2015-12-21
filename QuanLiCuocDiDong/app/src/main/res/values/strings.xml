@@ -57,10 +57,25 @@
     <string name="textTitlebarKTSoDu"><![CDATA[<font color=\'#FFFFFF\'>Kiểm tra thông tin thuê bao </font>]]></string>
     <string name="textNeedNetworkToUse">Bạn phải kết nối internet mới sử dụng được tiện ích này</string>
     <string name="textTitleBarKhuyenMai"><![CDATA[<font color=\'#FFFFFF\'>Trang thông tin khuyến mãi </font>]]></string>
-    <string name="rssMobi">http://qnghiauit.16mb.com/RssFile/mobiRss.xml</string>
-    <string name="rssVina">http://qnghiauit.16mb.com/RssFile/vinaphoneRss.xml</string>
-    <string name="rssViettel">http://qnghiauit.16mb.com/RssFile/viettelRss.xml</string>
-    <string name="rssGmobi">http://vnexpress.net/rss/so-hoa.rss</string>
-    <string name="rssVNMobi">http://vnexpress.net/rss/so-hoa.rss</string>
     <string name="titleBarDanhBa"><![CDATA[<font color=\'#FFFFFF\'>Số điện thoại hữu ích </font>]]></string>
+    <string name="textCuuHo">Cứu hộ</string>
+    <string name="textTuVan">Tư vấn</string>
+    <string name="textTaxi">Taxi</string>
+    <string name="CongAn">Công An</string>
+    <string name="CuuHoa">Cứu hoả</string>
+    <string name="CuuThuong">Cứu thương</string>
+    <string name="TuVanGiaoDuc">Tư vấn giáo dục (10.000đ/p)</string>
+    <string name="TuVanHonNhan">Tư vấn hôn nhân, gia đình (10.000đ/p)</string>
+    <string name="TuVanTieuDung">Tư vấn tiêu dùng (miễn phí)</string>
+    <string name="TuVanTongHop">Tư vấn tổng hợp (5.000đ/p)</string>
+    <string name="TuVanLuat">Tư vấn luật (5.000đ/p)</string>
+    <string name="TuVanSinhsan">Tư vấn sức khoẻ, sinh sản (5.000đ/p)</string>
+    <string name="TuVanSucKhoeMienPhi">MEDLATEC - tư vấn sức khoẻ (miễn phí)</string>
+    <string name="TuVanSucKhoeEDocter">eDocter - tư vấn sức khoẻ (2.000đ/p)</string>
+    <string name="titleThongKeFragment">Thống kê</string>
+    <string name="titleNgayFragment">Tra theo ngày</string>
+    <string name="titleCaiDatFragment">Cài đặt</string>
+    <string name="titleTienIchFragment">Tiện ích</string>
+    <string name="titleGioiThieuFragment">Giới thiệu</string>
+    <string name="textCurrency">đ</string>
 </resources>

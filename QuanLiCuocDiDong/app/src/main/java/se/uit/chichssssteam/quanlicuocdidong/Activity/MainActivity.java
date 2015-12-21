@@ -1,30 +1,27 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import se.uit.chichssssteam.quanlicuocdidong.BackgroundService.PhoneStateReceiver;
 import se.uit.chichssssteam.quanlicuocdidong.DB.CallLog;
@@ -32,10 +29,10 @@ import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_CallLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_MessageLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.DAO_Statistic;
 import se.uit.chichssssteam.quanlicuocdidong.DB.MessageLog;
-import se.uit.chichssssteam.quanlicuocdidong.DB.Statistic;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.AmazingListView;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.DateTimeManager;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.NavigationDrawerCallbacks;
+import se.uit.chichssssteam.quanlicuocdidong.Manager.NavigationDrawerFragment;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.OnFragmentInteractionListener;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.PackageNetwork;
 import se.uit.chichssssteam.quanlicuocdidong.Manager.PhoneLogManager;
@@ -79,6 +76,7 @@ public class MainActivity extends ActionBarActivity
     public static final String KEY_IDIMAGE = "idImage";
     public static final String KEY_ALLOWPOPUP = "AllowPopup";
     public static final String VALUE_DEFAULT = "Not found";
+    public static final String KEY_PACKAGEFEE = "PackageFee";
 
     /*Bo sung value luu trang thai kiem tra da cap nhat lan dau tien chua khi user thay sim moi*/
     public static final String KEY_UPDATE_STATE = "UpdateState";
@@ -128,9 +126,9 @@ public class MainActivity extends ActionBarActivity
         //_txtView= (TextView)findViewById(R.id.txtView);
         // Get infomation from ChonGoiCuocActivitity
 
-        //getMobileNetwork();
         getNetwork();
         setMobileNetworkUserData();
+
         _progressBar.setVisibility(View.VISIBLE);
         new DatabaseExecuteTask(_lastCallUpdate,_lastMessageUpdate).execute();
     }
@@ -172,27 +170,36 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         Fragment fragment = null;
         Class fragmentClass = null;
-
+        if(position == 2)
+        {
+            setTitle(getString(R.string.titleCaiDatFragment));
+            fragment = CaiDatFragment.newInstance(_myPackageFee); //Thay string = object packagefee
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+            return;
+        }
         switch (position) {
             case 0:
                 fragmentClass = ThongKeFragment.class;
-                setTitle(ThongKeFragment.getNameFragment());
+                setTitle(getString(R.string.titleThongKeFragment));
                 break;
             case 1:
                 fragmentClass = NgayFragment.class;
-                setTitle(NgayFragment.getNameFragment());
+                setTitle(getString(R.string.titleNgayFragment));
                 break;
+            /*
             case 2:
                 fragmentClass = CaiDatFragment.class;
-                setTitle(CaiDatFragment.getNameFragment());
+                setTitle(getString(R.string.titleCaiDatFragment));
                 break;
+                */
             case 3:
                 fragmentClass = TienIchFragment.class;
-                setTitle(TienIchFragment.getNameFragment());
+                setTitle(getString(R.string.titleTienIchFragment));
                 break;
             case 4:
                 fragmentClass = GioiThieuFragment.class;
-                setTitle(GioiThieuFragment.getNameFragment());
+                setTitle(getString(R.string.titleGioiThieuFragment));
                 break;
         }
         try {
@@ -441,11 +448,7 @@ public class MainActivity extends ActionBarActivity
         saveSharedPreferences();
 
     }
-    public void FirstInitLog()
-    {
-        FirstInitCallLog();
-        //FirstInitMessageLog();
-    }
+
     public void getNetwork()
     {
         Intent callerIntent = getIntent();
@@ -475,60 +478,7 @@ public class MainActivity extends ActionBarActivity
             this._logManager = PhoneLogManager.get_instance(this, _myPackageFee);
 
         }
-
-
-
-        //saveSharedPreferences();
-    }
-    private void getMobileNetwork() {
-        Intent callerIntent = getIntent();
-        Bundle packegeFromCaller = callerIntent.getBundleExtra("Mang");
-        if (packegeFromCaller != null)
-        {
-            mangDiDong = ((PackageNetwork) packegeFromCaller.getSerializable("PackageNetworkItem")).getNameNetwork();
-            goiCuoc = ((PackageNetwork) packegeFromCaller.getSerializable("PackageNetworkItem")).getPackageName();
-            idImage = ((PackageNetwork) packegeFromCaller.getSerializable("PackageNetworkItem")).getIdResourceImage();
-            _lastCallUpdate = 0;
-            _lastMessageUpdate= 0;
-            this.InitPackage(this.goiCuoc);
-            this._logManager = PhoneLogManager.get_instance(this,_myPackageFee);
-
-          //  FirstInitLog();
-            _lastCallUpdate = _logManager.GetLastedCallTime();
-            //_lastMessageUpdate = _logManager.GetLastedMessageTime();
-
-        }
-        else
-        {
-            // Restore preferences
-            SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-            goiCuoc = settings.getString(KEY_GOICUOC, VALUE_DEFAULT);
-            mangDiDong = settings.getString(KEY_NHAMANG, VALUE_DEFAULT);
-            idImage = settings.getInt(KEY_IDIMAGE, 0);
-            _lastCallUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_CALL, TIME_DEDAULT);
-            _lastMessageUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_MESSAGE, TIME_DEDAULT);
-            this.InitPackage(this.goiCuoc);
-            this._logManager = PhoneLogManager.get_instance(this, _myPackageFee);
-            long lastTime = _logManager.GetLastedCallTime();
-            if(lastTime > _lastCallUpdate)
-            {
-                RenewCallData(_lastCallUpdate);
-                _lastCallUpdate = lastTime;
-
-            }
-            //lastTime = _logManager.GetLastedMessageTime();
-           // if(lastTime > _lastMessageUpdate)
-           // {
-                //RenewMessageData(_lastMessageUpdate);
-            //    _lastMessageUpdate = lastTime;
-         //   }
-
-        }
-
-
-
         saveSharedPreferences();
-
     }
 
     private void setMobileNetworkUserData() {
@@ -701,11 +651,9 @@ public class MainActivity extends ActionBarActivity
         @Override
         protected void onPostExecute(Void result)
         {
-
            _progressBar.setVisibility(View.GONE);
-
-
         }
+
 
     }
 }

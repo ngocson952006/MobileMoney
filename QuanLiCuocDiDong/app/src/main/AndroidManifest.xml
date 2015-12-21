@@ -74,6 +74,7 @@
         <activity android:name=".Activity.DanhBaActivity"
             android:label="@string/title_activity_danh_ba"
             android:theme="@android:style/Theme.Holo.Light">
+
         </activity>
 
         <receiver android:name=".BackgroundService.PhoneStateReceiver" >

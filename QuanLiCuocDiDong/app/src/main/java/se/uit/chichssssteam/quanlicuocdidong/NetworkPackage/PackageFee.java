@@ -11,7 +11,7 @@ import java.util.Scanner;
 /**
  * Created by justinvan on 03-Oct-15.
  */
-public abstract class PackageFee
+public abstract class PackageFee implements Serializable
 {
     //Attributes
     protected NumberHeaderManager.networkName _myNetwork;
@@ -59,10 +59,25 @@ public abstract class PackageFee
     {
         return this._type;
     }
-     public NumberHeaderManager.networkName get_myNetwork()
+    public NumberHeaderManager.networkName get_myNetwork()
      {
          return this._myNetwork;
      }
+    public int get_internalCallFee(){
+        return _internalCallFee;
+    }
+    public int get_outerCallFee() {
+        return _outerCallFee;
+    }
+    public int get_internalMessageFee(){
+        return _internalMessageFee;
+    }
+    public int get_outerMessageFee()
+    {
+        return _outerMessageFee;
+    }
+
+
 
     //set methods
     public void set_sendMessageTime(String messageTime){this._sendMessageTime = messageTime;}

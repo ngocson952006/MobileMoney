@@ -1,18 +1,31 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import se.uit.chichssssteam.quanlicuocdidong.Manager.OnFragmentInteractionListener;
+import se.uit.chichssssteam.quanlicuocdidong.NetworkPackage.PackageFee;
 import se.uit.chichssssteam.quanlicuocdidong.R;
 
 
@@ -23,29 +36,20 @@ public class CaiDatFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String goiCuoc;
+    private String nhaMang;
     private int idImage;
-
+    private PackageFee _myPackageFee;
     private OnFragmentInteractionListener mListener;
 
     CheckBox checkBoxPopup;
     SharedPreferences settings;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CaiDatFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static CaiDatFragment newInstance(String param1, String param2) {
+    public static CaiDatFragment newInstance(PackageFee myPackageFee) {
         CaiDatFragment fragment = new CaiDatFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(MainActivity.KEY_PACKAGEFEE,myPackageFee);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,15 +61,13 @@ public class CaiDatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        if (getArguments() != null) {
+            _myPackageFee = (PackageFee)getArguments().getSerializable(MainActivity.KEY_PACKAGEFEE);
+        }
         settings = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
-        mParam1 = settings.getString(MainActivity.KEY_GOICUOC, MainActivity.VALUE_DEFAULT);
-        mParam2 = settings.getString(MainActivity.KEY_NHAMANG, MainActivity.VALUE_DEFAULT);
+        goiCuoc = settings.getString(MainActivity.KEY_GOICUOC, MainActivity.VALUE_DEFAULT);
+        nhaMang = settings.getString(MainActivity.KEY_NHAMANG, MainActivity.VALUE_DEFAULT);
         idImage = settings.getInt(MainActivity.KEY_IDIMAGE, 0);
-
     }
 
     @Override
@@ -73,8 +75,21 @@ public class CaiDatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cai_dat, container, false);
 
-        checkBoxPopup = (CheckBox) view.findViewById(R.id.checkBoxPopUp);
-        checkBoxPopup.setChecked(settings.getBoolean(MainActivity.KEY_ALLOWPOPUP,false));
+        TextView textViewGoiCuoc = (TextView) view.findViewById(R.id.textViewTenGoiCuoc);
+        textViewGoiCuoc.setText(goiCuoc);
+        TextView textViewTenNhaMang = (TextView) view.findViewById(R.id.textViewTenNhaMang);
+        textViewTenNhaMang.setText(nhaMang);
+        TextView textViewPhiGoiNoiMang = (TextView) view.findViewById(R.id.textViewPhiGoiNoiMang);
+        textViewPhiGoiNoiMang.setText(String.valueOf(_myPackageFee.get_internalCallFee()));
+        TextView textViewPhiGoiNgoaiMang = (TextView) view.findViewById(R.id.textViewPhiGoiNgoaiMang);
+        textViewPhiGoiNgoaiMang.setText(String.valueOf(_myPackageFee.get_outerCallFee()));
+        TextView textViewPhiNhanTinNoiMang = (TextView) view.findViewById(R.id.textViewPhiNhanTinNoiMang);
+        textViewPhiNhanTinNoiMang.setText(String.valueOf(_myPackageFee.get_internalMessageFee()));
+        TextView textViewPhiNhanTinNgoaiMang = (TextView) view.findViewById(R.id.textViewPhiNhanTinNgoaiMang);
+        textViewPhiNhanTinNgoaiMang.setText(String.valueOf(_myPackageFee.get_outerMessageFee()));
+
+        ImageView imageViewLogo = (ImageView) view.findViewById(R.id.imageViewLogoGoiCuoc);
+        imageViewLogo.setImageResource(idImage);
 
         Button buttonChangeMobileNW = (Button) view.findViewById(R.id.buttonClear);
         buttonChangeMobileNW.setOnClickListener(new View.OnClickListener() {
@@ -84,15 +99,8 @@ public class CaiDatFragment extends Fragment {
             }
         });
 
-        TextView textViewGoiCuoc = (TextView) view.findViewById(R.id.textViewTenGoiCuoc);
-        textViewGoiCuoc.setText(mParam1);
-        TextView textViewTenNhaMang = (TextView) view.findViewById(R.id.textViewTenNhaMang);
-        textViewTenNhaMang.setText(mParam2);
-
-        ImageView imageViewLogo = (ImageView) view.findViewById(R.id.imageViewLogoGoiCuoc);
-        imageViewLogo.setImageResource(idImage);
-
-
+        checkBoxPopup = (CheckBox) view.findViewById(R.id.checkBoxPopUp);
+        checkBoxPopup.setChecked(settings.getBoolean(MainActivity.KEY_ALLOWPOPUP, false));
         // Inflate the layout for this fragment
         return view;
     }
@@ -134,12 +142,6 @@ public class CaiDatFragment extends Fragment {
         // Commit the edits!
         editor.commit();
         super.onStop();
-    }
-
-
-    public static String getNameFragment()
-    {
-        return "Cài đặt";
     }
 
 }

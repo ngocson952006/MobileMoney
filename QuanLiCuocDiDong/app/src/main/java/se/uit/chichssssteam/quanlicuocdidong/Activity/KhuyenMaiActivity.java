@@ -115,23 +115,23 @@ public class KhuyenMaiActivity extends Activity {
         switch (mangDiDong)
         {
             case "Mobifone": {
-                url = getString(R.string.rssMobi);
+                url = "http://qnghiauit.16mb.com/RssFile/mobiRss.xml";
                 break;
             }
             case "VinaPhone": {
-                url = getString(R.string.rssVina);
+                url = "http://qnghiauit.16mb.com/RssFile/vinaphoneRss.xml";
                 break;
             }
             case "Viettel": {
-                url = getString(R.string.rssViettel);
+                url = "";
                 break;
             }
             case "GMobile": {
-                url = getString(R.string.rssGmobi);
+                url = "";
                 break;
             }
             case "VietNamMobile": {
-                url = getString(R.string.rssVNMobi);
+                url = "";
                 break;
             }
         }

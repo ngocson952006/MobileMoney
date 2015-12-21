@@ -78,12 +78,12 @@ public class TienIchFragment extends Fragment {
 
     void initData()
     {
-        listUtiltyItem.add(new UtiltyItem("Tra cứu thông tin khuyến mãi","Khuyến mãi nạp thẻ, hoà mạng...",R.drawable.khuyenmai));
-        listUtiltyItem.add(new UtiltyItem("Ứng tiền nhanh","Ứng tiền khi tài khoản của bạn hết tiền",R.drawable.ungtien));
-        listUtiltyItem.add(new UtiltyItem("Yêu cầu gọi lại","Nhắn tin cho bạn bè nhờ gọi lại cho bạn",R.drawable.goilai));
-        listUtiltyItem.add(new UtiltyItem("Tra cứu thông tin thuê bao","Tra cứu thông tin chi tiết thuê bao",R.drawable.tracuuthongtin));
-        listUtiltyItem.add(new UtiltyItem("Kiểm tra tài khoản","Kiểm tra tài khoản gốc và khuyến mãi",R.drawable.kiemtrasodu));
-        listUtiltyItem.add(new UtiltyItem("Số điện thoại hữu ích","Số khẩn cấp, số xe Taxi, số tư vấn ..",R.drawable.kiemtrasodu));
+        listUtiltyItem.add(new UtiltyItem("Tra cứu thông tin khuyến mãi","Khuyến mãi nạp thẻ, hoà mạng...",R.drawable.ic_action_action_add_shopping_cart));
+        listUtiltyItem.add(new UtiltyItem("Ứng tiền nhanh","Ứng tiền khi tài khoản của bạn hết tiền",R.drawable.ic_action_editor_attach_money));
+        listUtiltyItem.add(new UtiltyItem("Yêu cầu gọi lại","Nhắn tin cho bạn bè nhờ gọi lại cho bạn",R.drawable.ic_action_notification_phone_missed));
+        listUtiltyItem.add(new UtiltyItem("Tra cứu thông tin thuê bao","Tra cứu thông tin chi tiết thuê bao",R.drawable.ic_action_file_folder_shared));
+        listUtiltyItem.add(new UtiltyItem("Kiểm tra tài khoản","Kiểm tra tài khoản gốc và khuyến mãi",R.drawable.ic_action_action_account_balance));
+        listUtiltyItem.add(new UtiltyItem("Số điện thoại hữu ích","Số khẩn cấp, số xe Taxi, số tư vấn ..",R.drawable.ic_action_action_perm_contact_cal));
         tienIchArrayAdapter = new TienIchArrayAdapter(getActivity(),R.layout.tienich_listview_item,listUtiltyItem);
         listViewUtilty.setAdapter(tienIchArrayAdapter);
         tienIchArrayAdapter.notifyDataSetChanged();
@@ -145,11 +145,6 @@ public class TienIchFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public static String getNameFragment()
-    {
-        return "Tiện ích";
     }
 
     public static Uri ussdToCallableUri(String ussd) {

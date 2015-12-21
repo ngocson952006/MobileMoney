@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuanLiCuocDiDong</string>
+    <string name="CongAn">Police</string>
+    <string name="titleTienIchFragment">Utilities</string>
+    <string name="titleThongKeFragment">Statistics</string>
+    <string name="titleNgayFragment">Look by date</string>
+    <string name="titleGioiThieuFragment">About us</string>
+    <string name="titleCaiDatFragment">Setting</string>
+    <string name="CuuHoa">Firefighting</string>
+    <string name="CuuThuong">Ambulance</string>
+    <string name="TuVanGiaoDuc">Educational Consultants (10.000 VND/min)</string>
+</resources>

@@ -18,6 +18,7 @@ import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import se.uit.chichssssteam.quanlicuocdidong.DB.CallLog;
@@ -41,12 +42,12 @@ public class NgayFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String currency;
     private OnFragmentInteractionListener mListener;
     private ImageButton imageButtonCalendar;
     private TextView textViewCalendarValue;
-    private int day;
-    private int month;
-    private int year;
+    private int day, month, year;
+    private int oldestDay,oldestMonth,oldestYear;
     TextView textViewTongTienGoi;
     TextView textViewSoPhutGoiNoiMang;
     TextView textViewTienGoiNoiMang;
@@ -60,13 +61,12 @@ public class NgayFragment extends Fragment
     TextView textViewTongTien;
     List<CallLog> callLogList;
     List<MessageLog> messLogList;
-    int tempDay,tempMonth,tempYear;
     CalllogArrayAdapter calllogAdapter;
     MessLogArrayAdapter messLogAdapter;
     ListView listViewCallLog;
     ListView listViewMessLog;
-    int numCallLog;
-    int numMessLog;
+    DAO_MessageLog dao_messageLog;
+    DAO_CallLog dao_callLog;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -96,7 +96,12 @@ public class NgayFragment extends Fragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        getLog();
+        currency =  getContext().getString(R.string.textCurrency);
+        DateTime now = DateTime.now();
+        this.year = now.getYear();
+        this.month = now.getMonthOfYear();
+        this.day = now.getDayOfMonth();
+        createConnect();
     }
 
     @Override
@@ -106,11 +111,7 @@ public class NgayFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ngay, container, false);
         getControl(view);
-        DateTime now = DateTime.now();
-        this.year = now.getYear();
-        this.month = now.getMonthOfYear();
-        this.day = now.getDayOfMonth();
-        Init();
+        getLog();
         addEvent();
 
 
@@ -166,7 +167,7 @@ public class NgayFragment extends Fragment
                                 now.getDayOfMonth());
 
                 calendarDatePickerDialogFragment.setDateRange(
-                        new MonthAdapter.CalendarDay(tempYear, tempMonth - 1, tempDay),
+                        new MonthAdapter.CalendarDay(oldestYear, oldestMonth - 1,  oldestDay),
                         new MonthAdapter.CalendarDay(now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth()));
 
                 calendarDatePickerDialogFragment.show(fm, FRAG_TAG_DATE_PICKER);
@@ -197,10 +198,6 @@ public class NgayFragment extends Fragment
         super.onDetach();
         mListener = null;
     }
-    public static String getNameFragment()
-    {
-        return "Tra theo ngày";
-    }
 
     @Override
     public void onDestroy() {
@@ -214,28 +211,42 @@ public class NgayFragment extends Fragment
             this.day = dayOfMonth;
             this.month = monthOfYear +1 ;
             this.year = year;
-            Init();
+            getLog();
         }
     }
 
+    private void createConnect()
+    {
+        dao_callLog = new DAO_CallLog(getContext());
+        dao_callLog.Open();
+        long callTime = dao_callLog.getOldestCallTime();
+
+        dao_messageLog = new DAO_MessageLog(getContext());
+        dao_messageLog.Open();
+        long messTime = dao_messageLog.GetOldestMessageTime();
+
+        long oldestTime;
+        if(callTime < messTime)
+            oldestTime = callTime;
+        else
+            oldestTime = messTime;
+        oldestYear = DateTimeManager.get_instance().getYearFromMilisecs(oldestTime);
+        oldestMonth = DateTimeManager.get_instance().getMonthFromMilisecs(oldestTime);
+        oldestDay = DateTimeManager.get_instance().getDayhFromMilisecs(oldestTime);
+    }
     private void getLog()
     {
-        DAO_CallLog dao_callLog = new DAO_CallLog(getContext());
-        dao_callLog.Open();
-        callLogList = dao_callLog.GetAllCallLog();
+        int numCallLog;
+        int numMessLog;
+        DateTime dateTime = new DateTime(this.year,this.month,this.day,0,0);
+        long millis = dateTime.getMillis();
+        callLogList = dao_callLog.GetCallLogInDay(millis);
         numCallLog = callLogList.size();
-        DAO_MessageLog dao_messageLog = new DAO_MessageLog(getContext());
-        dao_messageLog.Open();
-        messLogList = dao_messageLog.GetAllMessageLog();
+        messLogList = dao_messageLog.GetMessageLogInDay(millis);
         numMessLog = messLogList.size();
-    }
-    private void Init()
-    {
+
         CallLog tempCall;
         MessageLog tempMess;
-        List<CallLog> callLogListTemp = new ArrayList<CallLog>();
-        List<MessageLog> messageLogListTemp = new ArrayList<MessageLog>();
-        String logDate;
         DayFee dayFee = new DayFee(this.day,this.month,this.year);
         int minutes_innerCall = 0;
         int minutes_outerCall = 0;
@@ -244,112 +255,58 @@ public class NgayFragment extends Fragment
         for (i=0;i< numCallLog;i++)
         {
             tempCall = callLogList.get(i);
-            logDate = DateTimeManager.get_instance().convertToDMYHms(tempCall.get_callDate()).substring(0, 10);
-            tempYear = Integer.parseInt(logDate.substring(6, 10));
-            tempMonth = Integer.parseInt(logDate.substring(0, 2));
-            tempDay = Integer.parseInt(logDate.substring(3, 5));
-            if(tempYear == year && tempMonth == month && tempDay == day)
-            {
-                if (tempCall.get_callType() == 0)
-                {
-                    minutes_innerCall += tempCall.get_callDuration();
-                    dayFee.addFee_innerCall(tempCall.get_callFee());
+            if (tempCall.get_callType() == 0) {
+                minutes_innerCall += tempCall.get_callDuration();
+                dayFee.addFee_innerCall(tempCall.get_callFee());
 
-                } else
-                {
-                    minutes_outerCall += tempCall.get_callDuration();
-                    dayFee.addFee_outerCall(tempCall.get_callFee());
-                }
-                callLogListTemp.add(tempCall);
-            }
-            else
+            } else
             {
-                continue;
+                minutes_outerCall += tempCall.get_callDuration();
+                dayFee.addFee_outerCall(tempCall.get_callFee());
             }
         }
         dayFee.setMinutes_innerCall(DateTimeManager.get_instance().convertToMinutesAndSec(minutes_innerCall));
         dayFee.setMinutes_outerCall(DateTimeManager.get_instance().convertToMinutesAndSec(minutes_outerCall));
-        textViewTongTienGoi.setText(String.valueOf(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()) + "đ");
+        textViewTongTienGoi.setText(String.valueOf(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()) + currency);
         textViewSoPhutGoiNoiMang.setText(dayFee.getMinutes_innerCall());
-        textViewTienGoiNoiMang.setText(String.valueOf(dayFee.getFee_innerCall()) + "đ");
+        textViewTienGoiNoiMang.setText(String.valueOf(dayFee.getFee_innerCall()) + currency);
         textViewSoPhutGoiNgoaiMang.setText(dayFee.getMinutes_outerCall());
-        textViewTienGoiNgoaiMang.setText(String.valueOf(dayFee.getFee_outerCall()) + "đ");
+        textViewTienGoiNgoaiMang.setText(String.valueOf(dayFee.getFee_outerCall()) + currency);
 
 
-        int tempYearMess = 0;
-        int tempMonthMess = 0;
-        int tempDayMess = 0;
         for (i=0;i< numMessLog;i++)
         {
             tempMess = messLogList.get(i);
-            logDate = DateTimeManager.get_instance().convertToDMYHms(tempMess.get_messageDate()).substring(0, 10);
-            tempYearMess = Integer.parseInt(logDate.substring(6, 10));
-            tempMonthMess = Integer.parseInt(logDate.substring(0, 2));
-            tempDayMess = Integer.parseInt(logDate.substring(3, 5));
-            if(tempYearMess == year && tempMonthMess == month && tempDayMess == day)
+            if (tempMess.get_messageType() == 0)
             {
-                if (tempMess.get_messageType() == 0)
-                {
-                    dayFee.countUpNumber_innerMess();
-                    dayFee.addFee_innerMess(tempMess.get_messageFee());
+                dayFee.countUpNumber_innerMess();
+                dayFee.addFee_innerMess(tempMess.get_messageFee());
 
-                } else
-                {
-                    dayFee.countUpNumber_outerMess();
-                    dayFee.addFee_outerMess(tempMess.get_messageFee());
-                }
-                messLogList.add(tempMess);
-            }
-            else
+            } else
             {
-                continue;
+                dayFee.countUpNumber_outerMess();
+                dayFee.addFee_outerMess(tempMess.get_messageFee());
             }
         }
-        textViewTongTienSmS.setText(String.valueOf(dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + "đ");
+        textViewTongTienSmS.setText(String.valueOf(dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + currency);
         textViewSoSmsNoiMang.setText(String.valueOf(dayFee.getNumber_innerMess()));
-        textViewTienSmSNoiMang.setText(String.valueOf(dayFee.getFee_innerMess()) + "đ");
+        textViewTienSmSNoiMang.setText(String.valueOf(dayFee.getFee_innerMess()) + currency);
         textViewSoSmsNgoaiMang.setText(String.valueOf(dayFee.getNumber_outerMess()));
-        textViewTienSmsNgoaiMang.setText(String.valueOf(dayFee.getFee_outerMess()) + "đ");
+        textViewTienSmsNgoaiMang.setText(String.valueOf(dayFee.getFee_outerMess()) + currency);
 
         textViewTongTien.setText(String.valueOf(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()
-         + dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + "đ");
+         + dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + currency);
 
-        calllogAdapter = new CalllogArrayAdapter(getActivity(),R.layout.daydetail_item_listview,callLogListTemp);
+
+        calllogAdapter = new CalllogArrayAdapter(getActivity(),R.layout.daydetail_item_listview,callLogList);
         listViewCallLog.setAdapter(calllogAdapter);
         calllogAdapter.notifyDataSetChanged();
 
-        messLogAdapter = new MessLogArrayAdapter(getActivity(),R.layout.daydetail_item_listview,messageLogListTemp);
+        messLogAdapter = new MessLogArrayAdapter(getActivity(),R.layout.daydetail_item_listview,messLogList);
         listViewMessLog.setAdapter(messLogAdapter);
         messLogAdapter.notifyDataSetChanged();
 
         textViewCalendarValue.setText(String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year));
-        if(tempYearMess < tempYear)
-        {
-            tempDay = tempDayMess;
-            tempMonth = tempMonthMess;
-            tempYear = tempYearMess;
-        }
-        else
-        {
-            if(tempYearMess == tempYear)
-            {
-                if(tempMonthMess < tempMonth)
-                {
-                    tempDay = tempDayMess;
-                    tempMonth = tempMonthMess;
-                }
-                else
-                {
-                    if(tempMonthMess == tempMonth)
-                    {
-                        if(tempDayMess < tempDay)
-                        {
-                            tempDay = tempDayMess;
-                        }
-                    }
-                }
-            }
-        }
 
     }
 

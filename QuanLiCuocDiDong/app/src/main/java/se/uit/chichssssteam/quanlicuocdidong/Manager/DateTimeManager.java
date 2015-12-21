@@ -1,10 +1,12 @@
 package se.uit.chichssssteam.quanlicuocdidong.Manager;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by justinvan on 22-Oct-15.
@@ -19,7 +21,7 @@ public class DateTimeManager
         return _instance;
     }
     public String normalizeDateTime(String date)
-    {
+        {
         SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
         try
         {
@@ -46,6 +48,21 @@ public class DateTimeManager
         }
         return 0;
     }
+
+    public long convertddMMyyyyToMilisec(String date)
+    {
+        String someDate = "05.10.2011";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy",Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            Date dates = sdf.parse(someDate);
+            long a = dates.getTime();
+            return a;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
     public String convertToHm(String date)
     {
         try {
@@ -70,10 +87,23 @@ public class DateTimeManager
         }
         return "";
     }
-    public String convertMilisecToDatetime(long milisecs)
+    public int getYearFromMilisecs(long milisecs)
     {
-        Date temp = new Date(milisecs);
-        return temp.toString();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milisecs);
+        return calendar.get(Calendar.YEAR);
+    }
+    public int getMonthFromMilisecs(long milisecs)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milisecs);
+        return calendar.get(Calendar.MONTH) + 1;
+    }
+    public int getDayhFromMilisecs(long milisecs)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milisecs);
+        return calendar.get(Calendar.DAY_OF_MONTH);
     }
     public int getMonth(String date)
     {

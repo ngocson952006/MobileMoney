@@ -33,7 +33,7 @@ public class ThongKeFragment extends Fragment {
 
     AmazingListView lsComposer;
     SectionMonthFeeAdapter adapter;
-    public static final String currency = "đ";
+    private String currency;
 
     /**
      * Use this factory method to create a new instance of
@@ -64,7 +64,7 @@ public class ThongKeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        currency =  getContext().getString(R.string.textCurrency);
 
     }
 
@@ -103,11 +103,6 @@ public class ThongKeFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-    public static String getNameFragment()
-    {
-        return "Thống kê";
-    }
-
     class SectionMonthFeeAdapter extends AmazingAdapter {
         List<Pair<String, List<MonthFee>>> all = DataMonthFee.getAllData(getContext());
 

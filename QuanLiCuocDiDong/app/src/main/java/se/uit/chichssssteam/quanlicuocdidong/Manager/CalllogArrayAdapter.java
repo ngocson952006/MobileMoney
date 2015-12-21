@@ -51,11 +51,12 @@ public class CalllogArrayAdapter extends ArrayAdapter<CallLog>
 
             final CallLog call = myArrayCalllog.get(position);
 
-            imageViewTypeLog.setImageResource(R.drawable.phoneicon);
+            imageViewTypeLog.setImageResource(R.drawable.ic_action_communication_call);
             textViewPhoneNumber.setText(call.get_callNumber());
             textViewTime.setText(DateTimeManager.get_instance().convertToDMYHms(call.get_callDate()).substring(11, 16));
-            textViewfee.setText(String.valueOf(call.get_callFee()) + " đ");
-            textViewDuration.setText(String.valueOf(call.get_callDuration()) + " s");
+            final String currency =  getContext().getString(R.string.textCurrency);
+            textViewfee.setText(String.valueOf(call.get_callFee()) + currency);
+            textViewDuration.setText(DateTimeManager.get_instance().convertToMinutesAndSec(call.get_callDuration()));
 
         }
         return convertView;
