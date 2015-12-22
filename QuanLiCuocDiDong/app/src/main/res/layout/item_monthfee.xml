@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.000"
+                android:text="0"
                 android:id="@+id/textViewTongTienGoi"
                 android:gravity="right"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6p7s"
+                android:text="0s"
                 android:id="@+id/textViewSoPhutGoiNoiMang"
                 android:layout_marginLeft="25dp"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -51,7 +51,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.000đ"
+                android:text="0"
                 android:id="@+id/textViewTienGoiNoiMang"
                 android:gravity="right"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6p7s"
+                android:text="0s"
                 android:id="@+id/textViewSoPhutGoiNgoaiMang"
                 android:layout_marginLeft="25dp"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -80,7 +80,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.000đ"
+                android:text="0"
                 android:id="@+id/textViewTienGoiNgoaiMang"
                 android:gravity="right"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -102,7 +102,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1000đ"
+                android:text="0"
                 android:id="@+id/textViewTongTienSmS"
                 android:gravity="right"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -124,7 +124,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2"
+                android:text="0"
                 android:id="@+id/textViewSoSmsNoiMang"
                 android:layout_marginLeft="25dp"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -132,7 +132,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.000đ"
+                android:text="0"
                 android:id="@+id/textViewTienSmSNoiMang"
                 android:gravity="right"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -153,7 +153,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6"
+                android:text="0"
                 android:id="@+id/textViewSoSmsNgoaiMang"
                 android:layout_marginLeft="25dp"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -161,7 +161,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.000đ"
+                android:text="0"
                 android:id="@+id/textViewTienSmsNgoaiMang"
                 android:gravity="right"
                 android:textColor="@color/abc_primary_text_material_light" />
@@ -192,7 +192,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.000.000đ"
+                android:text="0"
                 android:id="@+id/textViewTongTien"
                 android:gravity="right"
                 android:textColor="@color/abc_primary_text_material_light" />

@@ -1,7 +1,11 @@
 package se.uit.chichssssteam.quanlicuocdidong.Activity;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -42,7 +46,7 @@ public class NgayFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String currency;
+    public static String currency;
     private OnFragmentInteractionListener mListener;
     private ImageButton imageButtonCalendar;
     private TextView textViewCalendarValue;
@@ -163,8 +167,8 @@ public class NgayFragment extends Fragment
                 FragmentManager fm = getFragmentManager();
                 DateTime now = DateTime.now();
                 CalendarDatePickerDialogFragment calendarDatePickerDialogFragment = CalendarDatePickerDialogFragment
-                        .newInstance(NgayFragment.this, now.getYear(), now.getMonthOfYear() - 1,
-                                now.getDayOfMonth());
+                        .newInstance(NgayFragment.this, year, month - 1,
+                                day);
 
                 calendarDatePickerDialogFragment.setDateRange(
                         new MonthAdapter.CalendarDay(oldestYear, oldestMonth - 1,  oldestDay),
@@ -264,6 +268,7 @@ public class NgayFragment extends Fragment
                 minutes_outerCall += tempCall.get_callDuration();
                 dayFee.addFee_outerCall(tempCall.get_callFee());
             }
+
         }
         dayFee.setMinutes_innerCall(DateTimeManager.get_instance().convertToMinutesAndSec(minutes_innerCall));
         dayFee.setMinutes_outerCall(DateTimeManager.get_instance().convertToMinutesAndSec(minutes_outerCall));
@@ -307,7 +312,25 @@ public class NgayFragment extends Fragment
         messLogAdapter.notifyDataSetChanged();
 
         textViewCalendarValue.setText(String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year));
+    }
+    public static String getContactName(Context context, String phoneNumber) {
+        ContentResolver cr = context.getContentResolver();
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+        Cursor cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        String contactName = null;
+        if(cursor.moveToFirst()) {
+            contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+        }
 
+        if(cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        if(contactName == null)
+            return phoneNumber;
+        return contactName;
     }
 
 }

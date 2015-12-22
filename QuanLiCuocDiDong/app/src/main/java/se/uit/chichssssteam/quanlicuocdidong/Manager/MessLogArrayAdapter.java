@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import se.uit.chichssssteam.quanlicuocdidong.Activity.NgayFragment;
 import se.uit.chichssssteam.quanlicuocdidong.DB.CallLog;
 import se.uit.chichssssteam.quanlicuocdidong.DB.MessageLog;
 import se.uit.chichssssteam.quanlicuocdidong.R;
@@ -53,9 +54,9 @@ public class MessLogArrayAdapter extends ArrayAdapter<MessageLog>
             final MessageLog mess = myArrayMessLog.get(position);
 
             imageViewTypeLog.setImageResource(R.drawable.ic_action_communication_message);
-            textViewPhoneNumber.setText(mess.get_receiverNumber());
+            textViewPhoneNumber.setText(NgayFragment.getContactName(getContext(),mess.get_receiverNumber()));
             textViewTime.setText(DateTimeManager.get_instance().convertToDMYHms(mess.get_messageDate()).substring(11, 16));
-            textViewfee.setText(String.valueOf(mess.get_messageFee()) + " đ");
+            textViewfee.setText(String.valueOf(mess.get_messageFee()) + NgayFragment.currency);
             textViewDuration.setText("");
 
         }

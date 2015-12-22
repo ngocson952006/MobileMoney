@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QuanLiCuocDiDong</string>
+    <string name="app_name">Mobile money Manager</string>
     <string name="CongAn">Police</string>
     <string name="titleTienIchFragment">Utilities</string>
     <string name="titleThongKeFragment">Statistics</string>

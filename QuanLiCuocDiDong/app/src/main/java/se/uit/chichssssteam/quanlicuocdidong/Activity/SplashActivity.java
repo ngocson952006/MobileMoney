@@ -22,7 +22,7 @@ public class SplashActivity extends Activity {
         new CountDownTimer(3000, 3000) {
 
             public void onTick(long millisUntilFinished) {
-                ///
+
             }
             public void onFinish() {
                 if (goiCuoc == "Not found") {

@@ -7,10 +7,8 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+        android:layout_height="fill_parent"
+        tools:context=".MainActivity"
         android:orientation="vertical"
         android:baselineAligned="false">
 
@@ -26,8 +24,10 @@
                 android:text="Cước ngày "
                 android:id="@+id/textViewv"
                 android:layout_gravity="center_vertical"
-                android:textSize="20dp"
-                android:textColor="@color/abc_primary_text_material_dark" />
+                android:textSize="17dp"
+                android:textColor="@color/abc_primary_text_material_dark"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,8 +35,9 @@
                 android:text="27/8/1995"
                 android:id="@+id/textViewValueOfCalendar"
                 android:layout_gravity="center_vertical"
-                android:textSize="20dp"
-                android:textColor="@color/abc_primary_text_material_dark" />
+                android:textSize="17dp"
+                android:textColor="@color/abc_primary_text_material_dark"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -44,13 +45,13 @@
                 android:layout_height="wrap_content">
 
                 <ImageButton
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:id="@+id/imageButtonCalendar"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_action_action_event"
                     android:layout_gravity="right"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_action_action_event" />
             </LinearLayout>
 
         </LinearLayout>

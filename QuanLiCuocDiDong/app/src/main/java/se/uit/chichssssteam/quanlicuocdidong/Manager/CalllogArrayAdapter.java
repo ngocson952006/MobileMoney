@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import se.uit.chichssssteam.quanlicuocdidong.Activity.NgayFragment;
 import se.uit.chichssssteam.quanlicuocdidong.DB.CallLog;
 import se.uit.chichssssteam.quanlicuocdidong.R;
 
@@ -52,10 +53,9 @@ public class CalllogArrayAdapter extends ArrayAdapter<CallLog>
             final CallLog call = myArrayCalllog.get(position);
 
             imageViewTypeLog.setImageResource(R.drawable.ic_action_communication_call);
-            textViewPhoneNumber.setText(call.get_callNumber());
+            textViewPhoneNumber.setText(NgayFragment.getContactName(getContext(), call.get_callNumber()));
             textViewTime.setText(DateTimeManager.get_instance().convertToDMYHms(call.get_callDate()).substring(11, 16));
-            final String currency =  getContext().getString(R.string.textCurrency);
-            textViewfee.setText(String.valueOf(call.get_callFee()) + currency);
+            textViewfee.setText(String.valueOf(call.get_callFee()) + NgayFragment.currency);
             textViewDuration.setText(DateTimeManager.get_instance().convertToMinutesAndSec(call.get_callDuration()));
 
         }
