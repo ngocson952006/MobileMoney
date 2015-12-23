@@ -99,6 +99,10 @@ public class DAO_CallLog
     {
         _database.delete(_dbHelper.CALL_TABLE, _dbHelper.CALL_ID + " = " + callId, null);
     }
+    public void DeleteAllData()
+    {
+        _database.execSQL("delete from " + _dbHelper.CALL_TABLE);
+    }
     public List<CallLog> GetAllCallLog()
     {
 

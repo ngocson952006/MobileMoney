@@ -81,7 +81,7 @@ public class DbHelper extends SQLiteOpenHelper
             + "primary key (" + MONTH +"," + YEAR + ")" + ");";
 
 
-    public DbHelper(Context context)
+    private DbHelper(Context context)
     {
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
     }

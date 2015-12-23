@@ -89,7 +89,10 @@ public class DAO_MessageLog
     {
         _database.delete(_dbHelper.MESSAGE_TABLE, _dbHelper.MESS_ID + " = " + _id, null);
     }
-
+    public void DeleteAllData()
+    {
+        _database.execSQL("delete from " + _dbHelper.MESSAGE_TABLE);
+    }
     public List<MessageLog> GetAllMessageLog()
     {
         List<MessageLog> _listMessage = new ArrayList<MessageLog>();

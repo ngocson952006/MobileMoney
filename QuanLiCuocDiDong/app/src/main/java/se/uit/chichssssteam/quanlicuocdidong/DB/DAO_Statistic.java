@@ -100,6 +100,10 @@ public class DAO_Statistic
         _database.delete(_dbHelper.STATISTIC_TABLE, _dbHelper.MONTH + " = " + month + " AND " +
                 _dbHelper.YEAR + " = " + year, null);
     }
+    public void DeleteAllData()
+    {
+        _database.execSQL("delete from " + _dbHelper.STATISTIC_TABLE);
+    }
     public List<Statistic> GetAllStatistic()
     {
         List<Statistic> _listStatistic = new ArrayList<Statistic>();
@@ -158,7 +162,24 @@ public class DAO_Statistic
         _rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,newValue,whereClause, null);
         cursor.close();
     }
-
+    public void ResetMessageData()
+    {
+        ContentValues newValue = new ContentValues();
+        newValue.put(_dbHelper.INNER_MESSAGE_FEE,0);
+        newValue.put(_dbHelper.OUTER_MESSAGE_FEE,0);
+        newValue.put(_dbHelper.TOTAL_INNER_MESSAGE,0);
+        newValue.put(_dbHelper.TOTAL_OUTER_MESSAGE,0);
+        _database.update(_dbHelper.STATISTIC_TABLE, newValue, null, null);
+    }
+    public void ResetCallData()
+    {
+        ContentValues newValue = new ContentValues();
+        newValue.put(_dbHelper.INNER_CALL_FEE,0);
+        newValue.put(_dbHelper.OUTER_CALL_FEE,0);
+        newValue.put(_dbHelper.INNER_CALL_DURATION,0);
+        newValue.put(_dbHelper.OUTER_CALL_DURATION,0);
+        _database.update(_dbHelper.STATISTIC_TABLE, newValue, null, null);
+    }
     public int UpdateInnerCallInfo(int month, int year, int callFee, long callDuration)
     {
         String whereClause = _dbHelper.MONTH + " = ?"  + " AND " + _dbHelper.YEAR + " = ?";

@@ -38,7 +38,7 @@ public class PhoneLogManager {
             _instance = new PhoneLogManager(context,packageFee);
         return _instance;
     }
-    public PhoneLogManager(Context context, PackageFee packageFee)
+    private PhoneLogManager(Context context, PackageFee packageFee)
     {
         //_listCall = new ArrayList<se.uit.chichssssteam.quanlicuocdidong.DB.CallLog>();
         //_listMessage = new ArrayList<MessageLog>();

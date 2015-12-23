@@ -118,14 +118,11 @@ public class MainActivity extends ActionBarActivity
         this._myPhoneStateListener = new PhoneStateReceiver();
         initNavigationDrawer();
         _progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        //_thongkeFragment =getFragmentManager().findFragmentById(R.id.thongke);
-        //_txtView= (TextView)findViewById(R.id.txtView);
-        // Get infomation from ChonGoiCuocActivitity
-
         getNetwork();
         setMobileNetworkUserData();
 
         _progressBar.setVisibility(View.VISIBLE);
+
         new DatabaseExecuteTask(_lastCallUpdate,_lastMessageUpdate).execute();
     }
 
@@ -137,6 +134,13 @@ public class MainActivity extends ActionBarActivity
         saveSharedPreferences();
         super.onStop();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        saveSharedPreferences();
+        super.onDestroy();
     }
 
     public void initNavigationDrawer() {
@@ -620,23 +624,28 @@ public class MainActivity extends ActionBarActivity
         protected  Void doInBackground(Void...params)
         {
 
-            if(lastCallTime == 0) {
+            if(_lastCallUpdate == 0) {
+                _callLogTableAdapter.DeleteAllData();
+                _statisticTableAdapter.ResetCallData();
                 FirstInitCallLog();
-
+                saveSharedPreferences();
             }
             else {
                 RenewCallData(_lastCallUpdate);
-
+                saveSharedPreferences();
             }
-            if(lastMessageTime == 0) {
+            if(_lastMessageUpdate == 0) {
+                _messageLogTableAdapter.DeleteAllData();
+                _statisticTableAdapter.ResetMessageData();
                 FirstInitMessageLog();
-
+                saveSharedPreferences();
             }
             else
             {
                 RenewMessageData(_lastMessageUpdate);
+                saveSharedPreferences();
             }
-            //saveSharedPreferences();
+           // saveSharedPreferences();
             return null;
         }
         @Override
@@ -645,12 +654,10 @@ public class MainActivity extends ActionBarActivity
             _progressBar.setProgress(values[0]);
         }
         @Override
-        protected void onPostExecute(Void result)
-        {
-           _progressBar.setVisibility(View.GONE);
+        protected void onPostExecute(Void result) {
+            _progressBar.setVisibility(View.GONE);
+            saveSharedPreferences();
         }
-
-
     }
 }
 

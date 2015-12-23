@@ -42,7 +42,7 @@ public class DanhBaActivity extends Activity {
         setContentView(R.layout.activity_danh_ba);
         editActionBar();
 
-        expListView = (ExpandableListView) findViewById(R.id.expandableListViewCuuHo);
+        expListView = (ExpandableListView) findViewById(R.id.expandableListView);
         prepareListData();
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
         expListView.setAdapter(listAdapter);

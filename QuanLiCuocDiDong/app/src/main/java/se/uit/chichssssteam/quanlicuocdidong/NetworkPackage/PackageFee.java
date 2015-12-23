@@ -19,7 +19,6 @@ public abstract class PackageFee implements Serializable
     protected int _callDuration;
     protected int _callFee;
     protected int _messageFee;
-    //protected NumberHeaderManager _numberHeader;
     protected  NumberHeaderManager _numberHeader;
     //
     protected String _callTime;
