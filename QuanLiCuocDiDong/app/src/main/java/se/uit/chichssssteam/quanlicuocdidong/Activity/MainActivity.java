@@ -98,10 +98,6 @@ public class MainActivity extends ActionBarActivity
     private DateTimeManager _dateTimeManager;
     private long _lastCallUpdate;
     private long _lastMessageUpdate;
-
-    private android.app.Fragment _thongkeFragment;
-    private AmazingListView _listView;
-   // private TextView _txtView;
     private ProgressBar _progressBar;
     //Background service
 

@@ -54,7 +54,7 @@
     <string name="urlUngTienVNMobi">http://www.vietnamobile.com.vn/layout1.php?pdid=66#</string>
     <string name="textTitleBarTraCuuTTTB"><![CDATA[<font color=\'#FFFFFF\'>Kiểm tra thông tin thuê bao </font>]]></string>
     <string name="urlTTCTTraCuuTTTB"><![CDATA["<a href=http://dichvudidong.vn/huong-dan-tra-cuu-thong-tin-thue-bao-cua-sim-tra-truoc.html> Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây "]]></string>
-    <string name="textTitlebarKTSoDu"><![CDATA[<font color=\'#FFFFFF\'>Kiểm tra thông tin thuê bao </font>]]></string>
+    <string name="textTitlebarKTSoDu"><![CDATA[<font color=\'#FFFFFF\'>Kiểm tra số dư tài khoản </font>]]></string>
     <string name="textNeedNetworkToUse">Bạn phải kết nối internet mới sử dụng được tiện ích này</string>
     <string name="textTitleBarKhuyenMai"><![CDATA[<font color=\'#FFFFFF\'>Trang thông tin khuyến mãi </font>]]></string>
     <string name="titleBarDanhBa"><![CDATA[<font color=\'#FFFFFF\'>Số điện thoại hữu ích </font>]]></string>

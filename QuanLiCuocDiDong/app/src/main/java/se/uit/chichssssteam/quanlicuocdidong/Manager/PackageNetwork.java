@@ -9,7 +9,6 @@ public class PackageNetwork implements Serializable {
     private String namePackage;
     private int idResourceImage;
     private String nameNetwork;
-    private String urlPromotion;
     public PackageNetwork(String _nameNetwork, String _namePackage, int _idImage)
     {
         nameNetwork = _nameNetwork;
@@ -27,8 +26,5 @@ public class PackageNetwork implements Serializable {
     {
         return idResourceImage;
     }
-    public void setUrlPromotion(String _url)
-    {
-        urlPromotion = _url;
-    }
+
 }

@@ -76,7 +76,7 @@ public class TienIchFragment extends Fragment {
         return view;
     }
 
-    void initData()
+    private void initData()
     {
         listUtiltyItem.add(new UtiltyItem("Tra cứu thông tin khuyến mãi","Khuyến mãi nạp thẻ, hoà mạng...",R.drawable.ic_action_action_add_shopping_cart));
         listUtiltyItem.add(new UtiltyItem("Ứng tiền nhanh","Ứng tiền khi tài khoản của bạn hết tiền",R.drawable.ic_action_editor_attach_money));
@@ -88,7 +88,7 @@ public class TienIchFragment extends Fragment {
         listViewUtilty.setAdapter(tienIchArrayAdapter);
         tienIchArrayAdapter.notifyDataSetChanged();
     }
-    void getControlAndAddEvent(View view)
+    private void getControlAndAddEvent(View view)
     {
         listViewUtilty = (ListView) view.findViewById(R.id.listViewUtilty);
         listViewUtilty.setOnItemClickListener(new AdapterView.OnItemClickListener() {
