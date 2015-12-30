@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="se.uit.chichssssteam.quanlicuocdidong.Activity.ThongKeFragment"
+    tools:context="se.uit.battleteam.quanlicuocdidong.Activity.ThongKeFragment"
     android:id="@+id/thongke">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="left|top">
 
-        <se.uit.chichssssteam.quanlicuocdidong.Manager.AmazingListView
+        <se.uit.battleteam.quanlicuocdidong.Manager.AmazingListView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/lsComposer" />
