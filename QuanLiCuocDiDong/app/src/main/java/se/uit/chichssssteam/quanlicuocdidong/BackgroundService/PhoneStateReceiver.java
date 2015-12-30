@@ -270,7 +270,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             if(_isOutGoingCallEnd == true && _isReceivingCall == false)
             {
                 CallLog lastCall = getNewCallLog();
-                if(lastCall != null && lastCall.get_callDuration() >0 && _isOutGoing == true && _isAllowPopUp == true)
+                if(lastCall != null && lastCall.get_callDuration() >0 && _isOutGoing == true && _isAllowPopUp == true )
                 {
                     try
                     {
@@ -326,8 +326,11 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                 String _callType = cursor.getString(callType);
                 int dircode = Integer.parseInt(_callType);
                 if(dircode == android.provider.CallLog.Calls.OUTGOING_TYPE) {
+
                     _isOutGoing = true;
                     String _number = cursor.getString(number);
+                    if(_number.length() <10)
+                        return null;
                     String _callDate = cursor.getString(date);
                     Date _callDayTime = new Date(Long.valueOf(_callDate));
                     int _callDuration = cursor.getInt(duration);
