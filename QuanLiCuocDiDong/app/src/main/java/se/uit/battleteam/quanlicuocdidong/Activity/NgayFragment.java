@@ -154,6 +154,9 @@ public class NgayFragment extends Fragment
         tab.addTab(spec);
         //Thiết lập tab mặc định được chọn ban đầu là tab 0
         tab.setCurrentTab(0);
+        final int height = 90;
+        tab.getTabWidget().getChildAt(0).getLayoutParams().height = height;
+        tab.getTabWidget().getChildAt(1).getLayoutParams().height = height;
 
     }
 
