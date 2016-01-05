@@ -1,5 +1,6 @@
 package se.uit.battleteam.quanlicuocdidong.NetworkPackage;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by justinvan on 03-Oct-15.
  */
 
-public class NumberHeaderManager
+public class NumberHeaderManager implements Serializable
 {
     public enum networkName
     {

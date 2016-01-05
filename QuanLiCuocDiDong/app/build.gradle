@@ -5,9 +5,9 @@ android {
     buildToolsVersion '23.0.1'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "se.uit.chichssssteam.quanlicuocdidong"
+        applicationId 'se.uit.battleteam.quanlicuocdidong'
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }

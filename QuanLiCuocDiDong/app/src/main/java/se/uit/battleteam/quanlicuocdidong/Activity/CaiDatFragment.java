@@ -37,7 +37,7 @@ public class CaiDatFragment extends Fragment {
     public static CaiDatFragment newInstance(PackageFee myPackageFee) {
         CaiDatFragment fragment = new CaiDatFragment();
         Bundle args = new Bundle();
-        args.putSerializable(MainActivity.KEY_PACKAGEFEE,myPackageFee);
+        args.putSerializable(MainActivity.KEY_INFO_MOBILENETWORK,myPackageFee);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +50,7 @@ public class CaiDatFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            _myPackageFee = (PackageFee)getArguments().getSerializable(MainActivity.KEY_PACKAGEFEE);
+            _myPackageFee = (PackageFee)getArguments().getSerializable(MainActivity.KEY_INFO_MOBILENETWORK);
         }
         settings = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
         goiCuoc = settings.getString(MainActivity.KEY_GOICUOC, MainActivity.VALUE_DEFAULT);

@@ -68,10 +68,10 @@ public class MainActivity extends ActionBarActivity
     public static final String PREFS_NAME = "MySetting";
     public static final String KEY_GOICUOC = "GoiCuoc";
     public static final String KEY_NHAMANG = "NhaMang";
-    public static final String KEY_IDIMAGE = "idImage";
+    public static final String KEY_IDIMAGE = "IDImage";
     public static final String KEY_ALLOWPOPUP = "AllowPopup";
-    public static final String VALUE_DEFAULT = "Not found";
-    public static final String KEY_PACKAGEFEE = "PackageFee";
+    public static final String VALUE_DEFAULT = "Notfound";
+    public static final String KEY_INFO_MOBILENETWORK = "MobileNetwork";
 
     /*Bo sung value luu trang thai kiem tra da cap nhat lan dau tien chua khi user thay sim moi*/
     public static final String KEY_UPDATE_STATE = "UpdateState";
@@ -439,12 +439,15 @@ public class MainActivity extends ActionBarActivity
     public void getNetwork()
     {
         Intent callerIntent = getIntent();
-        Bundle packegeFromCaller = callerIntent.getBundleExtra("Mang");
+        Bundle packegeFromCaller = callerIntent.getBundleExtra(KEY_INFO_MOBILENETWORK);
         if (packegeFromCaller != null)
         {
-            mangDiDong = ((PackageNetwork) packegeFromCaller.getSerializable("PackageNetworkItem")).getNameNetwork();
-            goiCuoc = ((PackageNetwork) packegeFromCaller.getSerializable("PackageNetworkItem")).getPackageName();
-            idImage = ((PackageNetwork) packegeFromCaller.getSerializable("PackageNetworkItem")).getIdResourceImage();
+            PackageNetwork goicuoc = (PackageNetwork) packegeFromCaller.getSerializable(KEY_GOICUOC);
+            if(goicuoc != null) {
+                mangDiDong = goicuoc.getNameNetwork();
+                goiCuoc = goicuoc.getPackageName();
+                idImage = goicuoc.getIdResourceImage();
+            }
             SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
             _lastCallUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_CALL, TIME_DEDAULT);
             _lastMessageUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_MESSAGE, TIME_DEDAULT);
@@ -479,117 +482,117 @@ public class MainActivity extends ActionBarActivity
 
     public void InitPackage(String _package) {
         switch (_package) {
-            case "Mobicard": {
+            case ChonGoiCuocActivity.MOBICARD: {
                 _myPackageFee = new MobiCard();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
                 break;
             }
-            case "MobiGold": {
+            case ChonGoiCuocActivity.MOBIGOLD: {
                 _myPackageFee = new MobiGold();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
                 break;
             }
-            case "MobiQ": {
+            case ChonGoiCuocActivity.MOBIQ: {
                 _myPackageFee = new MobiQ();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
                 break;
             }
-            case "Q-Student": {
+            case ChonGoiCuocActivity.QSTUDENT: {
                 _myPackageFee = new QStudent();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
                 break;
             }
-            case "Q-Teen": {
+            case ChonGoiCuocActivity.QTEEN: {
                 _myPackageFee = new QTeen();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
                 break;
             }
-            case "Q-Kids": {
+            case ChonGoiCuocActivity.QKIDS: {
                 _myPackageFee = new Qkids();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
                 break;
             }
-            case "VinaCard": {
+            case ChonGoiCuocActivity.VINACARD: {
                 _myPackageFee = new VinaCard();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
                 break;
             }
-            case "VinaXtra": {
+            case ChonGoiCuocActivity.VINAXTRA: {
                 _myPackageFee = new VinaXtra();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
                 break;
             }
-            case "Economy": {
+            case ChonGoiCuocActivity.ECONOMY: {
                 _myPackageFee = new Economy();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
                 break;
             }
-            case "Tomato": {
+            case ChonGoiCuocActivity.TOMATO: {
                 _myPackageFee = new Tomato();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
                 break;
             }
-            case "Student": {
+            case ChonGoiCuocActivity.STUDENT: {
                 _myPackageFee = new Student();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
                 break;
             }
-            case "Sea+": {
+            case ChonGoiCuocActivity.SEA: {
                 _myPackageFee = new SeaPlus();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
                 break;
             }
-            case "Hi School": {
+            case ChonGoiCuocActivity.HISCHOOL: {
                 _myPackageFee = new HiSchool();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
                 break;
             }
-            case "7Colors": {
+            case ChonGoiCuocActivity.SEVENCOLOR: {
                 _myPackageFee = new SevenColor();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
                 break;
             }
-            case "Buôn làng": {
+            case ChonGoiCuocActivity.BUONLANG: {
                 _myPackageFee = new TomatoBL();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
                 break;
             }
-            case "Big Save": {
+            case ChonGoiCuocActivity.BIGSAVE: {
                 _myPackageFee = new BigSave();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
                 break;
             }
-            case "Big & Kool": {
+            case ChonGoiCuocActivity.BIGKOOL: {
                 _myPackageFee = new BigKool();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
                 break;
             }
-            case "Tỉ phú 2": {
+            case ChonGoiCuocActivity.TIPHU2: {
                 _myPackageFee = new BillionareTwo();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
                 break;
             }
-            case "Tỉ phú 3": {
+            case ChonGoiCuocActivity.TIPHU3: {
                 _myPackageFee = new BillionareThree();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
                 break;
             }
-            case "Tỉ phú 5": {
+            case ChonGoiCuocActivity.TIPHU5: {
                 _myPackageFee = new BillionareFive();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
                 break;
             }
-            case "VM One": {
+            case ChonGoiCuocActivity.VMONE: {
                 _myPackageFee = new VMOne();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
                 break;
             }
-            case "VMax": {
+            case ChonGoiCuocActivity.VMAX: {
                 _myPackageFee = new VMax();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
                 break;
             }
-            case "SV 2014": {
+            case ChonGoiCuocActivity.SV2014: {
                 _myPackageFee = new SV2014();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
                 break;

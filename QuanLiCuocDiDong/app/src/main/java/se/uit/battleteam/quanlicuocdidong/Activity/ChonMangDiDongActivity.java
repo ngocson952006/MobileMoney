@@ -17,12 +17,18 @@ import se.uit.battleteam.quanlicuocdidong.R;
 
 public class ChonMangDiDongActivity extends Activity {
 
-    ImageButton imageBtnMobi;
-    ImageButton imageBtnVina;
-    ImageButton imageBtnViettel;
-    ImageButton imageBtnGMobi;
-    ImageButton imageBtnVNMobile;
-    String mangDiDong;
+    private ImageButton imageBtnMobi;
+    private ImageButton imageBtnVina;
+    private ImageButton imageBtnViettel;
+    private ImageButton imageBtnGMobi;
+    private ImageButton imageBtnVNMobile;
+    private String mangDiDong;
+    public static final String MOBIFONE = "Mobifone";
+    public static final String VINAPHONE = "VinaPhone";
+    public static final String VIETTEL = "Viettel";
+    public static final String GMOBILE = "GMobile";
+    public static final String VIETNAMOBILE = "VietNamobile";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,25 +82,25 @@ public class ChonMangDiDongActivity extends Activity {
             switch(arg0.getId())
             {
                 case R.id.imageButtonMobifone:
-                    mangDiDong = "Mobifone";
+                    mangDiDong = MOBIFONE;
                     break;
                 case R.id.imageButtonVinaPhone:
-                    mangDiDong = "VinaPhone";
+                    mangDiDong = VINAPHONE;
                     break;
                 case R.id.imageButtonViettel:
-                    mangDiDong = "Viettel";
+                    mangDiDong = VIETTEL;
                     break;
                 case R.id.imageButtonGMobile:
-                    mangDiDong = "GMobile";
+                    mangDiDong = GMOBILE;
                     break;
                 case R.id.imageButtonVietnamMobile:
-                    mangDiDong = "VietNamMobile";
+                    mangDiDong = VIETNAMOBILE;
                     break;
             }
             Bundle myBundle = new Bundle();
-            myBundle.putString("Mang Di Dong",mangDiDong);
+            myBundle.putString(MainActivity.KEY_NHAMANG, mangDiDong);
             Intent myIntent = new Intent(ChonMangDiDongActivity.this,ChonGoiCuocActivity.class);
-            myIntent.putExtra("Mang",myBundle);
+            myIntent.putExtra(MainActivity.KEY_INFO_MOBILENETWORK,myBundle);
             startActivity(myIntent);
         }
 

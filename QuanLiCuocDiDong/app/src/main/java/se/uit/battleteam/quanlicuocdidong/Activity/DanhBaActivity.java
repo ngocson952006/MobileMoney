@@ -27,13 +27,13 @@ import se.uit.battleteam.quanlicuocdidong.R;
 public class DanhBaActivity extends Activity {
 
 
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-    List<Contact> taxiHN,taxiDN,taxiHCM;
-    List<Contact> tuVan,cuuHo;
-    RadioGroup radioGroup;
-    List<String> listDataHeader;
-    HashMap<String, List<Contact>> listDataChild;
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
+    private List<Contact> taxiHN,taxiDN,taxiHCM;
+    private List<Contact> tuVan,cuuHo;
+    private RadioGroup radioGroup;
+    private List<String> listDataHeader;
+    private HashMap<String, List<Contact>> listDataChild;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -12,20 +12,20 @@ import se.uit.battleteam.quanlicuocdidong.R;
 
 public class SplashActivity extends Activity {
 
-    String goiCuoc;
+    private String goiCuoc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        SharedPreferences settings = getSharedPreferences("MySetting", MODE_PRIVATE);
-        goiCuoc = settings.getString("GoiCuoc", "Not found");
+        SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
+        goiCuoc = settings.getString(MainActivity.KEY_GOICUOC, MainActivity.VALUE_DEFAULT);
         new CountDownTimer(3000, 3000) {
 
             public void onTick(long millisUntilFinished) {
 
             }
             public void onFinish() {
-                if (goiCuoc == "Not found") {
+                if (goiCuoc == MainActivity.VALUE_DEFAULT) {
                     Intent myIntent = new Intent(SplashActivity.this, ChonMangDiDongActivity.class);
                     startActivity(myIntent);
                 }

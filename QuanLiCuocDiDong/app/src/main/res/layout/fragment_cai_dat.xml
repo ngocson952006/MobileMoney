@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:background="#ff2c323f" android:layout_width="fill_parent" android:layout_height="fill_parent"
+<LinearLayout
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
-        android:clickable="false"
-        android:background="#ffffff">
+        android:clickable="false">
         <LinearLayout android:gravity="center_vertical" android:orientation="vertical"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="5.0dip" android:layout_marginRight="5.0dip"
             android:background="#e0e0e0">
             <TextView android:textStyle="bold" android:textColor="#626359" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:text="Thông tin gói cước:" android:layout_weight="1.0"

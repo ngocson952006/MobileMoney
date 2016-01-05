@@ -50,25 +50,25 @@ public class NgayFragment extends Fragment
     private TextView textViewCalendarValue;
     private int day, month, year;
     private int oldestDay,oldestMonth,oldestYear;
-    TextView textViewTongTienGoi;
-    TextView textViewSoPhutGoiNoiMang;
-    TextView textViewTienGoiNoiMang;
-    TextView textViewSoPhutGoiNgoaiMang;
-    TextView textViewTienGoiNgoaiMang;
-    TextView textViewTongTienSmS;
-    TextView textViewSoSmsNoiMang;
-    TextView textViewTienSmSNoiMang;
-    TextView textViewSoSmsNgoaiMang;
-    TextView textViewTienSmsNgoaiMang;
-    TextView textViewTongTien;
-    List<CallLog> callLogList;
-    List<MessageLog> messLogList;
-    CalllogArrayAdapter calllogAdapter;
-    MessLogArrayAdapter messLogAdapter;
-    ListView listViewCallLog;
-    ListView listViewMessLog;
-    DAO_MessageLog dao_messageLog;
-    DAO_CallLog dao_callLog;
+    private TextView textViewTongTienGoi;
+    private TextView textViewSoPhutGoiNoiMang;
+    private TextView textViewTienGoiNoiMang;
+    private TextView textViewSoPhutGoiNgoaiMang;
+    private TextView textViewTienGoiNgoaiMang;
+    private TextView textViewTongTienSmS;
+    private TextView textViewSoSmsNoiMang;
+    private TextView textViewTienSmSNoiMang;
+    private TextView textViewSoSmsNgoaiMang;
+    private TextView textViewTienSmsNgoaiMang;
+    private TextView textViewTongTien;
+    private List<CallLog> callLogList;
+    private List<MessageLog> messLogList;
+    private CalllogArrayAdapter calllogAdapter;
+    private MessLogArrayAdapter messLogAdapter;
+    private ListView listViewCallLog;
+    private ListView listViewMessLog;
+    private DAO_MessageLog dao_messageLog;
+    private DAO_CallLog dao_callLog;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.

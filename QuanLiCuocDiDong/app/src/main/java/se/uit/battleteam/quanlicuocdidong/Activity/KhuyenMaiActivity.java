@@ -40,9 +40,9 @@ import se.uit.battleteam.quanlicuocdidong.R;
 
 public class KhuyenMaiActivity extends Activity {
 
-    ListView lstViewKM;
-    ArrayList<PromotionItem> arrayListPromotion= new ArrayList<PromotionItem>();
-    ArrayAdapter<PromotionItem> arrayAdapterPromotion = null;
+    private ListView lstViewKM;
+    private ArrayList<PromotionItem> arrayListPromotion= new ArrayList<PromotionItem>();
+    private ArrayAdapter<PromotionItem> arrayAdapterPromotion = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
