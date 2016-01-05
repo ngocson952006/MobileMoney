@@ -50,6 +50,8 @@ import se.uit.battleteam.quanlicuocdidong.NetworkPackage.SV2014;
 import se.uit.battleteam.quanlicuocdidong.NetworkPackage.SeaPlus;
 import se.uit.battleteam.quanlicuocdidong.NetworkPackage.SevenColor;
 import se.uit.battleteam.quanlicuocdidong.NetworkPackage.Student;
+import se.uit.battleteam.quanlicuocdidong.NetworkPackage.TalkStudent;
+import se.uit.battleteam.quanlicuocdidong.NetworkPackage.TalkTeen;
 import se.uit.battleteam.quanlicuocdidong.NetworkPackage.Tomato;
 import se.uit.battleteam.quanlicuocdidong.NetworkPackage.TomatoBL;
 import se.uit.battleteam.quanlicuocdidong.NetworkPackage.VMOne;
@@ -519,6 +521,18 @@ public class MainActivity extends ActionBarActivity
             }
             case ChonGoiCuocActivity.VINAXTRA: {
                 _myPackageFee = new VinaXtra();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case ChonGoiCuocActivity.TALKSTUDENT:
+            {
+                _myPackageFee = new TalkStudent();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case ChonGoiCuocActivity.TALKTEEN:
+            {
+                _myPackageFee = new TalkTeen();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
                 break;
             }
