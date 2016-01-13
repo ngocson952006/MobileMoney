@@ -49,7 +49,7 @@ public class KhuyenMaiActivity extends Activity {
         setContentView(R.layout.activity_khuyen_mai);
 
         editActionBar();
-        if(isNetworkConnected() == false) {
+        if(!isNetworkConnected()) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(KhuyenMaiActivity.this);
             dialog.setMessage(R.string.textNeedNetworkToUse);
             dialog.setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
@@ -64,12 +64,26 @@ public class KhuyenMaiActivity extends Activity {
         {
             initListView();
             addEventListItems();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    new ReadXML().execute(getUrlPromotion());
-                }
-            });
+            if(getUrlPromotion() == "")
+            {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(KhuyenMaiActivity.this);
+                dialog.setMessage(R.string.textPromotionNotSupport);
+                dialog.setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                dialog.create().show();
+            }
+            else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new ReadXML().execute(getUrlPromotion());
+                    }
+                });
+            }
         }
     }
     private void addEventListItems()
@@ -111,24 +125,24 @@ public class KhuyenMaiActivity extends Activity {
         String url = null;
         switch (mangDiDong)
         {
-            case "Mobifone": {
-                url = "http://qnghiauit.16mb.com/RssFile/mobiRss.xml";
+            case ChonMangDiDongActivity.MOBIFONE: {
+                url = "http://nghianq.azurewebsites.net/OtherFile/AndroidApp/mobifone.xml";
                 break;
             }
-            case "VinaPhone": {
-                url = "http://qnghiauit.16mb.com/RssFile/vinaphoneRss.xml";
+            case ChonMangDiDongActivity.VINAPHONE: {
+                url = "http://nghianq.azurewebsites.net/OtherFile/AndroidApp/vinaphone.xml";
                 break;
             }
-            case "Viettel": {
+            case ChonMangDiDongActivity.VIETTEL: {
+                url = "http://nghianq.azurewebsites.net/OtherFile/AndroidApp/viettel.xml";
+                break;
+            }
+            case ChonMangDiDongActivity.GMOBILE: {
                 url = "";
                 break;
             }
-            case "GMobile": {
-                url = "";
-                break;
-            }
-            case "VietNamMobile": {
-                url = "";
+            case ChonMangDiDongActivity.VIETNAMOBILE: {
+                url = "http://nghianq.azurewebsites.net/OtherFile/AndroidApp/vietnamobile.xml";
                 break;
             }
         }

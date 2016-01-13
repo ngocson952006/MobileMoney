@@ -79,4 +79,5 @@
     <string name="titleGioiThieuFragment">Giới thiệu</string>
     <string name="textCurrency">đ</string>
     <string name="textThang">"Tháng "</string>
+    <string name="textPromotionNotSupport">Tiện ích này chưa hỗ trợ nhà mạng của bạn.</string>
 </resources>
