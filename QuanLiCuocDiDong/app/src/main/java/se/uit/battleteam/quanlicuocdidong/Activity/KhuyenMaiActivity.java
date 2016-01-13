@@ -126,15 +126,15 @@ public class KhuyenMaiActivity extends Activity {
         switch (mangDiDong)
         {
             case ChonMangDiDongActivity.MOBIFONE: {
-                url = "http://nghianq.azurewebsites.net/OtherFile/AndroidApp/mobifone.xml";
+                url = "http://qnghiauit.16mb.com/RssFile/mobifone.xml";
                 break;
             }
             case ChonMangDiDongActivity.VINAPHONE: {
-                url = "http://nghianq.azurewebsites.net/OtherFile/AndroidApp/vinaphone.xml";
+                url = "http://qnghiauit.16mb.com/RssFile/vinaphone.xml";
                 break;
             }
             case ChonMangDiDongActivity.VIETTEL: {
-                url = "http://nghianq.azurewebsites.net/OtherFile/AndroidApp/viettel.xml";
+                url = "http://qnghiauit.16mb.com/RssFile/viettel.xml";
                 break;
             }
             case ChonMangDiDongActivity.GMOBILE: {
@@ -142,7 +142,7 @@ public class KhuyenMaiActivity extends Activity {
                 break;
             }
             case ChonMangDiDongActivity.VIETNAMOBILE: {
-                url = "http://nghianq.azurewebsites.net/OtherFile/AndroidApp/vietnamobile.xml";
+                url = "http://qnghiauit.16mb.com/RssFile/vietnamobile.xml";
                 break;
             }
         }
