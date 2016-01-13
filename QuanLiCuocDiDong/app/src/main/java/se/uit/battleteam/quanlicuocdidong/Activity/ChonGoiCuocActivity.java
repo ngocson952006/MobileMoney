@@ -223,7 +223,7 @@ public class ChonGoiCuocActivity extends Activity {
     }
     private void callUSSD(String code)
     {
-        Intent callIntent = new Intent(Intent.ACTION_CALL, TienIchFragment.ussdToCallableUri(code));
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, TienIchFragment.ussdToCallableUri(code));
         startActivity(callIntent);
     }
 }

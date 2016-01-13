@@ -33,7 +33,6 @@
         <activity
             android:name=".Activity.ChonGoiCuocActivity"
             android:label="@string/title_activity_chon_goi_cuoc"
-            android:noHistory="true"
             android:theme="@android:style/Theme.Holo.Light" >
         </activity>
         <activity
